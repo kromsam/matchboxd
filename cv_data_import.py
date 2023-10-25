@@ -94,10 +94,13 @@ for film in film_data:
     
     # Decline cookies
     try:
-        cookie_decline = driver.find_element(By.ID, "CybotCookiebotDialogBodyButtonDecline")
+        cookie_decline = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "CybotCookiebotDialogBodyButtonDecline")))
+        driver.execute_script("arguments[0].scrollIntoView();", cookie_decline)
         cookie_decline.click()
     except NoSuchElementException:
         print("Cookie consent element not found. Continuing without interaction.")
+    except Exception as e:
+        print(f"An error occurred while clicking the 'Decline' button: {e}")
 
     expand_button = driver.find_element(By.CLASS_NAME,'agenda-filters__row--cities')
     expand_button.click()
