@@ -67,6 +67,9 @@ firefox_options = Options()
 # Set the path to the GeckoDriver executable
 firefox_options.binary_location = driver_path
 
+# Add the headless option
+firefox_options.add_argument("-headless")
+
 # Initialize the Firefox web driver with the custom options
 driver = webdriver.Firefox(options=firefox_options)
 

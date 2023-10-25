@@ -14,6 +14,9 @@ driver_path = 'GeckoDriver/geckodriver'  # Replace with the actual path
 # Create a FirefoxOptions instance
 firefox_options = Options()
 
+# Add the headless option
+firefox_options.add_argument("-headless")
+
 # Set the path to the GeckoDriver executable
 firefox_options.binary_location = driver_path
 
