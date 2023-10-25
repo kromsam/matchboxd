@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 import time
 
@@ -26,11 +27,19 @@ driver.get(url)
 try:
     # Use WebDriverWait to wait for elements to load
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "all-films-list__list")))
-    
-    # Get user input for locations to expand (comma-separated)
-    locations_input = input("Enter the locations to expand (e.g., 'Utrecht, Amsterdam') or 'all' to expand all locations: ")
+   
+   # Decline cookies
+    try:
+        cookie_decline = driver.find_element(By.ID, "CybotCookiebotDialogBodyButtonDecline")
+        cookie_decline.click()
+    except NoSuchElementException:
+        print("Cookie consent element not found. Continuing without interaction.")
 
-    locations = [location.strip() for location in locations_input.split(",")]
+    # Get user input for locations to expand (line-separated)
+    locations_file = "input/locations.txt"
+    with open(locations_file, 'r') as file:
+        # Read the file line by line and strip each line
+        locations = [location.strip() for location in file]
 
     if "all" in locations:
         # Optionally, you can also add a button to collapse all locations if needed
@@ -42,7 +51,7 @@ try:
             location_button.click()
 
     # Give the page some time to load after button interactions
-    time.sleep(10)
+    time.sleep(2)
 
     # Retrieve the HTML content after the page has loaded
     html = driver.page_source
@@ -62,7 +71,20 @@ try:
             title_element = film_element.find('h3', class_='card__title')
             url_element = film_element.find('a', class_='block-link')
             screening_state_element = film_element.find('div', class_='film-card__screening-state-text')
-            oneliner_element = film_element.find('div', class_='film-card__oneliner')
+
+            # List of possible class names for the oneliner element
+            oneliner_class_names = ['film-card__oneliner', 'film-card__film-tip-quote']
+
+            # Initialize oneliner as None
+            oneliner = None
+
+            # Loop through the possible class names and find the oneliner
+            for class_name in oneliner_class_names:
+                oneliner_element = film_element.find('div', class_=class_name)
+                if oneliner_element:
+                    oneliner = oneliner_element.text
+                    break  # Break out of the loop if the oneliner is found
+
             img_element = film_element.find('img', class_='image-replace')
 
             # Check if elements were found before accessing their text or attributes
@@ -73,8 +95,8 @@ try:
             full_url = f"https://www.cineville.nl{url}"
 
             screening_state = screening_state_element.text if screening_state_element else "Screening state not found"
-            oneliner = oneliner_element.text if oneliner_element else "Oneliner not found"
-            
+            oneliner = oneliner if oneliner else "Oneliner not found"
+
             # Modify the image URL to remove the ?w={width} part
             img_url = img_element['data-src'].split('?w=')[0] if img_element else "Image URL not found"
 
@@ -87,7 +109,7 @@ try:
             })
 
         # Save the film data to a JSON file
-        with open('films.json', 'w', encoding='utf-8') as json_file:
+        with open('output/cv_films_raw.json', 'w', encoding='utf-8') as json_file:
             json.dump(films, json_file, ensure_ascii=False, indent=4)
 
     else:
