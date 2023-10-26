@@ -4,7 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Films in Theatres</title>
+    <title></title>
+    <script>
+        // Function to fetch the contents of a text file
+        function fetchTextFile(filePath) {
+            return fetch(filePath)
+                .then(response => response.text())
+                .catch(error => {
+                    console.error('Error fetching file:', error);
+                    return null;
+                });
+        }
+    
+        // Fetch the contents of the letterboxd_list.txt and locations.txt files
+        Promise.all([
+            fetchTextFile('../input/letterboxd_list.txt'),
+            fetchTextFile('../input/locations.txt')
+        ])
+        .then(([letterboxdListContent, locationsContent]) => {
+            if (letterboxdListContent && locationsContent) {
+                // Create a URL for the letterboxd_list part
+                const letterboxdList = letterboxdListContent.trim();
+                const letterboxdListURL = `https://letterboxd.com/${letterboxdList}`;
+                
+                // Create the heading text with the letterboxd_list part as a URL
+                const headingText = `Films in ${locationsContent.trim()} van <a href="${letterboxdListURL}" target="_blank">${letterboxdList}</a>`;
+                
+                // Update the <h1> element
+                const h1Element = document.querySelector('h1');
+                h1Element.innerHTML = headingText;
+                
+                // Update the page title
+                document.title = `Films in ${locationsContent.trim()} van ${letterboxdList}`;
+            }
+        })
+        .catch(error => console.error('Error fetching text files:', error));
+    </script>    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,700" rel="stylesheet">
     <style>
@@ -73,7 +108,7 @@
 
 <body>
     <div class="container">
-        <h1 class="mt-4 mb-4">Films in Theatres Near You</h1>
+        <h1 class="mt-4 mb-4"></h1>
         <div class="row" id="filmCards"></div>
     </div>
 
