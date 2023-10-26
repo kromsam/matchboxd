@@ -12,6 +12,8 @@ from json import JSONEncoder
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from webdriver_manager.firefox import GeckoDriverManager
 
+print("Film data import initialized.")
+
 class DateEncoder(JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime.date):
@@ -60,9 +62,15 @@ def convert_day_to_date(day_str):
         else:
             return None
 
+# Create a FirefoxOptions instance
+firefox_options = webdriver.FirefoxOptions()
+
+# Add the headless option
+firefox_options.add_argument("-headless")
+
 # Initialize the Firefox web driver with the custom options
 print("Initializing WebDriver...")
-driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=firefox_options)
 print("WebDriver initialized.")
 
 # Load the JSON data from your file
