@@ -5,7 +5,7 @@ import json
 LETTERBOXD_JSON_URL = "https://letterboxd-list-radarr.onrender.com/"
 with open('input/letterboxd_list.txt', 'r') as file:
     # Read the entire contents of the file
-    letterboxd_list = file.read()
+    letterboxd_list = file.read().strip()
 
 online_json_url = LETTERBOXD_JSON_URL + letterboxd_list
 
