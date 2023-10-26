@@ -2,39 +2,43 @@ import json
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 import time
 
-# Specify the path to the GeckoDriver executable
-driver_path = 'GeckoDriver/geckodriver'  # Replace with the actual path
+print("Film import initialized.")
 
 # Create a FirefoxOptions instance
-firefox_options = Options()
+firefox_options = webdriver.FirefoxOptions()
 
 # Add the headless option
 firefox_options.add_argument("-headless")
 
-# Set the path to the GeckoDriver executable
-firefox_options.binary_location = driver_path
-
 # Initialize the Firefox web driver with the custom options
-driver = webdriver.Firefox(options=firefox_options)
+print("Initializing WebDriver...")
+driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=firefox_options)
+print("WebDriver initialized.")
 
 # Navigate to the webpage
+print("Navigating to the webpage...")
 url = "https://cineville.nl/films"  # Replace with the actual URL
 driver.get(url)
+print("Navigated to the webpage.")
 
 try:
     # Use WebDriverWait to wait for elements to load
     WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "all-films-list__list")))
-   
-   # Decline cookies
+    print("Page elements have loaded successfully.")
+
+    # Decline cookies
     try:
         cookie_decline = driver.find_element(By.ID, "CybotCookiebotDialogBodyButtonDecline")
         cookie_decline.click()
+        print("Declined cookies.")
     except NoSuchElementException:
         print("Cookie consent element not found. Continuing without interaction.")
 
@@ -43,6 +47,7 @@ try:
     with open(locations_file, 'r') as file:
         # Read the file line by line and strip each line
         locations = [location.strip() for location in file]
+    print("Loaded locations from input file.")
 
     if "all" in locations:
         # Optionally, you can also add a button to collapse all locations if needed
@@ -52,18 +57,22 @@ try:
         for location in locations:
             location_button = driver.find_element(By.XPATH, f"//button[@data-value='{location}']")
             location_button.click()
+            print(f"Expanded location: {location}")
 
     # Give the page some time to load after button interactions
     time.sleep(2)
+    print("Waited for page to load after interactions.")
 
     # Retrieve the HTML content after the page has loaded
     html = driver.page_source
 
     # Parse the HTML using BeautifulSoup
     soup = BeautifulSoup(html, 'html.parser')
+    print("HTML succesfully parsed.")
 
     # Find all the film elements within the page
     film_elements = soup.find_all('li', {'data-colspan': '1'})
+    print("Relevant page elements found.")
 
     if film_elements:
         # Initialize a list to store film data
@@ -111,9 +120,12 @@ try:
                 "img_url": img_url
             })
 
+            print(title + " found.")
+
         # Save the film data to a JSON file
         with open('output/cv_films_raw.json', 'w', encoding='utf-8') as json_file:
             json.dump(films, json_file, ensure_ascii=False, indent=4)
+        print("Film data saved to JSON file.")
 
     else:
         print("No film elements found on the page.")
@@ -124,3 +136,4 @@ except Exception as e:
 finally:
     # Close the Selenium driver
     driver.quit()
+    print("Selenium driver closed.")

@@ -9,6 +9,8 @@ from bs4 import BeautifulSoup
 import time
 import datetime
 from json import JSONEncoder
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from webdriver_manager.firefox import GeckoDriverManager
 
 class DateEncoder(JSONEncoder):
     def default(self, obj):
@@ -58,20 +60,10 @@ def convert_day_to_date(day_str):
         else:
             return None
 
-# Specify the path to the GeckoDriver executable
-driver_path = 'GeckoDriver/geckodriver'  # Replace with the actual path
-
-# Create a FirefoxOptions instance
-firefox_options = Options()
-
-# Set the path to the GeckoDriver executable
-firefox_options.binary_location = driver_path
-
-# Add the headless option
-firefox_options.add_argument("-headless")
-
 # Initialize the Firefox web driver with the custom options
-driver = webdriver.Firefox(options=firefox_options)
+print("Initializing WebDriver...")
+driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()))
+print("WebDriver initialized.")
 
 # Load the JSON data from your file
 with open('output/common_films.json', 'r') as file:
