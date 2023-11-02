@@ -46,8 +46,8 @@ def scrape_cv_film_list(soup, look_for_element):
             # Concatenate the domain to the extracted URL
             full_url = f"https://www.cineville.nl{url}"
 
-            screening_state = screening_state_element.text if screening_state_element else "Screening state not found"
-            oneliner = oneliner if oneliner else "Oneliner not found"
+            screening_state = screening_state_element.text if screening_state_element else "Geen informatie beschikbaar."
+            oneliner = oneliner if oneliner else "Geen informatie beschikbaar."
 
             # Modify the image URL to remove the ?w={width} part
             img_url = img_element['data-src'].split('?w=')[0] if img_element else "Image URL not found"

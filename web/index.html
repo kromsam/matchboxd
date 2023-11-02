@@ -251,11 +251,17 @@
                                 </ul>
                             </div>
                         `
-                        : `
-                            <div class="card-collapse screening-info">
-                                <p>${film.showings[0].screening_info}</p>
-                            </div>
-                        `;
+                        : film.showings[0].screening_info
+                            ? `
+                                <div class="card-collapse screening-info">
+                                    <p>${film.showings[0].screening_info}</p>
+                                </div>
+                            `
+                            : `
+                                <div class="card-collapse screening-info">
+                                    <p>Geen vertoningen beschikbaar.</p>
+                                </div>
+                            `;
     
                     const links = addLinks(film);
     
