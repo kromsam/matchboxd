@@ -1,3 +1,4 @@
+"""Module to run Cineville Heart Letterboxd"""
 import subprocess
 
 # List of scripts to run in order
@@ -13,7 +14,8 @@ scripts_to_run = [
 for script in scripts_to_run:
     try:
         # Run the script using subprocess
+        print(f"Running {script}...")
         subprocess.run(["python", script], check=True)
-        print(f"{script} executed successfully")
+        print(f"{script} executed successfully.")
     except subprocess.CalledProcessError as e:
         print(f"Error executing {script}: {e}")

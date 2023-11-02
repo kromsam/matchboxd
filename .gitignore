@@ -168,3 +168,7 @@ cython_debug/
 # Input
 /input
 web/films_with_showings.json
+cv_films_import_prelint.py
+test/elements.html
+test/film_data.html
+cv_data_import_prelint.py

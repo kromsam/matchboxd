@@ -1,26 +1,22 @@
-import json
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException
-from bs4 import BeautifulSoup
-import time
+"""Module providing json-data of filmpage in Cineville."""
 import datetime
-from json import JSONEncoder
-from selenium.webdriver.firefox.service import Service as FirefoxService
-from webdriver_manager.firefox import GeckoDriverManager
 
-print("Film data import initialized.")
+from utils import get_cv_data
+from utils import store_data
+from utils import get_html_element
+from utils import load_json_data
+from utils import run_driver
 
-class DateEncoder(JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, datetime.date):
-            return obj.isoformat()
-        return super().default(obj)
+# Constants
+INPUT_FILE = 'output/common_films.json'
+LOCATIONS = "input/locations.txt"
+OUTPUT_FILE = 'web/films_with_showings.json'
+LOOK_FOR_ELEMENT = ('div', {'class': 'shows-list__day-group'})
+WAIT_FOR_CLASS = "film-draaitijden"
+
 
 def convert_day_to_date(day_str):
+    """returns a date from a dutch day name"""
     # Define a mapping of Dutch day names to English day names
     day_mapping = {
         "vandaag": "today",
@@ -43,99 +39,42 @@ def convert_day_to_date(day_str):
     for i in range(2, 9):  # Check the next 7 days
         if (today + datetime.timedelta(days=i)).strftime('%A').lower() == english_day:
             return today + datetime.timedelta(days=i)
-    else:
-        # Extract the date string (assuming it's in the format "day day_number month")
-        parts = day_str.split()
-        if len(parts) == 3:
-            day_number = int(parts[1])
-            month_name = parts[2]
-            month_number = {
-                "januari": 1, "februari": 2, "maart": 3, "april": 4,
-                "mei": 5, "juni": 6, "juli": 7, "augustus": 8,
-                "september": 9, "oktober": 10, "november": 11, "december": 12
-            }[month_name]
-            current_year = today.year
-            new_date = datetime.date(current_year, month_number, day_number)
-            if new_date < today:
-                new_date = datetime.date(current_year + 1, month_number, day_number)
-            return new_date
-        else:
-            return None
+    # Extract the date string (assuming it's in the format "day day_number month")
+    parts = day_str.split()
+    if len(parts) == 3:
+        day_number = int(parts[1])
+        month_name = parts[2]
+        month_number = {
+            "januari": 1, "februari": 2, "maart": 3, "april": 4,
+            "mei": 5, "juni": 6, "juli": 7, "augustus": 8,
+            "september": 9, "oktober": 10, "november": 11, "december": 12
+        }[month_name]
+        current_year = today.year
+        new_date = datetime.date(current_year, month_number, day_number)
+        if new_date < today:
+            new_date = datetime.date(current_year + 1, month_number, day_number)
+        return new_date
+    return None
 
-# Create a FirefoxOptions instance
-firefox_options = webdriver.FirefoxOptions()
 
-# Add the headless option
-firefox_options.add_argument("-headless")
+def get_cv_film_data(driver, scrape_function, locations, input_file, wait_for_class, look_for_element):
+    """Loop through films and get data from Cineville."""
+    film_data = load_json_data(input_file)
+    # Iterate over each film in the JSON data and add showings
+    for film in film_data:
+        print(f"Importing data from {film['title']}...")
+        film['showings'] = get_cv_data(driver, film['url'], scrape_function, locations, wait_for_class, look_for_element)
+        print("Import succesful.")
+    return film_data
 
-# Initialize the Firefox web driver with the custom options
-print("Initializing WebDriver...")
-driver = webdriver.Firefox(service=FirefoxService(GeckoDriverManager().install()), options=firefox_options)
-print("WebDriver initialized.")
 
-# Load the JSON data from your file
-with open('output/common_films.json', 'r') as file:
-    film_data = json.load(file)
-
-# Iterate over each film in the JSON data and add showings
-for film in film_data:
-    # Get the URL for the current film
-    cv_film_url = film['url']
-
-    # Navigate to the webpage
-    url = cv_film_url
-    driver.get(url)
-
-    # Wait for the page to load completely (you may need to adjust the wait time)
-    driver.implicitly_wait(10)
-
-    # Use WebDriverWait to wait for elements to load
-    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CLASS_NAME, "film-draaitijden")))
-    
-    # Decline cookies
-    try:
-        cookie_decline = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "CybotCookiebotDialogBodyButtonDecline")))
-        driver.execute_script("arguments[0].scrollIntoView();", cookie_decline)
-        cookie_decline.click()
-    except NoSuchElementException:
-        print("Cookie consent element not found. Continuing without interaction.")
-    except Exception as e:
-        print(f"An error occurred while clicking the 'Decline' button: {e}")
-
-    expand_button = driver.find_element(By.CLASS_NAME,'agenda-filters__row--cities')
-    expand_button.click()
-
-    # Get user input for locations to expand (line-separated)
-    locations_file = "input/locations.txt"
-    with open(locations_file, 'r') as file:
-        # Read the file line by line and strip each line
-        locations = [location.strip() for location in file]
-
-    if "all" in locations:
-        # Optionally, you can also add a button to collapse all locations if needed
-        pass
-    else:
-        # Iterate through the specified locations and click the corresponding buttons
-        for location in locations:
-            location_button = driver.find_element(By.XPATH, f"//button[@data-value='{location}']")
-            location_button_classes = location_button.get_attribute("class")
-
-    if "selectable-button--selected" not in location_button_classes:
-        location_button.click()
-
-    # Give the page some time to load after button interactions
-    time.sleep(5)
-
-    # Get the page source
-    page_source = driver.page_source
-
-    # Parse the HTML content with BeautifulSoup
-    soup = BeautifulSoup(page_source, 'html.parser')
-    # Add showings to the film data
+def scrape_cv_film_data(soup, look_for_element):
+    """Scrape data from a Cineville film page"""
+    print(f"Look for {look_for_element} element...")
+    day_groups = get_html_element(soup, look_for_element)
     showings = []
-
-    day_groups = soup.find_all(class_="shows-list__day-group")
     if day_groups:
+        print("Film data with agenda found.")
         for day_group in day_groups:
             date = convert_day_to_date(day_group.find(class_="shows-list__day").text)
             shows = day_group.find_all(class_="shows-list-item--compact")
@@ -146,7 +85,7 @@ for film in film_data:
                 location_name = show.find(class_="shows-list-item__location__name").text
                 location_city = show.find(class_="shows-list-item__location__city").text
                 show_title = show.find(class_="shows-list-item__title").text
-                
+
                 # Extract ticket_url and information_url
                 cineville_url = "https://www.cineville.nl"
                 additional_info = show.find("div", class_="shows-list-item__additional")
@@ -176,7 +115,12 @@ for film in film_data:
 
                 showings.append(show_info)
     else:
-        screening_info = soup.select_one('.shows-list__screening-info h3').text
+        if soup.select_one('.shows-list__screening-info h3'):
+            print("Film data without agenda, with screening info found.")
+            screening_info = soup.select_one('.shows-list__screening-info h3').text
+        else:
+            print("Film data without agenda and screening info found.")
+            screening_info = None
         show_info = {
             "date": None,
             "time_start": None,
@@ -190,15 +134,16 @@ for film in film_data:
             "additional_info": None
         }
         showings.append(show_info)
-    
-    # Add the showings to the film data
-    film['showings'] = showings
+    return showings
 
-# Save the updated film data to a new JSON file
-with open('web/films_with_showings.json', 'w') as json_file:
-    json.dump(film_data, json_file, indent=4, cls=DateEncoder)
 
-print("Showings have been added to the films and saved to films_with_showings.json.")
-
-# Close the Selenium driver
-driver.quit()
+if __name__ == "__main__":
+    print("Loading driver...")
+    scrape_driver = run_driver()
+    print("Started import of film data...")
+    data = get_cv_film_data(scrape_driver, scrape_cv_film_data, LOCATIONS, INPUT_FILE, WAIT_FOR_CLASS, LOOK_FOR_ELEMENT)
+    print("Import finished.")
+    print("Closing driver...")
+    scrape_driver.quit()
+    print("Driver closed...")
+    store_data(data, OUTPUT_FILE)
