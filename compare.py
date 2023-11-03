@@ -1,12 +1,6 @@
 """Compare two lists for matching tmdb ids, and put the result in a new list."""
 
 from utils import load_json_data
-from utils import store_data
-
-# Constants
-CV_FILMS = 'output/cv_films.json'
-LB_FILMS = 'output/lb_films.json'
-OUTPUT_FILE = "web/films_with_showings.json"
 
 
 def compare_for_tmdb(cv_films, lb_films):
@@ -47,10 +41,3 @@ def compare_for_tmdb(cv_films, lb_films):
     common_films_list = list(common_films.values())
     print("Comparison succeeded.")
     return common_films_list
-
-
-if __name__ == "__main__":
-    print("Fetching comparison data...")
-    data = compare_for_tmdb(CV_FILMS, LB_FILMS)
-    print("Comparison data fetched.")
-    store_data(data, OUTPUT_FILE)

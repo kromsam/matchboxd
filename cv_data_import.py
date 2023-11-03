@@ -1,18 +1,11 @@
 """Module providing json-data of filmpage in Cineville."""
 import datetime
+import sqlite3
+
+from db_utils import db_conn
 
 from utils import get_cv_data
-from utils import store_data
 from utils import get_html_element
-from utils import load_json_data
-from utils import run_driver
-
-# Constants
-INPUT_FILE = 'output/common_films.json'
-LOCATIONS = "input/locations.txt"
-OUTPUT_FILE = 'web/films_with_showings.json'
-LOOK_FOR_ELEMENT = ('div', {'class': 'shows-list__day-group'})
-WAIT_FOR_CLASS = "film-draaitijden"
 
 
 def convert_day_to_date(day_str):
@@ -56,15 +49,34 @@ def convert_day_to_date(day_str):
         return new_date
     return None
 
+def load_common_films(db):
+    # Execute a SQL query to select films with lb_check=True
+    conn = db_conn(db)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM films WHERE lb_check = 1")  # Assuming '1' represents True
 
-def get_cv_film_data(driver, scrape_function, locations, input_file, wait_for_class, look_for_element):
+    # Fetch all the rows that match the condition
+    film_data_raw = cursor.fetchall()
+    conn.close()
+
+    film_data = []
+    for row in film_data_raw:
+        film_dict = dict(row)
+        film_data.append(film_dict)
+    return film_data
+
+
+def get_cv_film_data(driver, scrape_function, locations, db, wait_for_class, look_for_element):
     """Loop through films and get data from Cineville."""
-    film_data = load_json_data(input_file)
+    film_data = load_common_films(db)
     # Iterate over each film in the JSON data and add showings
+    
     for film in film_data:
         print(f"Importing data from {film['title']}...")
         film['showings'] = get_cv_data(driver, film['url'], scrape_function, locations, wait_for_class, look_for_element)
         print("Import succesful.")
+
     return film_data
 
 
@@ -135,15 +147,3 @@ def scrape_cv_film_data(soup, look_for_element):
         }
         showings.append(show_info)
     return showings
-
-
-if __name__ == "__main__":
-    print("Loading driver...")
-    scrape_driver = run_driver()
-    print("Started import of film data...")
-    data = get_cv_film_data(scrape_driver, scrape_cv_film_data, LOCATIONS, INPUT_FILE, WAIT_FOR_CLASS, LOOK_FOR_ELEMENT)
-    print("Import finished.")
-    print("Closing driver...")
-    scrape_driver.quit()
-    print("Driver closed...")
-    store_data(data, OUTPUT_FILE)

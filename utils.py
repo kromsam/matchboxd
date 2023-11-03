@@ -55,7 +55,7 @@ def cv_class_wait(driver, wait_for_class):
     print(f"Waiting for {wait_for_class} to load...")
     wait_for = (By.CLASS_NAME, wait_for_class)
     driver.implicitly_wait(2)
-    WebDriverWait(driver, 2).until(EC.presence_of_element_located(wait_for))
+    WebDriverWait(driver, 10).until(EC.presence_of_element_located(wait_for))
     print(f"{wait_for_class} has loaded succesfully.")
 
 

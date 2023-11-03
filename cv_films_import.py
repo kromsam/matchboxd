@@ -1,16 +1,6 @@
 """Module providing a json films screening in a specific city in Cineville."""
 
-from utils import get_cv_data
-from utils import store_data
 from utils import get_html_element
-from utils import run_driver
-
-# Constants
-URL = "https://cineville.nl/films"
-LOCATIONS = "input/locations.txt"
-OUTPUT_FILE = "output/cv_films.json"
-LOOK_FOR_ELEMENT = ('li', {'data-colspan': '1'})
-WAIT_FOR_CLASS = "all-films-list__list"
 
 
 def scrape_cv_film_list(soup, look_for_element):
@@ -64,16 +54,3 @@ def scrape_cv_film_list(soup, look_for_element):
         return films
     print("No film elements found on page.")
     return
-
-
-if __name__ == "__main__":
-    print("Loading driver...")
-    scrape_driver = run_driver()
-    # Save the film data to a JSON file
-    print("Fetching data from {URL}...")
-    data = get_cv_data(scrape_driver, URL, scrape_cv_film_list, LOCATIONS, WAIT_FOR_CLASS, LOOK_FOR_ELEMENT)
-    print(f"Data fetched from {URL}.")
-    print("Closing driver...")
-    scrape_driver.quit()
-    print("Driver closed...")
-    store_data(data, OUTPUT_FILE)

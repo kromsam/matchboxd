@@ -4,18 +4,12 @@ import json
 import requests
 
 from utils import get_lb_list
-from utils import store_data
-
-# Replace the URL with the URL of the online JSON file you want to import
-LETTERBOXD_JSON_URL = "https://letterboxd-list-radarr.onrender.com/"
-LB_LIST = "input/letterboxd_list.txt"
-OUTPUT_FILE = "output/lb_films.json"
 
 
-def get_letterboxd_data(lb_list):
+def get_letterboxd_data(lb_list, lb_url):
     """Get data from Letterboxd list in json format"""
     letterboxd_list = get_lb_list(lb_list)
-    online_json_url = LETTERBOXD_JSON_URL + letterboxd_list
+    online_json_url = lb_url + letterboxd_list
 
     try:
         # Fetch data from the online JSON file
@@ -33,6 +27,7 @@ def get_letterboxd_data(lb_list):
             for item in online_data:
                 item["tmdb_id"] = item.pop("id")
                 item["url"] = "https://letterboxd.com" + item.pop("clean_title")
+                item["lb_check"] = True
 
             return online_data
         else:
@@ -42,10 +37,3 @@ def get_letterboxd_data(lb_list):
         print(f"An error occurred while trying to fetch data: {e}")
     except json.JSONDecodeError as e:
         print(f"Failed to parse the JSON data: {e}")
-
-
-if __name__ == "__main__":
-    print(f"Fetching data from Letterboxd-list: {get_lb_list(LB_LIST)}")
-    data = get_letterboxd_data(LB_LIST)
-    print("Data found.")
-    store_data(data, OUTPUT_FILE)
