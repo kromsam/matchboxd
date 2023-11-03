@@ -26,7 +26,7 @@ FILM_DATA_LOOK_FOR = ('div', {'class': 'shows-list__day-group'})
 FILM_DATA_WAIT_FOR = "film-draaitijden"
 
 # Variable constants
-DATABASE = "output/database.sqlite"
+DATABASE = "database/database.sqlite"
 LOCATIONS_FILE = "input/locations.txt"
 TMDB_API_KEY = "input/tmdb_api_key.txt"
 LETTERBOXD_JSON_URL = "https://letterboxd-list-radarr.onrender.com/"
