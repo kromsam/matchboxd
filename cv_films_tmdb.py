@@ -4,6 +4,7 @@ import re
 import requests
 
 from db_utils import db_conn
+from utils import get_lb_list
 
 def get_movie_id(movie_title, api_key):
     """Get tmdb id from movie title"""
@@ -42,6 +43,10 @@ def add_tmdb_id(db, api_key):
     print(f"Loading films from database...")
     films = load_cv_films(db)
     print("Films loaded.")
+
+    # Convert file to key
+    api_key = get_lb_list(api_key)
+
     for film in films:
         movie_title = film["title"]
         print(f"Searching TMDB id for: {movie_title}.")
