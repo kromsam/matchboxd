@@ -27,8 +27,8 @@ FILM_DATA_WAIT_FOR = "film-draaitijden"
 
 # Variable constants
 DATABASE = "database/database.sqlite"
-LOCATIONS_FILE = "input/locations.txt"
-TMDB_API_KEY = "input/tmdb_api_key.txt"
+LOCATIONS_FILE = "web/locations.txt"
+TMDB_API_KEY = "web/tmdb_api_key.txt"
 LETTERBOXD_JSON_URL = "https://letterboxd-list-radarr.onrender.com/"
 LB_LIST_FILE = "input/letterboxd_list.txt"
 WEB_FILE = "web/films_with_showings.json"

@@ -172,3 +172,5 @@ cv_films_import_prelint.py
 test/elements.html
 test/film_data.html
 cv_data_import_prelint.py
+web/letterboxd_list.txt
+web/locations.txt

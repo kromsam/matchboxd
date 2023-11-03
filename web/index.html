@@ -18,8 +18,8 @@
     
         // Fetch the contents of the letterboxd_list.txt and locations.txt files
         Promise.all([
-            fetchTextFile('../input/letterboxd_list.txt'),
-            fetchTextFile('../input/locations.txt')
+            fetchTextFile('letterboxd_list.txt'),
+            fetchTextFile('locations.txt')
         ])
         .then(([letterboxdListContent, locationsContent]) => {
             if (letterboxdListContent && locationsContent) {
