@@ -1,51 +1,20 @@
 """Add TMDB ids to a list of films"""
-import sqlite3
 import re
 import requests
 
-from db_utils import db_conn
-from utils import get_lb_list
-
-def get_movie_id(movie_title, api_key):
-    """Get tmdb id from movie title"""
-    base_url = "https://api.themoviedb.org/3/search/movie"
-    params = {
-        "api_key": api_key,
-        "query": movie_title
-    }
-    response = requests.get(base_url, params=params, timeout=20)
-    tmdb_data = response.json()
-    if tmdb_data.get('results'):
-        return tmdb_data['results'][0]['id']
-    return None
-
-
-def load_cv_films(db):
-    # Execute a SQL query to select films with lb_check=True
-    conn = db_conn(db)
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM films")
-
-    # Fetch all the rows that match the condition
-    film_data_raw = cursor.fetchall()
-    conn.close()
-
-    film_data = []
-    for row in film_data_raw:
-        film_dict = dict(row)
-        film_data.append(film_dict)
-    return film_data
+from utils.db_utils import load_db_data
+from utils.utils import load_string
 
 
 def add_tmdb_id(db, api_key):
     """Add tmdb id to json file"""
-    print(f"Loading films from database...")
-    films = load_cv_films(db)
+    print("Loading films from database...")
+    query = "SELECT * FROM films"
+    films = load_db_data(db, query)
     print("Films loaded.")
 
     # Convert file to key
-    api_key = get_lb_list(api_key)
+    api_key = load_string(api_key)
 
     for film in films:
         movie_title = film["title"]
@@ -79,3 +48,17 @@ def add_tmdb_id(db, api_key):
         film["tmdb_id"] = movie_id
         print(f"TMDB id for {movie_title}: {movie_id}.")
     return films
+
+
+def get_movie_id(movie_title, api_key):
+    """Get tmdb id from movie title"""
+    base_url = "https://api.themoviedb.org/3/search/movie"
+    params = {
+        "api_key": api_key,
+        "query": movie_title
+    }
+    response = requests.get(base_url, params=params, timeout=20)
+    tmdb_data = response.json()
+    if tmdb_data.get('results'):
+        return tmdb_data['results'][0]['id']
+    return None

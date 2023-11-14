@@ -1,11 +1,9 @@
 """Module providing json-data of filmpage in Cineville."""
 import datetime
-import sqlite3
 
-from db_utils import db_conn
-
-from utils import get_cv_data
-from utils import get_html_element
+from utils.db_utils import load_db_data
+from utils.utils import get_cv_data
+from utils.utils import get_html_element
 
 
 def convert_day_to_date(day_str):
@@ -49,32 +47,22 @@ def convert_day_to_date(day_str):
         return new_date
     return None
 
-def load_common_films(db):
-    # Execute a SQL query to select films with lb_check=True
-    conn = db_conn(db)
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM films WHERE lb_check = 1")  # Assuming '1' represents True
 
-    # Fetch all the rows that match the condition
-    film_data_raw = cursor.fetchall()
-    conn.close()
-
-    film_data = []
-    for row in film_data_raw:
-        film_dict = dict(row)
-        film_data.append(film_dict)
-    return film_data
-
-
-def get_cv_film_data(driver, scrape_function, locations, db, wait_for_class, look_for_element):
+def get_cv_film_data(driver, scrape_function, locations, db, elements, scrape_mode):
     """Loop through films and get data from Cineville."""
-    film_data = load_common_films(db)
+
+    # Execute a SQL query to select films with lb_check=True
+    if scrape_mode == "local":
+        query = "SELECT * FROM films WHERE lb_check = 1"
+    elif scrape_mode == "full":
+        query = "SELECT * FROM films"
+    film_data = load_db_data(db, query)
+
     # Iterate over each film in the JSON data and add showings
-    
+
     for film in film_data:
         print(f"Importing data from {film['title']}...")
-        film['showings'] = get_cv_data(driver, film['url'], scrape_function, locations, wait_for_class, look_for_element)
+        film['showings'] = get_cv_data(driver, film['url'], scrape_function, locations, elements)
         print("Import succesful.")
 
     return film_data

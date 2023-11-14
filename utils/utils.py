@@ -25,11 +25,7 @@ class DateEncoder(JSONEncoder):
 def click_cv_location_list(location_file, driver):
     """Click through location on Cineville-webpage."""
 
-    # Get user input for locations to expand (line-separated)
-    with open(location_file, 'r', encoding="utf-8") as file:
-        # Read the file line by line and strip each line
-        locations = [location.strip() for location in file]
-    print("Loaded locations from input file.")
+    locations = load_list(location_file)
 
     # Check for buttons to be clicked
     if "all" in locations:
@@ -48,15 +44,15 @@ def click_cv_location_list(location_file, driver):
         print("All location buttons clicked.")
 
 
-def cv_class_wait(driver, wait_for_class):
+def cv_class_wait(driver, wait_for):
     """Wait for a class on the page to load."""
 
     # Wait for specific class
-    print(f"Waiting for {wait_for_class} to load...")
-    wait_for = (By.CLASS_NAME, wait_for_class)
+    print(f"Waiting for {wait_for} to load...")
+    wait_for = (By.CLASS_NAME, wait_for)
     driver.implicitly_wait(2)
     WebDriverWait(driver, 10).until(EC.presence_of_element_located(wait_for))
-    print(f"{wait_for_class} has loaded succesfully.")
+    print(f"{wait_for} has loaded succesfully.")
 
 
 def decline_cv_cookies(driver):
@@ -70,7 +66,7 @@ def decline_cv_cookies(driver):
         print("Cookie consent element not found. Continuing without interaction.")
 
 
-def get_cv_data(driver, url, scrape_function, locations, wait_for_class, look_for_element):
+def get_cv_data(driver, url, scrape_function, locations, elements):
     """Scrape Cineville for all films screening in specific cities."""
 
     # Go to url
@@ -79,7 +75,7 @@ def get_cv_data(driver, url, scrape_function, locations, wait_for_class, look_fo
     print("Page loaded.")
 
     # Use WebDriverWait to wait for elements to load
-    cv_class_wait(driver, wait_for_class)
+    cv_class_wait(driver, elements['wait_for'])
 
     # Decline cookies
     decline_cv_cookies(driver)
@@ -95,11 +91,17 @@ def get_cv_data(driver, url, scrape_function, locations, wait_for_class, look_fo
     print("Waiting for page to load after location interactions.")
     time.sleep(2)
 
+    # Find the div with class using Selenium
+    select_element = driver.find_element(By.CLASS_NAME, elements['wait_for'])
+
+    # Get the inner HTML of the div
+    html_content = select_element.get_attribute('innerHTML')
+
     # Scrape Cineville Films
-    soup = get_html_soup(driver)
+    soup = get_html_soup(html_content)
 
     print("Scraping data from webpage...")
-    data = scrape_function(soup, look_for_element)
+    data = scrape_function(soup, elements['look_for'])
     print("Webpage succesfully scraped.")
     return data
 
@@ -113,19 +115,17 @@ def get_html_element(soup, look_for_element):
     return film_elements
 
 
-def get_html_soup(driver):
+def get_html_soup(html_content):
     """Parse content of site with BeautifulSoup."""
 
     print("Fetching parsed html from webpage...")
-    # Retrieve the HTML content after the page has loaded
-    html = driver.page_source
     # Parse the HTML using BeautifulSoup
-    soup = BeautifulSoup(html, 'html.parser')
+    soup = BeautifulSoup(html_content, 'html.parser')
     print("Parsed html of webpage fetched.")
     return soup
 
 
-def get_lb_list(input_file):
+def load_string(input_file):
     """Load name of letterboxd list"""
     print(f"Getting name of Letterboxd-list from {input_file}...")
     with open(input_file, 'r', encoding="utf-8") as file:
@@ -133,6 +133,15 @@ def get_lb_list(input_file):
         lb_list = file.read().strip()
     print(f"Found name: {lb_list}.")
     return lb_list
+
+
+def load_list(input_file):
+    # Get user input for locations to expand (line-separated)
+    with open(input_file, 'r', encoding="utf-8") as file:
+        # Read the file line by line and strip each line
+        locations = [location.strip() for location in file]
+    print("Loaded locations from input file.")
+    return locations
 
 
 def load_json_data(input_file):

@@ -1,21 +1,24 @@
-import sqlite3
-import json
+"""Generate json-file from database."""
 
-from db_utils import db_conn
-from db_utils import db_close
+from utils.db_utils import db_conn
+from utils.db_utils import db_commit_close
+from utils.utils import store_data
 
-from utils import store_data
 
-def generate_json(db, output_file):
-    conn = db_conn(db)
+def generate_json(db, output_file, scrape_mode):
+    """Generate a json-file from the film database."""
+    conn = db_conn(db, "ro")
     cursor = conn.cursor()
 
     # Define the query to select films with lb_check is true
-    query = """
-    SELECT tmdb_id, title, url, screening_state, oneliner, img_url, imdb_id, lb_title, release_year, adult, lb_url
-    FROM films
-    WHERE lb_check = 1
-    """
+    if scrape_mode == "local":
+        query = """
+        SELECT tmdb_id, title, url, screening_state, oneliner, img_url, imdb_id, lb_title, release_year, adult, lb_url
+        FROM films
+        WHERE lb_check = 1
+        """
+    elif scrape_mode == "full":
+        query = "SELECT tmdb_id, title, url, screening_state, oneliner, img_url, imdb_id, lb_title, release_year, adult, lb_url FROM films"
 
     # Execute the query and fetch the results
     cursor.execute(query)
@@ -39,6 +42,8 @@ def generate_json(db, output_file):
             "lb_url": film_row[10],
             "showings": []
         }
+        if film_row[9] is None:
+            film_data["adult"] = None
 
         # Select showings for the current film
         cursor.execute("SELECT date, time_start, time_end, location_name, location_city, show_title, ticket_url, information_url, screening_info, additional_info FROM showings WHERE tmdb_id = ?", (film_row[0],))
@@ -63,9 +68,9 @@ def generate_json(db, output_file):
         films.append(film_data)
 
     # Close the database connection
-    db_close(conn)
+    db_commit_close(conn)
 
     # Write the film data to a JSON file
     store_data(films, output_file)
 
-    print("JSON file 'films_with_showings.json' has been created.") 
+    print(f"JSON file {output_file} has been created.")

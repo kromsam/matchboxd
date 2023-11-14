@@ -3,12 +3,12 @@ import json
 
 import requests
 
-from utils import get_lb_list
+from utils.utils import load_string
 
 
 def get_letterboxd_data(lb_list, lb_url):
     """Get data from Letterboxd list in json format"""
-    letterboxd_list = get_lb_list(lb_list)
+    letterboxd_list = load_string(lb_list)
     online_json_url = lb_url + letterboxd_list
 
     try:

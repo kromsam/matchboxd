@@ -1,11 +1,11 @@
 """Module providing a json films screening in a specific city in Cineville."""
 
-from utils import get_html_element
+from utils.utils import get_html_element
 
 
-def scrape_cv_film_list(soup, look_for_element):
+def scrape_cv_film_list(soup, look_for):
     """Scrape Cineville for all films screening in specific cities."""
-    film_elements = get_html_element(soup, look_for_element)
+    film_elements = get_html_element(soup, look_for)
     if film_elements:
         # Initialize a list to store film data
         films = []
@@ -53,4 +53,15 @@ def scrape_cv_film_list(soup, look_for_element):
             print(title + " found.")
         return films
     print("No film elements found on page.")
+    return
+
+
+def scrape_cv_location_list(soup, look_for):
+    """Get all locations from Cineville films page."""
+    # Find all the selectable buttons by their class name
+    location_elements = get_html_element(soup, look_for)
+    if location_elements:
+        cities = [button.text for button in location_elements]
+        return cities
+    print("No location elements found on page.")
     return
