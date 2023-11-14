@@ -125,14 +125,17 @@ if __name__ == "__main__":
 
     db_init(database)
 
-    print("Starting driver...")
-    scrape_driver = run_driver()
-
-    cv_films_import(scrape_driver, CV_URL, locations_file, FILM_LIST_WAIT_FOR, FILM_LIST_LOOK_FOR, database)
-    cv_films_tmdb(database, tmdb_api_key)
-    lb_films_import(lb_list, database, lb_url)
-    cv_data_import(scrape_driver, locations_file, database, FILM_DATA_WAIT_FOR, FILM_DATA_LOOK_FOR)
-    print("Closing driver...")
-    scrape_driver.quit()
-    print("Driver closed.")
-    generate_json(database, web_file)
+    try:
+        print("Starting driver...")
+        with run_driver() as scrape_driver:
+            cv_films_import(scrape_driver, CV_URL, locations_file, FILM_LIST_WAIT_FOR, FILM_LIST_LOOK_FOR, database)
+            cv_films_tmdb(database, tmdb_api_key)
+            lb_films_import(lb_list, database, lb_url)
+            cv_data_import(scrape_driver, locations_file, database, FILM_DATA_WAIT_FOR, FILM_DATA_LOOK_FOR)
+            print("Closing driver...")
+    
+    finally:
+        # Ensure that the driver is closed, even if an exception occurred
+        scrape_driver.quit()
+        print("Driver closed.")
+        generate_json(database, web_file)
