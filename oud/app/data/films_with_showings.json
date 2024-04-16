@@ -1,0 +1,590 @@
+[
+    {
+        "tmdb_id": 1112547,
+        "title": "Anselm",
+        "url": "https://www.cineville.nl/films/anselm",
+        "screening_state": "Vanaf morgen te zien in 24 filmtheaters",
+        "oneliner": "Twee jaar uit het leven van kunstenaar Anselm Kiefer, gefilmd door Wim Wenders. ",
+        "img_url": "https://filmformatie.imgix.net/filmstills/Anselm_st_2_jpg_sd-high-967b.jpg",
+        "imdb_id": "tt27502250",
+        "lb_title": "Anselm",
+        "release_year": "2023",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/anselm/",
+        "showings": [
+            {
+                "date": null,
+                "time_start": null,
+                "time_end": null,
+                "location_name": null,
+                "location_city": null,
+                "show_title": null,
+                "ticket_url": null,
+                "information_url": null,
+                "screening_info": "Vanaf 15 november 2023 te zien in Cineville",
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 524,
+        "title": "Casino",
+        "url": "https://www.cineville.nl/films/casino",
+        "screening_state": "Vanaf zaterdag te zien in LAB111",
+        "oneliner": "Martin Scorsese en Robert DeNiro zetten alles op rood.",
+        "img_url": "https://filmformatie.imgix.net/filmstills/casino.jpg",
+        "imdb_id": "tt0112641",
+        "lb_title": "Casino",
+        "release_year": "1995",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/casino/",
+        "showings": [
+            {
+                "date": "2023-11-18",
+                "time_start": "16:30",
+                "time_end": "19:40",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Casino",
+                "ticket_url": "https://www.cineville.nl/films/casino/shows/2318143/redirect",
+                "information_url": "https://www.cineville.nl/films/casino/shows/2318143",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-20",
+                "time_start": "10:15",
+                "time_end": "13:25",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Casino",
+                "ticket_url": "https://www.cineville.nl/films/casino/shows/2318132/redirect",
+                "information_url": "https://www.cineville.nl/films/casino/shows/2318132",
+                "screening_info": null,
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 9571,
+        "title": "Dazed and Confused",
+        "url": "https://www.cineville.nl/films/dazed-and-confused",
+        "screening_state": "Vanaf donderdag te zien in LAB111",
+        "oneliner": "Linklaters vrolijk nostalgische portret van oude en nieuwe high-schoolers in het Texas van de jaren zeventig.",
+        "img_url": "https://filmformatie.imgix.net/filmstills/dazed-and-confused.jpg",
+        "imdb_id": "tt0106677",
+        "lb_title": "Dazed and Confused",
+        "release_year": "1993",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/dazed-and-confused/",
+        "showings": [
+            {
+                "date": "2023-11-16",
+                "time_start": "15:00",
+                "time_end": "16:55",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Dazed and Confused",
+                "ticket_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2327812/redirect",
+                "information_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2327812",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-17",
+                "time_start": "14:45",
+                "time_end": "16:40",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Dazed and Confused",
+                "ticket_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318164/redirect",
+                "information_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318164",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-18",
+                "time_start": "14:45",
+                "time_end": "16:40",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Dazed and Confused",
+                "ticket_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318171/redirect",
+                "information_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318171",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-19",
+                "time_start": "14:45",
+                "time_end": "16:40",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Dazed and Confused",
+                "ticket_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318184/redirect",
+                "information_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318184",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-20",
+                "time_start": "14:45",
+                "time_end": "16:40",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Dazed and Confused",
+                "ticket_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318176/redirect",
+                "information_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318176",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-21",
+                "time_start": "14:45",
+                "time_end": "16:40",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Dazed and Confused",
+                "ticket_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318185/redirect",
+                "information_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318185",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-22",
+                "time_start": "15:00",
+                "time_end": "16:55",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Dazed and Confused",
+                "ticket_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318177/redirect",
+                "information_url": "https://www.cineville.nl/films/dazed-and-confused/shows/2318177",
+                "screening_info": null,
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 5899,
+        "title": "De Noorderlingen",
+        "url": "https://www.cineville.nl/films/de-noorderlingen",
+        "screening_state": "Vanaf maandag te zien in Kriterion",
+        "oneliner": "De nieuwbouwwijk-hel volgens Van Warmerdam.",
+        "img_url": "https://cineville.imgix.net/sites/all/files/de_noorderlingen-01.jpg",
+        "imdb_id": "tt0105019",
+        "lb_title": "The Northerners",
+        "release_year": "1992",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/the-northerners/",
+        "showings": [
+            {
+                "date": "2023-11-20",
+                "time_start": "21:00",
+                "time_end": "23:10",
+                "location_name": "Kriterion",
+                "location_city": "Amsterdam",
+                "show_title": "De Noorderlingen",
+                "ticket_url": "https://www.cineville.nl/films/de-noorderlingen/shows/2300135/redirect",
+                "information_url": "https://www.cineville.nl/films/de-noorderlingen/shows/2300135",
+                "screening_info": null,
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 210577,
+        "title": "Gone Girl",
+        "url": "https://www.cineville.nl/films/gone-girl",
+        "screening_state": "Vanaf donderdag te zien in LAB111 en KINO",
+        "oneliner": "De zoveelste topthriller van regisseur David Fincher (Seven, The Social Network).",
+        "img_url": "https://cineville.imgix.net/sites/all/files/GoneGirlsGroot.jpg",
+        "imdb_id": "tt2267998",
+        "lb_title": "Gone Girl",
+        "release_year": "2014",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/gone-girl/",
+        "showings": [
+            {
+                "date": "2023-11-17",
+                "time_start": "18:15",
+                "time_end": "20:55",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Gone Girl",
+                "ticket_url": "https://www.cineville.nl/films/gone-girl/shows/2306464/redirect",
+                "information_url": "https://www.cineville.nl/films/gone-girl/shows/2306464",
+                "screening_info": null,
+                "additional_info": "Moderne klassieker"
+            },
+            {
+                "date": "2023-11-18",
+                "time_start": "15:35",
+                "time_end": "18:15",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Gone Girl",
+                "ticket_url": "https://www.cineville.nl/films/gone-girl/shows/2318084/redirect",
+                "information_url": "https://www.cineville.nl/films/gone-girl/shows/2318084",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-21",
+                "time_start": "21:00",
+                "time_end": "23:40",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Gone Girl",
+                "ticket_url": "https://www.cineville.nl/films/gone-girl/shows/2306458/redirect",
+                "information_url": "https://www.cineville.nl/films/gone-girl/shows/2306458",
+                "screening_info": null,
+                "additional_info": "Moderne klassieker"
+            },
+            {
+                "date": "2023-11-22",
+                "time_start": "15:20",
+                "time_end": "18:00",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Gone Girl",
+                "ticket_url": "https://www.cineville.nl/films/gone-girl/shows/2318077/redirect",
+                "information_url": "https://www.cineville.nl/films/gone-girl/shows/2318077",
+                "screening_info": null,
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 769,
+        "title": "Goodfellas",
+        "url": "https://www.cineville.nl/films/goodfellas",
+        "screening_state": "Vanaf vrijdag te zien in LAB111",
+        "oneliner": "Van manusje-van-alles tot maffiabaas. Door Martin Scorsese.",
+        "img_url": "https://cineville.imgix.net/sites/all/files/goodfellaGroot.jpg",
+        "imdb_id": "tt0099685",
+        "lb_title": "GoodFellas",
+        "release_year": "1990",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/goodfellas/",
+        "showings": [
+            {
+                "date": "2023-11-17",
+                "time_start": "10:15",
+                "time_end": "12:50",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Goodfellas",
+                "ticket_url": "https://www.cineville.nl/films/goodfellas/shows/2318141/redirect",
+                "information_url": "https://www.cineville.nl/films/goodfellas/shows/2318141",
+                "screening_info": null,
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 947,
+        "title": "Lawrence of Arabia",
+        "url": "https://www.cineville.nl/films/lawrence-arabia",
+        "screening_state": "Vanaf morgen te zien in Filmhallen en Filmkoepel",
+        "oneliner": "David Leans woestijnklassieker. Magistraal, mysterieus en bombastisch.",
+        "img_url": "https://cineville.imgix.net/sites/all/files/LawrenceTE.jpg",
+        "imdb_id": "tt0056172",
+        "lb_title": "Lawrence of Arabia",
+        "release_year": "1962",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/lawrence-of-arabia/",
+        "showings": [
+            {
+                "date": "2023-11-15",
+                "time_start": "15:00",
+                "time_end": "19:00",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Lawrence of Arabia",
+                "ticket_url": "https://www.cineville.nl/films/lawrence-arabia/shows/2262718/redirect",
+                "information_url": "https://www.cineville.nl/films/lawrence-arabia/shows/2262718",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-15",
+                "time_start": "19:30",
+                "time_end": "23:30",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Lawrence of Arabia",
+                "ticket_url": "https://www.cineville.nl/films/lawrence-arabia/shows/2262719/redirect",
+                "information_url": "https://www.cineville.nl/films/lawrence-arabia/shows/2262719",
+                "screening_info": null,
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 19,
+        "title": "Metropolis",
+        "url": "https://www.cineville.nl/films/metropolis",
+        "screening_state": "Vanaf zaterdag te zien in Filmhallen en KINO",
+        "oneliner": "De moeder aller sciencefictionfilms.",
+        "img_url": "https://cineville.imgix.net/sites/all/files/metropolis3.jpg",
+        "imdb_id": "tt0017136",
+        "lb_title": "Metropolis",
+        "release_year": "1927",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/metropolis/",
+        "showings": [
+            {
+                "date": "2023-11-20",
+                "time_start": "20:45",
+                "time_end": "23:25",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Metropolis",
+                "ticket_url": "https://www.cineville.nl/films/metropolis/shows/2298721/redirect",
+                "information_url": "https://www.cineville.nl/films/metropolis/shows/2298721",
+                "screening_info": null,
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 872585,
+        "title": "Oppenheimer",
+        "url": "https://www.cineville.nl/films/oppenheimer",
+        "screening_state": "Vanaf morgen te zien in 10 filmtheaters",
+        "oneliner": "In theorie een hele goeie film. En in de praktijk ook.",
+        "img_url": "https://filmformatie.imgix.net/filmstills/Oppenheimer_st_1_jpg_sd-high_Copyright-2022-Universal-Studios-All-Rights-Reserved-1272.jpg",
+        "imdb_id": "tt15398776",
+        "lb_title": "Oppenheimer",
+        "release_year": "2023",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/oppenheimer-2023/",
+        "showings": [
+            {
+                "date": "2023-11-15",
+                "time_start": "11:45",
+                "time_end": "15:00",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Oppenheimer",
+                "ticket_url": "https://www.cineville.nl/films/oppenheimer/shows/2321248/redirect",
+                "information_url": "https://www.cineville.nl/films/oppenheimer/shows/2321248",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-15",
+                "time_start": "19:30",
+                "time_end": "22:45",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Oppenheimer",
+                "ticket_url": "https://www.cineville.nl/films/oppenheimer/shows/2321271/redirect",
+                "information_url": "https://www.cineville.nl/films/oppenheimer/shows/2321271",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-17",
+                "time_start": "11:00",
+                "time_end": "14:15",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Oppenheimer",
+                "ticket_url": "https://www.cineville.nl/films/oppenheimer/shows/2326128/redirect",
+                "information_url": "https://www.cineville.nl/films/oppenheimer/shows/2326128",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-17",
+                "time_start": "19:30",
+                "time_end": "22:45",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Oppenheimer",
+                "ticket_url": "https://www.cineville.nl/films/oppenheimer/shows/2326155/redirect",
+                "information_url": "https://www.cineville.nl/films/oppenheimer/shows/2326155",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-18",
+                "time_start": "19:30",
+                "time_end": "22:45",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Oppenheimer",
+                "ticket_url": "https://www.cineville.nl/films/oppenheimer/shows/2326192/redirect",
+                "information_url": "https://www.cineville.nl/films/oppenheimer/shows/2326192",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-19",
+                "time_start": "19:30",
+                "time_end": "22:45",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Oppenheimer",
+                "ticket_url": "https://www.cineville.nl/films/oppenheimer/shows/2326229/redirect",
+                "information_url": "https://www.cineville.nl/films/oppenheimer/shows/2326229",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-21",
+                "time_start": "11:00",
+                "time_end": "14:15",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Oppenheimer",
+                "ticket_url": "https://www.cineville.nl/films/oppenheimer/shows/2326275/redirect",
+                "information_url": "https://www.cineville.nl/films/oppenheimer/shows/2326275",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-21",
+                "time_start": "19:30",
+                "time_end": "22:45",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Oppenheimer",
+                "ticket_url": "https://www.cineville.nl/films/oppenheimer/shows/2326303/redirect",
+                "information_url": "https://www.cineville.nl/films/oppenheimer/shows/2326303",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-22",
+                "time_start": "11:00",
+                "time_end": "14:15",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Oppenheimer",
+                "ticket_url": "https://www.cineville.nl/films/oppenheimer/shows/2326312/redirect",
+                "information_url": "https://www.cineville.nl/films/oppenheimer/shows/2326312",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-22",
+                "time_start": "19:30",
+                "time_end": "22:45",
+                "location_name": "Filmhallen",
+                "location_city": "Amsterdam",
+                "show_title": "Oppenheimer",
+                "ticket_url": "https://www.cineville.nl/films/oppenheimer/shows/2326340/redirect",
+                "information_url": "https://www.cineville.nl/films/oppenheimer/shows/2326340",
+                "screening_info": null,
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 1578,
+        "title": "Raging Bull",
+        "url": "https://www.cineville.nl/films/raging-bull",
+        "screening_state": "Vanaf vrijdag te zien in LAB111",
+        "oneliner": "Met De Niro in opperste method-modus.",
+        "img_url": "https://cineville.imgix.net/sites/all/files/ragingbull450504.jpg",
+        "imdb_id": "tt0081398",
+        "lb_title": "Raging Bull",
+        "release_year": "1980",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/raging-bull/",
+        "showings": [
+            {
+                "date": "2023-11-17",
+                "time_start": "17:25",
+                "time_end": "19:45",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Raging Bull",
+                "ticket_url": "https://www.cineville.nl/films/raging-bull/shows/2318140/redirect",
+                "information_url": "https://www.cineville.nl/films/raging-bull/shows/2318140",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-19",
+                "time_start": "10:30",
+                "time_end": "12:50",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "Raging Bull",
+                "ticket_url": "https://www.cineville.nl/films/raging-bull/shows/2318144/redirect",
+                "information_url": "https://www.cineville.nl/films/raging-bull/shows/2318144",
+                "screening_info": null,
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 1422,
+        "title": "The Departed",
+        "url": "https://www.cineville.nl/films/departed",
+        "screening_state": "Vanaf donderdag te zien in LAB111",
+        "oneliner": "Gitzwarte remake van Infernal Affairs, door Martin Scorsese.",
+        "img_url": "https://cineville.imgix.net/sites/all/files/2006_the_departed_st_01.jpg",
+        "imdb_id": "tt0407887",
+        "lb_title": "The Departed",
+        "release_year": "2006",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/the-departed/",
+        "showings": [
+            {
+                "date": "2023-11-16",
+                "time_start": "17:00",
+                "time_end": "19:45",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "The Departed",
+                "ticket_url": "https://www.cineville.nl/films/departed/shows/2318136/redirect",
+                "information_url": "https://www.cineville.nl/films/departed/shows/2318136",
+                "screening_info": null,
+                "additional_info": null
+            },
+            {
+                "date": "2023-11-24",
+                "time_start": "12:05",
+                "time_end": "14:50",
+                "location_name": "LAB111",
+                "location_city": "Amsterdam",
+                "show_title": "The Departed",
+                "ticket_url": "https://www.cineville.nl/films/departed/shows/2328699/redirect",
+                "information_url": "https://www.cineville.nl/films/departed/shows/2328699",
+                "screening_info": null,
+                "additional_info": null
+            }
+        ]
+    },
+    {
+        "tmdb_id": 1541,
+        "title": "Thelma & Louise",
+        "url": "https://www.cineville.nl/films/thelma-louise",
+        "screening_state": "Vanaf donderdag te zien in Lumière Cinema",
+        "oneliner": "Ridley Scotts geslaagde feministische variant op het buddythema, verpakt in een roadmovie.",
+        "img_url": "https://filmformatie.imgix.net/filmstills/thelma-louise.jpg",
+        "imdb_id": "tt0103074",
+        "lb_title": "Thelma & Louise",
+        "release_year": "1991",
+        "adult": false,
+        "lb_url": "https://letterboxd.com/film/thelma-louise/",
+        "showings": [
+            {
+                "date": null,
+                "time_start": null,
+                "time_end": null,
+                "location_name": null,
+                "location_city": null,
+                "show_title": null,
+                "ticket_url": null,
+                "information_url": null,
+                "screening_info": "Vanaf 16 november 2023 te zien in Cineville",
+                "additional_info": null
+            }
+        ]
+    }
+]
