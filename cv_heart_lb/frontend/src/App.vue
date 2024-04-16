@@ -51,6 +51,11 @@ function extractDates(films) {
 </script>
 
 <style>
+/* Import Bulma styles */
+@import "https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css";
+
+/* Add your custom styles here */
+
 .toggle-container {
   margin: 20px;
 }

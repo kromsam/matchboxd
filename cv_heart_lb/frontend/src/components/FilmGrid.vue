@@ -24,10 +24,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-/* Import Bulma styles */
-@import '~bulma/bulma.sass';
-
-/* Add your custom styles here */
-</style>
