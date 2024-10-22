@@ -4,7 +4,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Create a URL for the letterboxd_list part
   const url = new URL(window.location.href);
-  const letterboxdList = 'kromsam/watchlist';
+  const letterboxdList = '';
 
   // const letterboxdList = "{{ user }}/{{ user_list }}";
   const letterboxdListURL = `https://letterboxd.com/${letterboxdList}`;

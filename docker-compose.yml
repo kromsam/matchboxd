@@ -1,0 +1,7 @@
+services:
+  matchboxd:
+    build: .
+    container_name: matchboxd
+    #command: python your-daemon-or-script.py
+    volumes:
+      - ./web/:/usr/src/app/web

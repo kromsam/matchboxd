@@ -142,13 +142,11 @@ def db_commit_close(conn):
 
 def db_init(db):
     """Initialize database."""
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(db), exist_ok=True)
 
-    if not os.path.exists(db):
-        # File doesn't exist, so we'll create an empty one
-        with open(db, "w", encoding="utf-8"):
+    with open(db, "w", encoding="utf-8"):
             pass  # An empty 'pass' statement creates an empty file
-    else:
-        pass
 
     conn = db_conn(db, "rw")
     cursor = conn.cursor()
