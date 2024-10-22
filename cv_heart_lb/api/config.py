@@ -20,7 +20,7 @@ LB_API = "https://letterboxd-list-radarr.onrender.com"
 
 # The Movie Database API
 TMDB_API = "https://api.themoviedb.org/3"
-TMDB_API_KEY = "5f97bf51209831a0c436859e0f8ec07e"
+TMDB_API_KEY = ""
 
 # Logging
 LOG_LEVEL = "INFO"
