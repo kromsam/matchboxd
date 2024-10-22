@@ -2,7 +2,7 @@
 
 # Settings
 COUNTRY = "nl"
-CITY = "amsterdam"
+CITY = None
 
 # Database
 DB_TYPE = "postgresql"

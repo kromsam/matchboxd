@@ -44,7 +44,12 @@ def format_city_name(name):
 
 def get_api_response(base_url, endpoint, params):
     """Make an API request."""
-    return httpx.get(base_url + endpoint, params=params, timeout=20)
+    try:
+        response = httpx.get(base_url + endpoint, params=params, timeout=20)
+        response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
+        return response
+    except httpx.HTTPError as http_err:
+        logger.error("HTTP error occurred: %s", http_err)
 
 
 def get_api_url(query_type, country, city=None, start_date=None, page_limit=None):

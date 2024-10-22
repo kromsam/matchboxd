@@ -141,7 +141,9 @@ def import_productions_to_db(session, api_data, city=None):
     for data in api_data["_embedded"]["productions"]:
         film_dict = get_film_dict(data)
         film_dict["cv_film_id"] = data.get("id")
-        film_dict["cities"] = [cities]
+        film_dict["cities"] = []
+        if cities:
+            film_dict["cities"] = [cities]
         film = session.query(Film).filter_by(cv_film_id=film_dict["cv_film_id"]).first()
 
         if film:
@@ -209,7 +211,7 @@ def update_film(film, film_dict, updated_film_titles):
     )
 
     # Check if the queried city is in the 'cities' list
-    if film_dict["cities"]:
+    if film_dict["cities"] is not None:
         if film_dict["cities"] not in film.cities:
             film.cities = film.cities + film_dict["cities"]
             film.cities = list(filter(lambda x: x is not None, film.cities))
