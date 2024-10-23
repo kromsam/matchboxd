@@ -3,7 +3,6 @@ import re
 import requests
 
 from utils.db_utils import load_db_data
-from utils.utils import load_string
 
 
 def add_tmdb_id(db, api_key):
@@ -12,9 +11,6 @@ def add_tmdb_id(db, api_key):
     query = "SELECT * FROM films"
     films = load_db_data(db, query)
     print("Films loaded.")
-
-    # Convert file to key
-    api_key = load_string(api_key)
 
     for film in films:
         movie_title = film["title"]

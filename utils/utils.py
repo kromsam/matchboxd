@@ -22,10 +22,8 @@ class DateEncoder(JSONEncoder):
         return super().default(o)
 
 
-def click_cv_location_list(location_file, driver):
+def click_cv_location_list(locations, driver):
     """Click through location on Cineville-webpage."""
-
-    locations = load_list(location_file)
 
     # Check for buttons to be clicked
     if "all" in locations:
@@ -124,23 +122,10 @@ def get_html_soup(html_content):
     print("Parsed html of webpage fetched.")
     return soup
 
-
-def load_string(input_file):
-    """Load name of letterboxd list"""
-    print(f"Getting name of Letterboxd-list from {input_file}...")
-    with open(input_file, 'r', encoding="utf-8") as file:
-        # Read the entire contents of the file
-        lb_list = file.read().strip()
-    print(f"Found name: {lb_list}.")
-    return lb_list
-
-
-def load_list(input_file):
-    # Get user input for locations to expand (line-separated)
-    with open(input_file, 'r', encoding="utf-8") as file:
-        # Read the file line by line and strip each line
-        locations = [location.strip() for location in file]
-    print("Loaded locations from input file.")
+def load_list(location_string):
+    # Get user input for locations to expand (comma-separated)
+    locations = [location.strip() for location in location_string.split(',')]
+    print(f"Loaded {locations} from input file.")
     return locations
 
 

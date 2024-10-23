@@ -190,3 +190,4 @@ app/static/films_with_showings.json
 app/static/cities.json
 database/database.sqlite
 web/cities.json
+.env
