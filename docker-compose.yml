@@ -2,8 +2,10 @@ services:
   matchboxd:
     build: .
     container_name: matchboxd
+    user: ${PUID}:${PGID}
     environment:
       #- RUN_ONCE=true
+      - TZ=${TZ}
       - CRON_SCHEDULE=0 8,20 * * *
       - TMDB_API=${TMDB_API}
       - LB_LIST=${LB_LIST}

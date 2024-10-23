@@ -192,6 +192,9 @@ if __name__ == "__main__":
                     LOCATION_LIST_ELEMENTS,
                     locations_web_file,
                 )
+            else:
+                store_data(locations, locations_web_file)
+            
             cv_films_tmdb(database, tmdb_api)
             if scrape_mode == "local":
                 lb_films_import(lb_list, database, lb_url)
