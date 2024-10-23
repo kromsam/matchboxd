@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Create a URL for the letterboxd_list part
   const url = new URL(window.location.href);
   
-  const lb_list_JsonURL = 'lb_list.json';
+  const lb_list_JsonURL = 'data/lb_list.json';
   fetch(lb_list_JsonURL)
     .then(response => response.json())
     .then(data => {
@@ -97,8 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
 /// Global variables
 
 let fetchedData = null;
-const cityjsonURL = 'cities.json';
-const jsonURL = 'films_with_showings.json';
+const cityjsonURL = 'data/cities.json';
+const jsonURL = 'data/films_with_showings.json';
 const sortingMode = getSortingMode();
 
 /// City-select functions
