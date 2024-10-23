@@ -28,6 +28,11 @@ chmod 0666 /var/log/cv_heart_lb.log
 
 # Write the cron schedule to the cron file
 echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" > /etc/cron.d/cv_heart_lb
+
+# Export all environment variables to the cron file
+printenv | grep -v "no_proxy" >> /etc/cron.d/cv_heart_lb
+
+# Add the cron schedule to run the script
 echo "$CRON_SCHEDULE /usr/src/app/venv/bin/python /usr/src/app/cv_heart_lb.py >> /var/log/cv_heart_lb.log 2>&1" >> /etc/cron.d/cv_heart_lb
 
 # Apply the cron job
