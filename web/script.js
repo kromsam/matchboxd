@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Update the <h1> element
   const h1Element = document.querySelector('h1');
   h1Element.innerHTML = headingText;
-  })
+  
   
   const sortingTextElement = document.getElementById('sortingText');
 
@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.location.href = currentURL.toString();
   }
 }
+
 );
 
 /// Global variables
@@ -433,3 +434,4 @@ fetchDataAndRender(sortingMode);
 
 //
 selectCity();
+})
