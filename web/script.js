@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
       // Extract the API_URL from the JSON
       const letterboxdList = data;
-    })
+    
   // const letterboxdList = "{{ user }}/{{ user_list }}";
   const letterboxdListURL = `https://letterboxd.com/${letterboxdList}`;
 
@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
   // Update the <h1> element
   const h1Element = document.querySelector('h1');
   h1Element.innerHTML = headingText;
-
+  })
+  
   const sortingTextElement = document.getElementById('sortingText');
 
   // Set the initial value based on the sortingMode
