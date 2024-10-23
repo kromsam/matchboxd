@@ -44,6 +44,7 @@ DATABASE = "database/database.sqlite"
 LETTERBOXD_JSON_URL = "https://letterboxd-list-radarr.onrender.com/"
 MODE = "local"
 LOCATIONS_WEB_FILE = "web/cities.json"
+LB_LIST_FILE = "web/lb_list.json"
 WEB_FILE = "web/films_with_showings.json"
 
 def cv_films_import(driver, cv_url, location_list, elements, db):
@@ -163,6 +164,7 @@ if __name__ == "__main__":
     scrape_mode = args.scrape_mode
     tmdb_api = args.tmdb_api
     locations_web_file = args.app_path + "/" + LOCATIONS_WEB_FILE
+    lb_list_file = args.app_path + "/" + LB_LIST_FILE
     web_file = args.app_path + "/" + args.web_file
 
     if tmdb_api == None:
@@ -202,4 +204,5 @@ if __name__ == "__main__":
         # Ensure that the driver is closed, even if an exception occurred
         scrape_driver.quit()
         print("Driver closed.")
+        store_data(lb_list, lb_list_file)
         generate_json(database, web_file, scrape_mode)

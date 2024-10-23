@@ -1,10 +1,14 @@
-/// EventListener
-
 //
 document.addEventListener('DOMContentLoaded', function () {
   // Create a URL for the letterboxd_list part
   const url = new URL(window.location.href);
-  const letterboxdList = '';
+  
+  const lb_list_JsonURL = 'lb_list.json';
+  fetch(lb_list_JsonURL)
+    .then(response => response.json())
+    .then(data => {
+      // Extract the API_URL from the JSON
+      const letterboxdList = data;
 
   // const letterboxdList = "{{ user }}/{{ user_list }}";
   const letterboxdListURL = `https://letterboxd.com/${letterboxdList}`;

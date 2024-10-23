@@ -4,10 +4,11 @@ services:
     container_name: matchboxd
     environment:
       #- RUN_ONCE=true
-      - CRON_SCHEDULE=* 8,20 * * *
+      - CRON_SCHEDULE=0 8,20 * * *
       - TMDB_API=${TMDB_API}
       - LB_LIST=${LB_LIST}
       - LOCATIONS=${LOCATIONS}
       - GH_TOKEN=${GH_TOKEN} #optional github token for scrapedriver
     volumes:
       - ./web/:/usr/src/app/web
+      - ./database:/usr/src/app/web
