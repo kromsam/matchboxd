@@ -2,7 +2,7 @@ services:
   matchboxd:
     build: .
     container_name: matchboxd
-    user: ${PUID}:${PGID}
+    restart: unless-stopped
     environment:
       #- RUN_ONCE=true
       - TZ=${TZ}
@@ -12,5 +12,5 @@ services:
       - LOCATIONS=${LOCATIONS}
       - GH_TOKEN=${GH_TOKEN} #optional github token for scrapedriver
     volumes:
-      - ./web/:/usr/src/app/web
+      - ./web:/usr/src/app/web
       - ./database:/usr/src/app/database
