@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(data => {
       // Extract the API_URL from the JSON
       const letterboxdList = data;
-
+    })
   // const letterboxdList = "{{ user }}/{{ user_list }}";
   const letterboxdListURL = `https://letterboxd.com/${letterboxdList}`;
 
