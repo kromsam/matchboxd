@@ -146,7 +146,7 @@ def db_init(db):
     os.makedirs(os.path.dirname(db), exist_ok=True)
 
     with open(db, "w", encoding="utf-8"):
-            pass  # An empty 'pass' statement creates an empty file
+        pass  # An empty 'pass' statement creates an empty file
 
     conn = db_conn(db, "rw")
     cursor = conn.cursor()

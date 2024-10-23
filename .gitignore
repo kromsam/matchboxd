@@ -181,7 +181,7 @@ node_modules
 todo
 package.json
 package-lock.json
-.eslintrc.yml
+.eslintrc.json
 .vscode/extensions.json
 .vscode/settings.json
 /app/data/
@@ -191,3 +191,4 @@ app/static/cities.json
 database/database.sqlite
 web/cities.json
 .env
+eslint.config.mjs

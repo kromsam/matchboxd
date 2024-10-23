@@ -9,6 +9,7 @@ def generate_json(db, output_file, scrape_mode):
     """Generate a json-file from the film database."""
     conn = db_conn(db, "ro")
     cursor = conn.cursor()
+    query = ""
 
     # Define the query to select films with lb_check is true
     if scrape_mode == "local":

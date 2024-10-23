@@ -122,8 +122,9 @@ def get_html_soup(html_content):
     print("Parsed html of webpage fetched.")
     return soup
 
+
 def load_list(location_string):
-    # Get user input for locations to expand (comma-separated)
+    """Get user input for locations to expand (comma-separated)"""
     locations = [location.strip() for location in location_string.split(',')]
     print(f"Loaded {locations} from input file.")
     return locations

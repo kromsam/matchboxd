@@ -108,8 +108,10 @@ def arg_parser():
 
     parser.add_argument(
         "--lb_list",
-        default=os.getenv('LB_LIST', 'bfi/list/sight-and-sounds-greatest-films-of-all-time/'),
-        help=f"Path to the LB list file. (default: Sight and Sounds Greatest Films of All Time 2022)",
+        default=os.getenv(
+            "LB_LIST", "bfi/list/sight-and-sounds-greatest-films-of-all-time/"
+        ),
+        help="Path to the LB list file. (default: Sight and Sounds Greatest Films of All Time 2022)",
     )
 
     parser.add_argument(
@@ -120,8 +122,8 @@ def arg_parser():
 
     parser.add_argument(
         "--locations",
-        default=os.getenv('LOCATIONS', 'all'),
-        help=f"Comma-separated list of cities, or: \"all\". (default: all)",
+        default=os.getenv("LOCATIONS", "all"),
+        help='Comma-separated list of cities, or: "all". (default: all)',
     )
 
     parser.add_argument(
@@ -132,15 +134,15 @@ def arg_parser():
 
     parser.add_argument(
         "--scrape_mode",
-        default=os.getenv('SCRAPE_MODE', MODE),
+        default=os.getenv("SCRAPE_MODE", MODE),
         choices=["full", "local"],
         help=f'Mode "full" for complete scrape, "local" to only scrape from Letterboxd list. (default: {MODE})',
     )
 
     parser.add_argument(
         "--tmdb_api",
-        default=os.getenv('TMDB_API'),
-        help=f"TMDB API key.)",
+        default=os.getenv("TMDB_API"),
+        help="TMDB API key.)",
     )
 
     parser.add_argument(
@@ -158,7 +160,7 @@ if __name__ == "__main__":
     arg_parser = arg_parser()
     args = arg_parser.parse_args()
     database = args.database
-    lb_list = args.lb_list
+    lb_list_string = args.lb_list
     lb_url = args.lb_url
     locations_string = args.locations
     scrape_mode = args.scrape_mode
@@ -167,12 +169,10 @@ if __name__ == "__main__":
     lb_list_file = args.app_path + "/" + LB_LIST_FILE
     web_file = args.app_path + "/" + args.web_file
 
-    if tmdb_api == None:
+    if tmdb_api is None:
         print("You need to provide a TMDB API key with --tmdb_api.")
-        exit
-    if locations_string == None:
+    if locations_string is None:
         print("You need to provide locations with --locations.")
-        exit
 
     db_init(database)
 
@@ -194,10 +194,10 @@ if __name__ == "__main__":
                 )
             else:
                 store_data(locations, locations_web_file)
-            
+
             cv_films_tmdb(database, tmdb_api)
             if scrape_mode == "local":
-                lb_films_import(lb_list, database, lb_url)
+                lb_films_import(lb_list_string, database, lb_url)
             cv_data_import(
                 scrape_driver, locations, database, FILM_DATA_ELEMENTS, scrape_mode
             )
@@ -207,5 +207,5 @@ if __name__ == "__main__":
         # Ensure that the driver is closed, even if an exception occurred
         scrape_driver.quit()
         print("Driver closed.")
-        store_data(lb_list, lb_list_file)
+        store_data(lb_list_string, lb_list_file)
         generate_json(database, web_file, scrape_mode)

@@ -1,4 +1,5 @@
 """Module providing json-data of filmpage in Cineville."""
+
 import datetime
 
 from utils.db_utils import load_db_data
@@ -20,7 +21,9 @@ def convert_day_to_date(day_str):
         "zaterdag": "saturday",
         "zondag": "sunday",
     }
-    english_day = day_mapping.get(day_str, day_str)  # Get English day name or keep it as is
+    english_day = day_mapping.get(
+        day_str, day_str
+    )  # Get English day name or keep it as is
     today = datetime.date.today()  # Get today's date
     if english_day == "today":
         return today
@@ -28,7 +31,7 @@ def convert_day_to_date(day_str):
         return today + datetime.timedelta(days=1)
     # Handle other days
     for i in range(2, 9):  # Check the next 7 days
-        if (today + datetime.timedelta(days=i)).strftime('%A').lower() == english_day:
+        if (today + datetime.timedelta(days=i)).strftime("%A").lower() == english_day:
             return today + datetime.timedelta(days=i)
     # Extract the date string (assuming it's in the format "day day_number month")
     parts = day_str.split()
@@ -36,9 +39,18 @@ def convert_day_to_date(day_str):
         day_number = int(parts[1])
         month_name = parts[2]
         month_number = {
-            "januari": 1, "februari": 2, "maart": 3, "april": 4,
-            "mei": 5, "juni": 6, "juli": 7, "augustus": 8,
-            "september": 9, "oktober": 10, "november": 11, "december": 12
+            "januari": 1,
+            "februari": 2,
+            "maart": 3,
+            "april": 4,
+            "mei": 5,
+            "juni": 6,
+            "juli": 7,
+            "augustus": 8,
+            "september": 9,
+            "oktober": 10,
+            "november": 11,
+            "december": 12,
         }[month_name]
         current_year = today.year
         new_date = datetime.date(current_year, month_number, day_number)
@@ -50,7 +62,7 @@ def convert_day_to_date(day_str):
 
 def get_cv_film_data(driver, scrape_function, locations, db, elements, scrape_mode):
     """Loop through films and get data from Cineville."""
-
+    query = ""
     # Execute a SQL query to select films with lb_check=True
     if scrape_mode == "local":
         query = "SELECT * FROM films WHERE lb_check = 1"
@@ -62,7 +74,9 @@ def get_cv_film_data(driver, scrape_function, locations, db, elements, scrape_mo
 
     for film in film_data:
         print(f"Importing data from {film['title']}...")
-        film['showings'] = get_cv_data(driver, film['url'], scrape_function, locations, elements)
+        film["showings"] = get_cv_data(
+            driver, film["url"], scrape_function, locations, elements
+        )
         print("Import succesful.")
 
     return film_data
@@ -91,8 +105,12 @@ def scrape_cv_film_data(soup, look_for_element):
                 additional_info = show.find("div", class_="shows-list-item__additional")
                 ticket_link = additional_info.find("a", string="Direct reserveren")
                 info_link = additional_info.find("a", string="Informatie")
-                ticket_url = cineville_url + ticket_link["href"] if ticket_link else None
-                information_url = cineville_url + info_link["href"] if info_link else None
+                ticket_url = (
+                    cineville_url + ticket_link["href"] if ticket_link else None
+                )
+                information_url = (
+                    cineville_url + info_link["href"] if info_link else None
+                )
 
                 show_info = {
                     "date": date,
@@ -103,7 +121,7 @@ def scrape_cv_film_data(soup, look_for_element):
                     "show_title": show_title,
                     "ticket_url": ticket_url,
                     "information_url": information_url,
-                    "screening_info": None
+                    "screening_info": None,
                 }
 
                 # Check for the presence of additional information
@@ -115,9 +133,9 @@ def scrape_cv_film_data(soup, look_for_element):
 
                 showings.append(show_info)
     else:
-        if soup.select_one('.shows-list__screening-info h3'):
+        if soup.select_one(".shows-list__screening-info h3"):
             print("Film data without agenda, with screening info found.")
-            screening_info = soup.select_one('.shows-list__screening-info h3').text
+            screening_info = soup.select_one(".shows-list__screening-info h3").text
         else:
             print("Film data without agenda and screening info found.")
             screening_info = None
@@ -131,7 +149,7 @@ def scrape_cv_film_data(soup, look_for_element):
             "ticket_url": None,
             "information_url": None,
             "screening_info": screening_info,
-            "additional_info": None
+            "additional_info": None,
         }
         showings.append(show_info)
     return showings

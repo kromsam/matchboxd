@@ -12,5 +12,6 @@ services:
       - LOCATIONS=${LOCATIONS}
       - GH_TOKEN=${GH_TOKEN} #optional github token for scrapedriver
     volumes:
+      - ./web:/usr/src/app/web
       - ./web_data:/usr/src/app/web/data
       - ./database:/usr/src/app/database
