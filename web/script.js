@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
 }
 
 );
-
+})
 /// Global variables
 
 let fetchedData = null;
@@ -434,4 +434,3 @@ fetchDataAndRender(sortingMode);
 
 //
 selectCity();
-})
