@@ -197,3 +197,6 @@ web/cities.json
 eslint.config.mjs
 venv
 .flake8
+.pycodestyle
+setup.cfg
+.isort.cfg
