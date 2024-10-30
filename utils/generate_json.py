@@ -13,12 +13,17 @@ def generate_json(db, output_file, scrape_mode):
     # Define the query to select films with lb_check is true
     if scrape_mode == "local":
         query = """
-        SELECT tmdb_id, title, url, screening_state, oneliner, img_url, imdb_id, lb_title, release_year, adult, lb_url
+        SELECT tmdb_id, title, url, screening_state, oneliner,
+        img_url, imdb_id, lb_title, release_year, adult, lb_url
         FROM films
         WHERE lb_check = 1
         """
     elif scrape_mode == "full":
-        query = "SELECT tmdb_id, title, url, screening_state, oneliner, img_url, imdb_id, lb_title, release_year, adult, lb_url FROM films"
+        query = """
+        SELECT tmdb_id, title, url, screening_state,
+        oneliner, img_url, imdb_id, lb_title, release_year, adult, lb_url
+        FROM films
+        """
 
     # Execute the query and fetch the results
     cursor.execute(query)
@@ -47,7 +52,11 @@ def generate_json(db, output_file, scrape_mode):
 
         # Select showings for the current film
         cursor.execute(
-            "SELECT date, time_start, time_end, location_name, location_city, show_title, ticket_url, information_url, screening_info, additional_info FROM showings WHERE tmdb_id = ?",
+            """
+            SELECT date, time_start, time_end, location_name, location_city,
+            show_title, ticket_url, information_url, screening_info, additional_info
+            FROM showings WHERE tmdb_id = ?
+            """,
             (film_row[0],),
         )
         showing_rows = cursor.fetchall()

@@ -107,7 +107,19 @@ def db_add_showings(data, db):
             cursor.execute(
                 """
             INSERT INTO showings
-            (tmdb_id, date, time_start, time_end, location_name, location_city, show_title, ticket_url, information_url, screening_info, additional_info)
+            (
+            tmdb_id,
+            date,
+            time_start,
+            time_end,
+            location_name,
+            location_city,
+            show_title,
+            ticket_url,
+            information_url,
+            screening_info,
+            additional_info
+            )
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
                 (

@@ -108,7 +108,10 @@ def arg_parser():
         default=os.getenv(
             "LB_LIST", "bfi/list/sight-and-sounds-greatest-films-of-all-time/"
         ),
-        help="Path to the LB list file. (default: Sight and Sounds Greatest Films of All Time 2022)",
+        help="""
+            Path to the LB list file.
+            (default: Sight and Sounds Greatest Films of All Time 2022)
+        """,
     )
 
     parser.add_argument(
@@ -133,7 +136,10 @@ def arg_parser():
         "--scrape_mode",
         default=os.getenv("SCRAPE_MODE", MODE),
         choices=["full", "local"],
-        help=f'Mode "full" for complete scrape, "local" to only scrape from Letterboxd list. (default: {MODE})',
+        help=f"""
+            Mode "full" for complete scrape,
+            "local" to only scrape from Letterboxd list. (default: {MODE})
+        """,
     )
 
     parser.add_argument(

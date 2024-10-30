@@ -30,7 +30,8 @@ def get_letterboxd_data(lb_list, lb_url):
             return online_data
         else:
             print(
-                f"Failed to fetch data from {online_json_url}. Status code: {response.status_code}"
+                f"Failed to fetch data from {online_json_url}. "
+                f"Status: {response.status_code}"
             )
 
     except requests.exceptions.RequestException as e:
