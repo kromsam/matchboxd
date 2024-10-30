@@ -41,13 +41,16 @@ def generate_json(db, output_file, scrape_mode):
             "release_year": film_row[8],
             "adult": bool(film_row[9]),  # Convert 0/1 to boolean
             "lb_url": film_row[10],
-            "showings": []
+            "showings": [],
         }
         if film_row[9] is None:
             film_data["adult"] = None
 
         # Select showings for the current film
-        cursor.execute("SELECT date, time_start, time_end, location_name, location_city, show_title, ticket_url, information_url, screening_info, additional_info FROM showings WHERE tmdb_id = ?", (film_row[0],))
+        cursor.execute(
+            "SELECT date, time_start, time_end, location_name, location_city, show_title, ticket_url, information_url, screening_info, additional_info FROM showings WHERE tmdb_id = ?",
+            (film_row[0],),
+        )
         showing_rows = cursor.fetchall()
 
         for showing_row in showing_rows:
@@ -61,7 +64,7 @@ def generate_json(db, output_file, scrape_mode):
                 "ticket_url": showing_row[6],
                 "information_url": showing_row[7],
                 "screening_info": showing_row[8],
-                "additional_info": showing_row[9]
+                "additional_info": showing_row[9],
             }
 
             film_data["showings"].append(showing_data)

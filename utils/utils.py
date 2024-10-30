@@ -1,4 +1,5 @@
 """Utils for Cineville Heart Letterboxd."""
+
 import datetime
 import json
 from json import JSONEncoder
@@ -16,6 +17,7 @@ from webdriver_manager.firefox import GeckoDriverManager
 
 class DateEncoder(JSONEncoder):
     """Class for date conversion"""
+
     def default(self, o):
         if isinstance(o, datetime.date):
             return o.isoformat()
@@ -32,7 +34,9 @@ def click_cv_location_list(locations, driver):
     else:
         # Iterate through the specified locations and click the corresponding buttons
         for location in locations:
-            location_button = driver.find_element(By.XPATH, f"//button[@data-value='{location}']")
+            location_button = driver.find_element(
+                By.XPATH, f"//button[@data-value='{location}']"
+            )
             location_button_classes = location_button.get_attribute("class")
 
             # Click buttons
@@ -57,7 +61,9 @@ def decline_cv_cookies(driver):
     """Decline cookies on Cineville-webpage."""
     print("Declining cookies...")
     try:
-        cookie_decline = driver.find_element(By.ID, "CybotCookiebotDialogBodyButtonDecline")
+        cookie_decline = driver.find_element(
+            By.ID, "CybotCookiebotDialogBodyButtonDecline"
+        )
         cookie_decline.click()
         print("Cookies declined.")
     except NoSuchElementException:
@@ -73,7 +79,7 @@ def get_cv_data(driver, url, scrape_function, locations, elements):
     print("Page loaded.")
 
     # Use WebDriverWait to wait for elements to load
-    cv_class_wait(driver, elements['wait_for'])
+    cv_class_wait(driver, elements["wait_for"])
 
     # Decline cookies
     decline_cv_cookies(driver)
@@ -90,16 +96,16 @@ def get_cv_data(driver, url, scrape_function, locations, elements):
     time.sleep(2)
 
     # Find the div with class using Selenium
-    select_element = driver.find_element(By.CLASS_NAME, elements['wait_for'])
+    select_element = driver.find_element(By.CLASS_NAME, elements["wait_for"])
 
     # Get the inner HTML of the div
-    html_content = select_element.get_attribute('innerHTML')
+    html_content = select_element.get_attribute("innerHTML")
 
     # Scrape Cineville Films
     soup = get_html_soup(html_content)
 
     print("Scraping data from webpage...")
-    data = scrape_function(soup, elements['look_for'])
+    data = scrape_function(soup, elements["look_for"])
     print("Webpage succesfully scraped.")
     return data
 
@@ -118,14 +124,14 @@ def get_html_soup(html_content):
 
     print("Fetching parsed html from webpage...")
     # Parse the HTML using BeautifulSoup
-    soup = BeautifulSoup(html_content, 'html.parser')
+    soup = BeautifulSoup(html_content, "html.parser")
     print("Parsed html of webpage fetched.")
     return soup
 
 
 def load_list(location_string):
     """Get user input for locations to expand (comma-separated)"""
-    locations = [location.strip() for location in location_string.split(',')]
+    locations = [location.strip() for location in location_string.split(",")]
     print(f"Loaded {locations} from input file.")
     return locations
 
@@ -134,7 +140,7 @@ def load_json_data(input_file):
     """Load json data from a file"""
     print(f"Loading JSON-data from: {input_file}...")
     # Load the JSON data from your file
-    with open(input_file, 'r', encoding='utf-8') as file:
+    with open(input_file, "r", encoding="utf-8") as file:
         json_data = json.load(file)
     print("Succesfully loaded data.")
     return json_data
@@ -155,7 +161,9 @@ def run_driver():
 
     # Initialize the Firefox web driver with the custom options
     print("Initializing WebDriver...")
-    driver = webdriver.Firefox(service=FirefoxService(driver_file), options=firefox_options)
+    driver = webdriver.Firefox(
+        service=FirefoxService(driver_file), options=firefox_options
+    )
     print("WebDriver initialized.")
 
     return driver
@@ -164,6 +172,6 @@ def run_driver():
 def store_data(data, output_file):
     """Store data to a json file."""
     print(f"Storing data in json format to: {output_file}...")
-    with open(output_file, 'w', encoding='utf-8') as json_file:
+    with open(output_file, "w", encoding="utf-8") as json_file:
         json.dump(data, json_file, ensure_ascii=False, indent=4, cls=DateEncoder)
     print("Data succesfully saved.")

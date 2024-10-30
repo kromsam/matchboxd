@@ -195,3 +195,5 @@ database/database.sqlite
 web/cities.json
 .env
 eslint.config.mjs
+venv
+.flake8

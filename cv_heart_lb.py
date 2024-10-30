@@ -1,4 +1,5 @@
 """Module to run Cineville Heart Letterboxd"""
+
 import os
 import argparse
 
@@ -46,6 +47,7 @@ MODE = "local"
 LOCATIONS_WEB_FILE = "web/data/cities.json"
 LB_LIST_FILE = "web/data/lb_list.json"
 WEB_FILE = "web/data/films_with_showings.json"
+
 
 def cv_films_import(driver, cv_url, location_list, elements, db):
     """Import films from Cineville Films page."""
@@ -102,7 +104,7 @@ def arg_parser():
 
     parser.add_argument(
         "--database",
-        default=os.getenv('DATABASE', DATABASE),
+        default=os.getenv("DATABASE", DATABASE),
         help=f"Path to the database. (default: {DATABASE})",
     )
 
@@ -116,7 +118,7 @@ def arg_parser():
 
     parser.add_argument(
         "--lb_url",
-        default=os.getenv('LB_URL', LETTERBOXD_JSON_URL),
+        default=os.getenv("LB_URL", LETTERBOXD_JSON_URL),
         help=f"URL for Letterboxd. (default: {LETTERBOXD_JSON_URL})",
     )
 
@@ -128,7 +130,7 @@ def arg_parser():
 
     parser.add_argument(
         "--app_path",
-        default=os.getenv('APP_PATH', APP_PATH),
+        default=os.getenv("APP_PATH", APP_PATH),
         help=f"Path to app. (default: {APP_PATH})",
     )
 
@@ -147,7 +149,7 @@ def arg_parser():
 
     parser.add_argument(
         "--web_file",
-        default=os.getenv('WEB_FILE', WEB_FILE),
+        default=os.getenv("WEB_FILE", WEB_FILE),
         help=f"Path to the web file. (default: {WEB_FILE})",
     )
 

@@ -1,4 +1,5 @@
 """Database utils for Cineville Heart Letterboxd."""
+
 import os
 import sqlite3
 
