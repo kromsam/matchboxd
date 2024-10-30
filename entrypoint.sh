@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Function to run the Python script and check its exit status
 run_script() {
@@ -43,11 +43,11 @@ crontab /etc/cron.d/cv_heart_lb
 echo "Cron job successfully configured: $CRON_SCHEDULE"
 
 # Start cron in the foreground
-if pgrep cron > /dev/null; then
+if pgrep crond > /dev/null; then
     echo "Cron is already running."
 else
     echo "Starting cron..."
-    cron
+    crond
     if [ $? -ne 0 ]; then
         echo "Cron failed to start, exiting."
         exit 1
