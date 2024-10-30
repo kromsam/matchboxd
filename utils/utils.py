@@ -2,8 +2,8 @@
 
 import datetime
 import json
-from json import JSONEncoder
 import time
+from json import JSONEncoder
 
 from bs4 import BeautifulSoup
 from selenium import webdriver

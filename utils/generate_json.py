@@ -1,7 +1,6 @@
 """Generate json-file from database."""
 
-from utils.db_utils import db_conn
-from utils.db_utils import db_commit_close
+from utils.db_utils import db_commit_close, db_conn
 from utils.utils import store_data
 
 
