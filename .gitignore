@@ -200,3 +200,4 @@ venv
 .pycodestyle
 setup.cfg
 .isort.cfg
+web_data
