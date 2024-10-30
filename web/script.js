@@ -1,8 +1,5 @@
 //
-document.addEventListener('DOMContentLoaded', function () {
-  // Create a URL for the letterboxd_list part
-  const url = new URL(window.location.href);
-  
+document.addEventListener('DOMContentLoaded', function () {  
   const lb_list_JsonURL = 'data/lb_list.json';
   fetch(lb_list_JsonURL)
     .then(response => response.json())
@@ -15,13 +12,27 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Create the heading text with the letterboxd_list part as a URL
   const headingText = `Films in <span id="city-content">
-      <a href="#" id="city-link" onclick="toggleCityDropdown(); return false;"></a><span id="city-dropdown" class="dropdown"><select id="city-select" class="form-select" onchange="selectCity();">
-              <!-- Populate the dropdown options with cities from 'cities.json' using JavaScript --></select></span></span> van <a href="${letterboxdListURL}" target="_blank">${letterboxdList}</a> <a href="#" id="sortingText" onclick="toggleSortingMode(); return false;"></a>`;
+        <a href="#" id="city-link"></a><span id="city-dropdown" class="dropdown">
+          <select id="city-select" class="form-select"></select>
+        </span>
+      </span> van <a href="${letterboxdListURL}" target="_blank">${letterboxdList}</a> 
+      <a href="#" id="sortingText"></a>`;
 
   // Update the <h1> element
   const h1Element = document.querySelector('h1');
   h1Element.innerHTML = headingText;
   
+      // Event listeners for click actions
+      document.getElementById('city-link').addEventListener('click', function (event) {
+        event.preventDefault();
+        toggleCityDropdown();
+      });
+
+      document.getElementById('sortingText').addEventListener('click', function (event) {
+        event.preventDefault();
+        toggleSortingMode();
+      });
+
   
   const sortingTextElement = document.getElementById('sortingText');
 
@@ -246,22 +257,6 @@ function fetchDataAndRender(sortingMode) {
     // Data has already been fetched, just render it based on sorting mode
     renderData(sortingMode);
   }
-}
-
-//
-function getJSONurl(type) {
-  // Get the current URL
-  const currentURL = window.location.href;
-
-  // Create a URL object to work with the URL
-  const OldJsonUrl = new URL(currentURL);
-
-  // Add a JSON parameter with a value of true
-  OldJsonUrl.searchParams.set(type, 'true');
-  // Get the modified URL with the added parameter
-  const jsonURL = OldJsonUrl.toString();
-
-  return jsonURL;
 }
 
 //

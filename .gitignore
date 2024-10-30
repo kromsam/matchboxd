@@ -167,7 +167,9 @@ cython_debug/
 
 # Input
 scrape_mode/input
-web/films_with_showings.json
+web/data/films_with_showings.json
+web/data/cities.json
+web/data/lb_list.json
 cv_films_import_prelint.py
 test/elements.html
 test/film_data.html
