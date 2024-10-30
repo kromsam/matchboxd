@@ -170,6 +170,7 @@ scrape_mode/input
 web/data/films_with_showings.json
 web/data/cities.json
 web/data/lb_list.json
+web/newscript.js
 cv_films_import_prelint.py
 test/elements.html
 test/film_data.html
