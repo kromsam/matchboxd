@@ -190,3 +190,16 @@ app/static/films_with_showings.json
 app/static/cities.json
 database/database.sqlite
 web/cities.json
+.eslintrc.json
+.flake8
+.isort.cfg
+.pycodestyle
+eslint.config.mjs
+setup.cfg
+web/newscript.js
+web/data/cities.json
+web/data/films_with_showings.json
+web/data/lb_list.json
+web_data/cities.json
+web_data/films_with_showings.json
+web_data/lb_list.json
