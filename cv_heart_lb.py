@@ -93,7 +93,7 @@ def cv_data_import(driver, location_list, db, elements, mode):
     db_add_showings(data, db)
 
 
-def arg_parser():
+def create_arg_parser():
     """Parse arguments."""
     parser = argparse.ArgumentParser(description="Argument Parser for Your Application")
 
@@ -160,7 +160,7 @@ def arg_parser():
 if __name__ == "__main__":
     print("Starting matchboxd...")
 
-    arg_parser = arg_parser()
+    arg_parser = create_arg_parser()
     args = arg_parser.parse_args()
     database = args.database
     lb_list_string = args.lb_list
