@@ -15,7 +15,7 @@ RUN pip install --no-cache-dir virtualenv \
 
 COPY . .
 
-RUN chmod +x cv_heart_lb.py
+RUN chmod +x app/main.py
 RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]

@@ -1,6 +1,6 @@
 """Module providing a json films screening in a specific city in Cineville."""
 
-from utils.utils import get_html_element
+from utils import get_html_element
 
 
 def scrape_cv_film_list(soup, look_for):
