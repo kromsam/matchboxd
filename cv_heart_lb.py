@@ -35,7 +35,7 @@ LOCATION_LIST_ELEMENTS = {
 }
 
 # Variable constants
-APP_PATH = "/usr/src/app"
+APP_PATH = "."  # might need to be changed in Docker container
 DATABASE = "database/database.sqlite"
 LETTERBOXD_JSON_URL = "https://letterboxd-list-radarr.onrender.com/"
 MODE = "local"
