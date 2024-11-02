@@ -1,11 +1,16 @@
 """Module providing json-data of filmpage in Cineville."""
 
 import datetime
+import logging
 from dataclasses import dataclass
 from typing import List, Any
 
-from matchboxd_scraper.db_utils import load_db_data
-from matchboxd_scraper.utils import get_cv_data, get_html_element
+from db_utils import load_db_data
+from utils import get_cv_data, get_html_element
+
+
+# Import root logger
+logger = logging.getLogger(__name__)
 
 
 def convert_day_to_date(day_str):
@@ -64,25 +69,25 @@ def convert_day_to_date(day_str):
 @dataclass
 class ScrapeConfig:
     """Config class"""
+
     locations: List[str]
     elements: List[Any]
     scrape_mode: str
 
 
 class ScrapeCVFilmPage:
-    """"add docstring"""
+    """Class for scraping individual film pages"""
+
     def __init__(self, scrape_driver, scrape_config):
         self.driver = scrape_driver
         self.config = scrape_config
 
     def run_scrape(self, db):
         """Run the scraping process."""
-        print("Starting scrape process...")
         query = self._get_query_for_mode()
         film_data = load_db_data(db, query)
         for film in film_data:
             self.import_film_showings(film)
-        print("Scrape process completed.")
         return film_data
 
     def _get_query_for_mode(self):
@@ -92,31 +97,27 @@ class ScrapeCVFilmPage:
         elif self.config.scrape_mode == "all":
             query = "SELECT * FROM films"
         else:
-            print(f"{self.config.scrape_mode} is not a valid scrape_mode.")
+            logger.error("%s is not a valid scrape_mode.", self.config.scrape_mode)
             return None
-        print(f"Query for mode '{self.config.scrape_mode}': {query}")
         return query
 
     def import_film_showings(self, film):
         """Import showing data for a single film."""
-        print(f"Importing data for film: {film['title']}...")
         film["showings"] = get_cv_data(
             self.driver,
             film["url"],
             self._scrape_cv_film_data,
             self.config.locations,
-            self.config.elements
+            self.config.elements,
         )
-        print("Import successful.")
+        logger.info("Scraped data for: %s.", film["title"])
         return film
 
     def _scrape_cv_film_data(self, soup, look_for_element):
         """Scrape data from a Cineville film page."""
-        print(f"Look for {look_for_element} element...")
         day_groups = get_html_element(soup, look_for_element)
 
         if day_groups:
-            print("Film data with agenda found.")
             return self._extract_showings_with_agenda(day_groups)
         return [self._extract_showings_without_agenda(soup)]
 
@@ -156,7 +157,7 @@ class ScrapeCVFilmPage:
             "ticket_url": ticket_url,
             "information_url": information_url,
             "screening_info": None,
-            "additional_info": self._extract_additional_info(show)
+            "additional_info": self._extract_additional_info(show),
         }
         return show_info
 
@@ -168,10 +169,8 @@ class ScrapeCVFilmPage:
     def _extract_showings_without_agenda(self, soup):
         """Handle showings when no agenda data is found."""
         if soup.select_one(".shows-list__screening-info h3"):
-            print("Film data without agenda, with screening info found.")
             screening_info = soup.select_one(".shows-list__screening-info h3").text
         else:
-            print("Film data without agenda and screening info found.")
             screening_info = None
 
         return {

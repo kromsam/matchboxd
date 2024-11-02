@@ -1,7 +1,7 @@
 """Generate json-file from database."""
 
-from matchboxd_scraper.db_utils import db_commit_close, db_conn
-from matchboxd_scraper.utils import store_data
+from db_utils import db_commit_close, db_conn
+from utils import store_data
 
 
 def generate_json(db, output_file, scrape_mode):
@@ -84,5 +84,3 @@ def generate_json(db, output_file, scrape_mode):
 
     # Write the film data to a JSON file
     store_data(films, output_file)
-
-    print(f"JSON file {output_file} has been created.")

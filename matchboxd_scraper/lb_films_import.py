@@ -1,8 +1,12 @@
 """Module to import a Letterboxd-list as json-data."""
 
 import json
+import logging
 
 import requests
+
+# Import root logger
+logger = logging.getLogger(__name__)
 
 
 def get_letterboxd_data(lb_list, lb_url):
@@ -11,13 +15,13 @@ def get_letterboxd_data(lb_list, lb_url):
 
     try:
         # Fetch data from the online JSON file
-        print(f"Waiting for {online_json_url} response...")
+        logger.debug("Waiting for %s response...", online_json_url)
         response = requests.get(online_json_url, timeout=20)
-        print(f"{online_json_url} responded.")
+        logger.debug("%s responded.", {online_json_url})
 
         # Check if the request was successful (status code 200)
         if response.status_code == 200:
-            print("Request was succesful.")
+            logger.info("Request to Letterboxd API was successful.")
             # Parse the JSON data
             online_data = response.json()
 
@@ -28,15 +32,15 @@ def get_letterboxd_data(lb_list, lb_url):
                 item["lb_check"] = True
 
             return online_data
-        print(
-                f"Failed to fetch data from {online_json_url}. "
-                f"Status: {response.status_code}"
-            )
+        logger.error(
+            "Failed to fetch data from %s. "
+            "Status: %s", online_json_url, response.status_code
+        )
         return None
 
     except requests.exceptions.RequestException as e:
-        print(f"An error occurred while trying to fetch data: {e}")
+        logger.error("An error occurred while trying to fetch data: %s ", e)
         return None
     except json.JSONDecodeError as e:
-        print(f"Failed to parse the JSON data: {e}")
+        logger.error("Failed to parse the JSON data: %s", e)
         return None

@@ -1,7 +1,12 @@
 """Database utils for Cineville Heart Letterboxd."""
 
 import os
+import logging
 import sqlite3
+
+
+# Import root logger
+logger = logging.getLogger(__name__)
 
 
 def db_add_cv_films(data, db):
@@ -45,9 +50,12 @@ def db_add_cv_films_tmdb(data, db):
                 "UPDATE films SET tmdb_id=? WHERE title=?",
                 (film["tmdb_id"], film["title"]),
             )
-            print(f"Updated tmdb_id for movie '{film['title']}' to {film['tmdb_id']}")
+            logger.debug(
+                "TMDB id (%s) for '%s' added to database.",
+                {film['tmdb_id']}, {film['title']}
+            )
         else:
-            print(f"Movie with title '{film['title']}' not found.")
+            logger.error("'%s' not found in database.", {film['title']})
 
     # Commit the changes and close the connection
     db_commit_close(conn)
@@ -86,9 +94,9 @@ def db_add_lb_films(data, db):
                 "UPDATE films SET release_year=? WHERE tmdb_id=?",
                 (film["release_year"], film["tmdb_id"]),
             )
-            print(f"Added data to film '{film['title']}'.")
+            logger.info("Data for '%s' added to database.", {film['title']})
         else:
-            print(f"Movie with title '{film['title']}' not found.")
+            logger.error("'%s' not found in database.", {film['title']})
 
     # Commit the changes and close the connection
     db_commit_close(conn)

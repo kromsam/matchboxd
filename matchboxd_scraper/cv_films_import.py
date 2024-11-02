@@ -1,6 +1,12 @@
 """Module providing a json films screening in a specific city in Cineville."""
 
-from matchboxd_scraper.utils import get_html_element
+import logging
+
+from utils import get_html_element
+
+
+# Import root logger
+logger = logging.getLogger(__name__)
 
 
 def extract_text(element, default="Not found"):
@@ -33,15 +39,17 @@ def extract_film_details(film_element, oneliner_class_names):
     """Extract and return film details from a film element."""
     title_element = film_element.find("h3", class_="card__title")
     url_element = film_element.find("a", class_="block-link")
-    screening_state_element = film_element.find("div",
-                                                class_="film-card__screening-state-text")
+    screening_state_element = film_element.find(
+        "div", class_="film-card__screening-state-text"
+    )
     img_element = film_element.find("img", class_="image-replace")
 
     title = extract_text(title_element, "Title not found")
     url = extract_attribute(url_element, "href", "URL not found")
     full_url = f"https://www.cineville.nl{url}"
-    screening_state = extract_text(screening_state_element,
-                                   "Geen informatie beschikbaar.")
+    screening_state = extract_text(
+        screening_state_element, "Geen informatie beschikbaar."
+    )
     oneliner = find_oneliner(film_element, oneliner_class_names)
     img_url = format_img_url(img_element)
 
@@ -58,7 +66,7 @@ def scrape_cv_film_list(soup, look_for):
     """Scrape Cineville for all films screening in specific cities."""
     film_elements = get_html_element(soup, look_for)
     if not film_elements:
-        print("No film elements found on page.")
+        logger.info("No film elements found on page.")
         return []
 
     oneliner_class_names = ["film-card__oneliner", "film-card__film-tip-quote"]
@@ -66,9 +74,7 @@ def scrape_cv_film_list(soup, look_for):
     for film_element in film_elements:
         film_details = extract_film_details(film_element, oneliner_class_names)
         films.append(film_details)
-
-    for film in films:
-        print(f"{film['title']} found.")
+        logger.info("%s", film_details["title"])
 
     return films
 
@@ -80,5 +86,5 @@ def scrape_cv_location_list(soup, look_for):
     if location_elements:
         cities = [button.text for button in location_elements]
         return cities
-    print("No location elements found on page.")
+    logger.info("No location elements found on page.")
     return None

@@ -1,16 +1,20 @@
 """Compare two lists for matching tmdb ids, and put the result in a new list."""
 
-from matchboxd_scraper.utils import load_json_data
+import logging
+
+from utils import load_json_data
+
+
+# Import root logger
+logger = logging.getLogger(__name__)
 
 
 def compare_for_tmdb(cv_films, lb_films):
     """Compare two lists for matching tmdb ids"""
-    print(f"Loading data from {cv_films}...")
     cv_films_data = load_json_data(cv_films)
-    print("Loaded.")
-    print(f"Loading data from {lb_films}...")
+    logger.info("Loaded data from: %s", cv_films)
     lb_films_data = load_json_data(lb_films)
-    print("Loaded.")
+    logger.info("Loaded data from: %s", lb_films)
 
     # Create a dictionary to store films with matching tmdb_id
     common_films = {}
@@ -41,5 +45,6 @@ def compare_for_tmdb(cv_films, lb_films):
             common_films[tmdb_id] = merged_film
 
     common_films_list = list(common_films.values())
-    print("Comparison succeeded.")
+    logger.info("Comparison succeeded.")
+    logger.debug("Films in common: %s", common_films_list)
     return common_films_list
