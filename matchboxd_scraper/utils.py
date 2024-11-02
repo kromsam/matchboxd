@@ -7,7 +7,10 @@ from json import JSONEncoder
 
 from bs4 import BeautifulSoup
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    ElementNotInteractableException,
+)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.support import expected_conditions as EC
@@ -68,6 +71,11 @@ def decline_cv_cookies(driver):
         print("Cookies declined.")
     except NoSuchElementException:
         print("Cookie consent element not found. Continuing without interaction.")
+    except ElementNotInteractableException:
+        print(
+            """Cookie consent element could not be scrolled into view.
+              Continuing without interaction."""
+        )
 
 
 def get_cv_data(driver, url, scrape_function, locations, elements):

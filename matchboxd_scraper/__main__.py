@@ -3,7 +3,7 @@
 import argparse
 import os
 
-from config import (
+from matchboxd_scraper.config import (
     CV_URL,
     FILM_LIST_ELEMENTS,
     FILM_DATA_ELEMENTS,
@@ -16,24 +16,23 @@ from config import (
     LB_LIST_FILE,
     WEB_FILE,
 )
-from utils.cv_data_import import ScrapeCVFilmPage, ScrapeConfig
-from utils.cv_films_import import scrape_cv_film_list, scrape_cv_location_list
-from utils.cv_films_tmdb import add_tmdb_id
-from utils.db_utils import (
+from matchboxd_scraper.cv_data_import import ScrapeCVFilmPage, ScrapeConfig
+from matchboxd_scraper.cv_films_import import scrape_cv_film_list, scrape_cv_location_list
+from matchboxd_scraper.cv_films_tmdb import add_tmdb_id
+from matchboxd_scraper.db_utils import (
     db_add_cv_films,
     db_add_cv_films_tmdb,
     db_add_lb_films,
     db_add_showings,
     db_init,
 )
-from utils.generate_json import generate_json
-from utils.lb_films_import import get_letterboxd_data
-from utils.utils import get_cv_data, load_list, run_driver, store_data
+from matchboxd_scraper.generate_json import generate_json
+from matchboxd_scraper.lb_films_import import get_letterboxd_data
+from matchboxd_scraper.utils import get_cv_data, load_list, run_driver, store_data
 
 
 def cv_films_import(driver, cv_url, location_list, elements, db):
     """Import films from Cineville Films page."""
-    # Cineville Films Import
     print(f"Fetching films from {cv_url}...")
     data = get_cv_data(driver, cv_url, scrape_cv_film_list, location_list, elements)
     print(f"Films fetched from {cv_url}.")
@@ -43,7 +42,6 @@ def cv_films_import(driver, cv_url, location_list, elements, db):
 
 def cv_locations_import(driver, cv_url, location_list, elements, output_file):
     """Import films from Cineville Films page."""
-    # Cineville Films Import
     print(f"Fetching cities from {cv_url}...")
     data = get_cv_data(driver, cv_url, scrape_cv_location_list, location_list, elements)
     print(f"Cities fetched from {cv_url}.")

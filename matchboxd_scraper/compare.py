@@ -1,6 +1,6 @@
 """Compare two lists for matching tmdb ids, and put the result in a new list."""
 
-from utils.utils import load_json_data
+from matchboxd_scraper.utils import load_json_data
 
 
 def compare_for_tmdb(cv_films, lb_films):
