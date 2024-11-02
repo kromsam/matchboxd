@@ -17,7 +17,10 @@ from matchboxd_scraper.config import (
     WEB_FILE,
 )
 from matchboxd_scraper.cv_data_import import ScrapeCVFilmPage, ScrapeConfig
-from matchboxd_scraper.cv_films_import import scrape_cv_film_list, scrape_cv_location_list
+from matchboxd_scraper.cv_films_import import (
+    scrape_cv_film_list,
+    scrape_cv_location_list,
+)
 from matchboxd_scraper.cv_films_tmdb import add_tmdb_id
 from matchboxd_scraper.db_utils import (
     db_add_cv_films,

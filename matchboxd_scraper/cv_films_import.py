@@ -24,7 +24,9 @@ def find_oneliner(film_element, class_names):
 
 def format_img_url(img_element):
     """Format the image URL to remove query parameters or return a default."""
-    return img_element["data-src"].split("?w=")[0] if img_element else "Image URL not found"
+    if img_element:
+        return img_element["data-src"].split("?w=")[0]
+    return "Image URL not found"
 
 
 def extract_film_details(film_element, oneliner_class_names):
@@ -60,7 +62,10 @@ def scrape_cv_film_list(soup, look_for):
         return []
 
     oneliner_class_names = ["film-card__oneliner", "film-card__film-tip-quote"]
-    films = [extract_film_details(film_element, oneliner_class_names) for film_element in film_elements]
+    films = []
+    for film_element in film_elements:
+        film_details = extract_film_details(film_element, oneliner_class_names)
+        films.append(film_details)
 
     for film in films:
         print(f"{film['title']} found.")
