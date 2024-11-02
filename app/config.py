@@ -1,4 +1,5 @@
-# Hard-coded constants
+"""Hard-coded constants"""
+
 CV_URL = "https://cineville.nl/films"
 FILM_LIST_ELEMENTS = {
     "look_for": ("section", {"class": "card--with-header-element"}),

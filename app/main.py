@@ -71,7 +71,7 @@ def lb_films_import(lb_list, db, url):
 
 
 def cv_data_import(driver, location_list, db, elements, mode):
-    """Import films from Cineville Film Page."""
+    """Import data from Cineville film pages."""
     print("Started import of film data...")
     filmpage_scrape_config = ScrapeConfig(location_list, elements, mode)
     filmpage_scraper = ScrapeCVFilmPage(driver, filmpage_scrape_config)
