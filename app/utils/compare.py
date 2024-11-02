@@ -1,6 +1,6 @@
 """Compare two lists for matching tmdb ids, and put the result in a new list."""
 
-from app.utils import load_json_data
+from utils.utils import load_json_data
 
 
 def compare_for_tmdb(cv_films, lb_films):

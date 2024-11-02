@@ -3,46 +3,32 @@
 import argparse
 import os
 
-from app.cv_data_import import get_cv_film_data, scrape_cv_film_data
-from app.cv_films_import import scrape_cv_film_list, scrape_cv_location_list
-from app.cv_films_tmdb import add_tmdb_id
-from app.db_utils import (
+from config import (
+    CV_URL,
+    FILM_LIST_ELEMENTS,
+    FILM_DATA_ELEMENTS,
+    LOCATION_LIST_ELEMENTS,
+    APP_PATH,
+    DATABASE,
+    LETTERBOXD_JSON_URL,
+    MODE,
+    LOCATIONS_WEB_FILE,
+    LB_LIST_FILE,
+    WEB_FILE,
+)
+from utils.cv_data_import import ScrapeCVFilmPage, ScrapeConfig
+from utils.cv_films_import import scrape_cv_film_list, scrape_cv_location_list
+from utils.cv_films_tmdb import add_tmdb_id
+from utils.db_utils import (
     db_add_cv_films,
     db_add_cv_films_tmdb,
     db_add_lb_films,
     db_add_showings,
     db_init,
 )
-from app.generate_json import generate_json
-from app.lb_films_import import get_letterboxd_data
-from app.utils import get_cv_data, load_list, run_driver, store_data
-
-# Hard-coded constants
-CV_URL = "https://cineville.nl/films"
-FILM_LIST_ELEMENTS = {
-    "look_for": ("section", {"class": "card--with-header-element"}),
-    "wait_for": "all-films-list__list",
-}
-
-FILM_DATA_ELEMENTS = {
-    "look_for": ("div", {"class": "shows-list__day-group"}),
-    "wait_for": "film-draaitijden",
-}
-
-LOCATION_LIST_ELEMENTS = {
-    "look_for": ("button", {"class": "selectable-button"}),
-    "wait_for": "location-select-input",
-}
-
-# Variable constants
-# needs to be changed in Docker container
-APP_PATH = "/home/sam/Documenten/Workspace/matchboxd"
-DATABASE = "database/database.sqlite"
-LETTERBOXD_JSON_URL = "https://letterboxd-list-radarr.onrender.com/"
-MODE = "local"
-LOCATIONS_WEB_FILE = "web/data/cities.json"
-LB_LIST_FILE = "web/data/lb_list.json"
-WEB_FILE = "web/data/films_with_showings.json"
+from utils.generate_json import generate_json
+from utils.lb_films_import import get_letterboxd_data
+from utils.utils import get_cv_data, load_list, run_driver, store_data
 
 
 def cv_films_import(driver, cv_url, location_list, elements, db):
@@ -87,9 +73,9 @@ def lb_films_import(lb_list, db, url):
 def cv_data_import(driver, location_list, db, elements, mode):
     """Import films from Cineville Film Page."""
     print("Started import of film data...")
-    data = get_cv_film_data(
-        driver, scrape_cv_film_data, location_list, db, elements, mode
-    )
+    filmpage_scrape_config = ScrapeConfig(location_list, elements, mode)
+    filmpage_scraper = ScrapeCVFilmPage(driver, filmpage_scrape_config)
+    data = filmpage_scraper.run_scrape(db)
     print("Import finished.")
     db_add_showings(data, db)
 

@@ -1,6 +1,6 @@
 """Module providing a json films screening in a specific city in Cineville."""
 
-from app.utils import get_html_element
+from utils.utils import get_html_element
 
 
 def scrape_cv_film_list(soup, look_for):
@@ -76,4 +76,4 @@ def scrape_cv_location_list(soup, look_for):
         cities = [button.text for button in location_elements]
         return cities
     print("No location elements found on page.")
-    return
+    return None

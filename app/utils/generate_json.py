@@ -1,7 +1,7 @@
 """Generate json-file from database."""
 
-from app.db_utils import db_commit_close, db_conn
-from app.utils import store_data
+from utils.db_utils import db_commit_close, db_conn
+from utils.utils import store_data
 
 
 def generate_json(db, output_file, scrape_mode):

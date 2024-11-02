@@ -28,13 +28,15 @@ def get_letterboxd_data(lb_list, lb_url):
                 item["lb_check"] = True
 
             return online_data
-        else:
-            print(
+        print(
                 f"Failed to fetch data from {online_json_url}. "
                 f"Status: {response.status_code}"
             )
+        return None
 
     except requests.exceptions.RequestException as e:
         print(f"An error occurred while trying to fetch data: {e}")
+        return None
     except json.JSONDecodeError as e:
         print(f"Failed to parse the JSON data: {e}")
+        return None
