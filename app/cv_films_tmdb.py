@@ -4,7 +4,7 @@ import re
 
 import requests
 
-from db_utils import load_db_data
+from app.db_utils import load_db_data
 
 
 def add_tmdb_id(db, api_key):

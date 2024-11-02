@@ -2,8 +2,8 @@
 
 import datetime
 
-from db_utils import load_db_data
-from utils import get_cv_data, get_html_element
+from app.db_utils import load_db_data
+from app.utils import get_cv_data, get_html_element
 
 
 def convert_day_to_date(day_str):

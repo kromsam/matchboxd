@@ -3,19 +3,19 @@
 import argparse
 import os
 
-from cv_data_import import get_cv_film_data, scrape_cv_film_data
-from cv_films_import import scrape_cv_film_list, scrape_cv_location_list
-from cv_films_tmdb import add_tmdb_id
-from db_utils import (
+from app.cv_data_import import get_cv_film_data, scrape_cv_film_data
+from app.cv_films_import import scrape_cv_film_list, scrape_cv_location_list
+from app.cv_films_tmdb import add_tmdb_id
+from app.db_utils import (
     db_add_cv_films,
     db_add_cv_films_tmdb,
     db_add_lb_films,
     db_add_showings,
     db_init,
 )
-from generate_json import generate_json
-from lb_films_import import get_letterboxd_data
-from utils import get_cv_data, load_list, run_driver, store_data
+from app.generate_json import generate_json
+from app.lb_films_import import get_letterboxd_data
+from app.utils import get_cv_data, load_list, run_driver, store_data
 
 # Hard-coded constants
 CV_URL = "https://cineville.nl/films"
@@ -35,7 +35,8 @@ LOCATION_LIST_ELEMENTS = {
 }
 
 # Variable constants
-APP_PATH = "/home/sam/Documenten/Workspace/matchboxd"  # needs to be changed in Docker container
+# needs to be changed in Docker container
+APP_PATH = "/home/sam/Documenten/Workspace/matchboxd"
 DATABASE = "database/database.sqlite"
 LETTERBOXD_JSON_URL = "https://letterboxd-list-radarr.onrender.com/"
 MODE = "local"
