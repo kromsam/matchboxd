@@ -1,7 +1,13 @@
 """Generate json-file from database."""
 
+import logging
+
 from db_utils import db_commit_close, db_conn
 from utils import store_data
+
+
+# Import root logger
+logger = logging.getLogger(__name__)
 
 
 def generate_json(db, output_file, scrape_mode):
