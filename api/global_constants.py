@@ -1,6 +1,6 @@
 """Global constants."""
 
-from config import (
+from .config import (
     DB_HOST,
     DB_NAME,
     DB_PASSWORD,

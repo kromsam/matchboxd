@@ -13,7 +13,8 @@ DB_HOST = "postgres"
 DB_PORT = "5432"
 
 # Cineville API
-CV_API = {"nl": "https://api.cineville.nl", "be": "https://api.cinevillepass.be"}
+CV_API = {"nl": "https://api.cineville.nl",
+          "be": "https://api.cinevillepass.be"}
 
 # Letterboxd API
 LB_API = "https://letterboxd-list-radarr.onrender.com"

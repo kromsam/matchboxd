@@ -5,8 +5,8 @@ import logging
 
 import httpx
 
-from config import CV_API
-from global_constants import TYPE_CITIES, TYPE_EVENTS, TYPE_PRODUCTIONS
+from .config import CV_API
+from .global_constants import TYPE_CITIES, TYPE_EVENTS, TYPE_PRODUCTIONS
 
 # Import the root logger
 logger = logging.getLogger(__name__)

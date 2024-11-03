@@ -10,7 +10,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 
-from db_helpers import Base
+from .db_helpers import Base
 
 # Define the association table for the many-to-many relationship
 film_city_association = Table(

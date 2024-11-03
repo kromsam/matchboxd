@@ -9,13 +9,13 @@ from fastapi_restful.session import FastAPISessionMaker
 import httpx
 from sqlalchemy.orm import Session
 
-from config import LB_API
-from global_constants import DATABASE
-from helpers import compare_with_database, handle_films_from_database
-from lb_api import (
+from .config import LB_API
+from .global_constants import DATABASE
+from .helpers import compare_with_database, handle_films_from_database
+from .lb_api import (
     fetch_external_data,
 )
-from schemas import APIResponse
+from .schemas import APIResponse
 
 
 # Import the root logger
