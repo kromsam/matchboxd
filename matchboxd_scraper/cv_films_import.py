@@ -2,7 +2,7 @@
 
 import logging
 
-from matchboxd_scraper.utils import get_html_element
+from .utils import get_html_element
 
 
 # Import root logger

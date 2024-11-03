@@ -2,7 +2,7 @@
 
 import logging
 
-from matchboxd_scraper.utils import load_json_data
+from .utils import load_json_data
 
 
 # Import root logger

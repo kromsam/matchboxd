@@ -5,7 +5,7 @@ import re
 
 import requests
 
-from matchboxd_scraper.db_utils import load_db_data
+from .db_utils import load_db_data
 
 
 # Import root logger

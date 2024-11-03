@@ -2,7 +2,7 @@
 
 import logging
 
-from matchboxd_scraper.main_utils import (
+from .main_utils import (
     create_arg_parser,
     cv_films_import,
     cv_locations_import,
@@ -10,20 +10,20 @@ from matchboxd_scraper.main_utils import (
     lb_films_import,
     cv_data_import,
 )
-from matchboxd_scraper.config import (
+from .config import (
     LOCATIONS_WEB_FILE,
     LB_LIST_FILE,
     LOG_FORMAT,
 )
-from matchboxd_scraper.global_constants import (
+from .global_constants import (
     CV_URL,
     FILM_LIST_ELEMENTS,
     FILM_DATA_ELEMENTS,
     LOCATION_LIST_ELEMENTS,
 )
-from matchboxd_scraper.db_utils import db_init
-from matchboxd_scraper.utils import run_driver, store_data, load_list
-from matchboxd_scraper.generate_json import generate_json
+from .db_utils import db_init
+from .utils import run_driver, store_data, load_list
+from .generate_json import generate_json
 
 
 # Parse arguments
