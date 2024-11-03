@@ -55,7 +55,7 @@ def db_add_cv_films_tmdb(data, db):
                 {film['tmdb_id']}, {film['title']}
             )
         else:
-            logger.error("'%s' not found in database.", {film['title']})
+            logger.debug("'%s' not found in database.", film['title'])
 
     # Commit the changes and close the connection
     db_commit_close(conn)
@@ -94,9 +94,9 @@ def db_add_lb_films(data, db):
                 "UPDATE films SET release_year=? WHERE tmdb_id=?",
                 (film["release_year"], film["tmdb_id"]),
             )
-            logger.info("Data for '%s' added to database.", {film['title']})
+            logger.info("Data for '%s' added to database.", film['title'])
         else:
-            logger.error("'%s' not found in database.", {film['title']})
+            logger.debug("'%s' not found in database.", film['title'])
 
     # Commit the changes and close the connection
     db_commit_close(conn)

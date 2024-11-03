@@ -1,10 +1,11 @@
 """Utils for main module"""
+
 import argparse
 import logging
 import os
+from pathlib import Path
 
 from config import (
-    APP_PATH,
     DATABASE,
     LETTERBOXD_JSON_URL,
     MODE,
@@ -20,7 +21,7 @@ from db_utils import (
     db_add_cv_films,
     db_add_cv_films_tmdb,
     db_add_lb_films,
-    db_add_showings
+    db_add_showings,
 )
 from lb_films_import import get_letterboxd_data
 from utils import get_cv_data, store_data
@@ -28,6 +29,9 @@ from utils import get_cv_data, store_data
 
 # Import root logger
 logger = logging.getLogger(__name__)
+
+
+APP_PATH = Path.cwd()
 
 
 def cv_films_import(driver, cv_url, location_list, elements, db):
@@ -112,8 +116,14 @@ def create_arg_parser():
     )
 
     parser.add_argument(
+        "--log_level",
+        default=os.getenv("LOG_LEVEL", "INFO"),
+        help='Log-level. (default: INFO)',
+    )
+
+    parser.add_argument(
         "--app_path",
-        default=os.getenv("APP_PATH", APP_PATH),
+        default=APP_PATH,
         help=f"Path to app. (default: {APP_PATH})",
     )
 

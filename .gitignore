@@ -201,3 +201,4 @@ venv
 setup.cfg
 .isort.cfg
 web_data
+.pylintrc
