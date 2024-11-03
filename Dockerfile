@@ -5,6 +5,7 @@ RUN apk add --no-cache firefox
 RUN apk add --no-cache cronie
 
 WORKDIR /usr/src/app
+ENV PYTHONPATH="/usr/src/app"
 
 COPY requirements.txt ./
 # Install virtualenv and create a virtual environment

@@ -2,8 +2,8 @@
 
 import logging
 
-from db_utils import db_commit_close, db_conn
-from utils import store_data
+from matchboxd_scraper.db_utils import db_commit_close, db_conn
+from matchboxd_scraper.utils import store_data
 
 
 # Import root logger

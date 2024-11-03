@@ -5,8 +5,8 @@ import logging
 from dataclasses import dataclass
 from typing import List, Any
 
-from db_utils import load_db_data
-from utils import get_cv_data, get_html_element
+from matchboxd_scraper.db_utils import load_db_data
+from matchboxd_scraper.utils import get_cv_data, get_html_element
 
 
 # Import root logger
