@@ -1,12 +1,14 @@
 """Entry point."""
+
 import logging
 
 from fastapi import FastAPI
 from fastapi_sqlalchemy import DBSessionMiddleware
 
-from .app import router
-from .config import LOG_LEVEL, LOG_FORMAT
-from .global_constants import DATABASE
+from app import router
+from config import LOG_LEVEL, LOG_FORMAT
+from global_constants import DATABASE
+
 
 # Set up logging
 

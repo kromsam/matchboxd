@@ -2,8 +2,8 @@
 
 from datetime import datetime
 
-from .cv_api_helpers import format_city_name
-from .models import City, Film, Showing
+from cv_api_helpers import format_city_name
+from models import City, Film, Showing
 
 
 def get_film_dict(data):

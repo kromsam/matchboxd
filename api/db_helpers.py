@@ -3,7 +3,7 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-from .global_constants import DATABASE
+from global_constants import DATABASE
 
 
 Base = declarative_base()

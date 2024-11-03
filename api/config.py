@@ -6,10 +6,10 @@ CITY = None
 
 # Database
 DB_TYPE = "postgresql"
-DB_NAME = "cv_lb_db"
-DB_USER = "cv_lb"
+DB_NAME = "matchboxd_db"
+DB_USER = "matchboxd_db"
 DB_PASSWORD = "123_123"
-DB_HOST = "postgres"
+DB_HOST = "matchboxd_db"
 DB_PORT = "5432"
 
 # Cineville API
@@ -24,5 +24,5 @@ TMDB_API = "https://api.themoviedb.org/3"
 TMDB_API_KEY = ""
 
 # Logging
-LOG_LEVEL = "INFO"
+LOG_LEVEL = "DEBUG"
 LOG_FORMAT = "%(asctime)s [%(levelname)s] %(message)s"

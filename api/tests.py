@@ -2,18 +2,18 @@
 
 import logging
 
-from .config import COUNTRY
-from .config import CITY
-from .db_helpers import DatabaseHandler
-from .cv_api_helpers import get_api_url
-from .cv_api_helpers import fetch_data_from_api
-from .cv_api_helpers import get_start_date
-from .cv_api import import_cities_to_db
-from .cv_api import import_events_to_db
-from .cv_api import import_productions_to_db
-from .cv_api import remove_films
-from .cv_api import remove_showings
-from .tmdb_api import update_tmdb_id
+from config import COUNTRY
+from config import CITY
+from db_helpers import DatabaseHandler
+from cv_api_helpers import get_api_url
+from cv_api_helpers import fetch_data_from_api
+from cv_api_helpers import get_start_date
+from cv_api import import_cities_to_db
+from cv_api import import_events_to_db
+from cv_api import import_productions_to_db
+from cv_api import remove_films
+from cv_api import remove_showings
+from tmdb_api import update_tmdb_id
 
 # Import the root logger
 logger = logging.getLogger(__name__)

@@ -7,8 +7,8 @@ import logging
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from .models import Film
-from .schemas import FilmSchema
+from models import Film
+from schemas import FilmSchema
 
 # Import the root logger
 logger = logging.getLogger(__name__)

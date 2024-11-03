@@ -5,9 +5,9 @@ import re
 
 import httpx
 
-from .config import TMDB_API
-from .config import TMDB_API_KEY
-from .models import Film
+from config import TMDB_API
+from config import TMDB_API_KEY
+from models import Film
 
 # Import the root logger
 logger = logging.getLogger(__name__)

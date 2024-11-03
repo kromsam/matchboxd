@@ -1,7 +1,7 @@
 services:
   api:
     build: ./api/.
-    container_name: cv_lb_api
+    container_name: matchboxd_api
     # for development purposes
     command: uvicorn main:app --host 0.0.0.0 --port 8080 --reload
     volumes:
@@ -12,19 +12,19 @@ services:
       - backend
   api_db:
     image: postgres
-    container_name: postgres
+    container_name: matchboxd_db
     environment:
-      - POSTGRES_DB="cv_lb_db"
-      - POSTGRES_USER="cv_lb"
+      - POSTGRES_DB="matchboxd_db"
+      - POSTGRES_USER="matchboxd_db"
       - POSTGRES_PASSWORD="123_123"
     ports:
       - "5432:5432"
     networks:
       - backend
-  frontend:
-    build: ./frontend/.
-    ports:
-      - "5371:80"
+  #frontend:
+  #  build: ./frontend/.
+  #  ports:
+  #    - "5371:80"
 
 networks:
   backend:

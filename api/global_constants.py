@@ -1,6 +1,6 @@
 """Global constants."""
 
-from .config import (
+from config import (
     DB_HOST,
     DB_NAME,
     DB_PASSWORD,
@@ -10,7 +10,7 @@ from .config import (
 )
 
 # Database
-DATABASE = f"{DB_TYPE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+DATABASE = f"{DB_TYPE}+psycopg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 # Types
 TYPE_CITIES = "cities"
