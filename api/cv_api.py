@@ -7,19 +7,15 @@ from .models import City, Film, Showing
 
 
 def get_film_dict(data):
-    """Get a dictionary with film data from API data."""
+    """Extract film information from the data."""
     film_dict = {}
     film_dict["title"] = data.get("title")
     film_dict["slug"] = data.get("slug")
     film_dict["screening_state"] = None
-    film_dict["oneliner"] = data.get("localizableAttributes", {}).get(
-        "shortDescription"
-    )
-    # Check if cover exists before accessing its URL
+    film_dict["oneliner"] = data.get("localizableAttributes", {}).get("shortDescription")
     assets = data.get("assets", {})
     cover = assets.get("cover", {})
     film_dict["img_url"] = cover.get("url") if cover else None
-
     return film_dict
 
 
@@ -37,21 +33,14 @@ def get_new_showing(showing_dict, film):
 def get_showing_dict(data):
     """Get a dictionary with showing data from API data."""
     showing_dict = {}
-    showing_dict["start_date"] = (data.get("startDate"),)
-    showing_dict["end_date"] = (data.get("endDate"),)
-    showing_dict["location_name"] = (data["_embedded"]["venue"].get("name"),)
-    showing_dict["location_city"] = (data["_embedded"]["venue"]["address"].get("city"),)
-    showing_dict["ticket_url"] = (data["attributes"].get("ticketingUrl"),)
-    showing_dict["information_url"] = (
-        data["_embedded"]["venue"]["attributes"].get("website"),
-    )
-    showing_dict["screening_info"] = (
-        data.get("attributes", {}).get("shortDescription"),
-    )
-    showing_dict["additional_info"] = (
-        data.get("localizableAttributes", {}).get("nl-NL", {}).get("shortDescription"),
-    )
-
+    showing_dict["start_date"] = data["startDate"]
+    showing_dict["end_date"] = data["endDate"]
+    showing_dict["location_name"] = data["_embedded"]["venue"].get("name")
+    showing_dict["location_city"] = data["_embedded"]["venue"]["address"].get("city")
+    showing_dict["ticket_url"] = data["ticketingUrl"]
+    showing_dict["information_url"] = data["_embedded"]["venue"]["attributes"]["website"]
+    showing_dict["screening_info"] = data.get("attributes", {}).get("shortDescription")
+    showing_dict["additional_info"] = data.get("localizableAttributes", {}).get("nl-NL", {}).get("shortDescription")
     return showing_dict
 
 
@@ -92,49 +81,49 @@ def import_events_to_db(session, api_data, city=None):
         city = []
 
     # Add missing films
-    with session.no_autoflush:
-        for event in api_data["events"]:
-            cv_film_id = event.get("productionId")
+    for event in api_data["events"]:
+        cv_film_id = event.get("productionId")
 
-            # Fetching tmdb_id and Film instance from the associated film in the films table
-            film = session.query(Film).filter_by(cv_film_id=cv_film_id).first()
-            if film is None:
-                production = event.get("production", {})
-                film_dict = get_film_dict(production)
-                film_dict["cv_film_id"] = cv_film_id
-                # Film is not in database, add it
-                new_film = Film(**film_dict)
-                session.add(new_film)
-                updated_film_titles.append(film_dict["title"])
-        session.commit()
+        # Fetching tmdb_id and Film instance from the associated film in the films table
+        film = session.query(Film).filter_by(cv_film_id=cv_film_id).first()
+        if film is None:
+            production = event.get("_embedded", {}).get("production", {})
+            film_dict = get_film_dict(production)
+            film_dict["cv_film_id"] = cv_film_id
+            # Film is not in database, add it
+            new_film = Film(**film_dict)
+            session.add(new_film)
+            updated_film_titles.append(film_dict["title"])
+        else:
+            print(f"Film with cv_film_id {cv_film_id} already exists.")
+    session.flush()  # Ensure the session is aware of the new films
 
     # Add showings
-    with session.no_autoflush:
-        for event in api_data["events"]:
-            showing_dict = get_showing_dict(event)
-            showing_dict["cv_showing_id"] = event.get("id")
-            cv_film_id = event.get("productionId")
+    for event in api_data["events"]:
+        showing_dict = get_showing_dict(event)
+        showing_dict["cv_showing_id"] = event.get("id")
+        cv_film_id = event.get("productionId")
 
-            # Ensure start_date and end_date are properly formatted
-            showing_dict["start_date"] = format_timestamp(showing_dict.get("start_date"))
-            showing_dict["end_date"] = format_timestamp(showing_dict.get("end_date"))
+        # Ensure start_date and end_date are properly formatted
+        showing_dict["start_date"] = format_timestamp(showing_dict.get("start_date"))
+        showing_dict["end_date"] = format_timestamp(showing_dict.get("end_date"))
 
-            film = session.query(Film).filter_by(cv_film_id=cv_film_id).first()
-            showing = (
-                session.query(Showing)
-                .filter_by(cv_showing_id=showing_dict["cv_showing_id"])
-                .first()
-            )
+        film = session.query(Film).filter_by(cv_film_id=cv_film_id).first()
+        showing = (
+            session.query(Showing)
+            .filter_by(cv_showing_id=showing_dict["cv_showing_id"])
+            .first()
+        )
 
-            if showing:
-                # Showing already in the database, update if necessary
-                update_showing(showing, film, showing_dict)
-            else:
-                new_showing = get_new_showing(showing_dict, film)
-                session.add(new_showing)
-                updated_showings.append(showing_dict["cv_showing_id"])
+        if showing:
+            # Showing already in the database, update if necessary
+            update_showing(showing, film, showing_dict)
+        else:
+            new_showing = get_new_showing(showing_dict, film)
+            session.add(new_showing)
+            updated_showings.append(showing_dict["cv_showing_id"])
 
-        session.commit()
+    session.commit()
     return updated_showings, updated_film_titles
 
 
