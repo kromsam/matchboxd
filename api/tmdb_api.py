@@ -53,37 +53,40 @@ def update_tmdb_id(session, film_titles=False):
 
     for film in films:
         film_title = film.title
-        logger.info("Searching TMDB id for: %s", film_title)
-        film_id = get_tmdb_id(film_title)
-        if film_id is None:
-            if "(" in film_title or ")" in film_title:
-                logger.info("Film not found, trying again without ().")
-                # Define a regular expression pattern to remove text inside parentheses
-                pattern = r"\([^)]*\)"
+        print("Searching TMDB id for: %s", film_title)
+        if film.slug == "cinesneak":
+            film_id = None
+        else:
+            film_id = get_tmdb_id(film_title)
+            if film_id is None:
+                if "(" in film_title or ")" in film_title:
+                    logger.info("Film not found, trying again without ().")
+                    # Define a regular expression pattern to remove text inside parentheses
+                    pattern = r"\([^)]*\)"
 
-                # Use the re.sub() function to remove text inside parentheses
-                cleaned_title = re.sub(pattern, "", film_title)
+                    # Use the re.sub() function to remove text inside parentheses
+                    cleaned_title = re.sub(pattern, "", film_title)
 
-                # Remove any trailing hyphens and extra spaces
-                cleaned_title = cleaned_title.strip()
-                cleaned_title = re.sub(r"-+$", "", cleaned_title)
-                film_id = get_tmdb_id(cleaned_title)
-            if ":" in film_title:
-                logger.info(
-                    "Film not found, trying again removing everything after : ."
-                )
-                cleaned_title = re.sub(r":.*", "", film_title)
-                cleaned_title.strip()
-                film_id = get_tmdb_id(cleaned_title)
-                if film_id is None:
-                    logger.info(
-                        "Film not found, trying again removing everything before : ."
-                    )
-                    pattern = r":\s(.*)$"
-                    cleaned_title = re.sub(pattern, ":", film_title, flags=re.MULTILINE)
+                    # Remove any trailing hyphens and extra spaces
+                    cleaned_title = cleaned_title.strip()
+                    cleaned_title = re.sub(r"-+$", "", cleaned_title)
                     film_id = get_tmdb_id(cleaned_title)
-        if film_id is None:
-            logger.info("Film not found.")
+                if ":" in film_title:
+                    logger.info(
+                        "Film not found, trying again removing everything after : ."
+                    )
+                    cleaned_title = re.sub(r":.*", "", film_title)
+                    cleaned_title.strip()
+                    film_id = get_tmdb_id(cleaned_title)
+                    if film_id is None:
+                        logger.info(
+                            "Film not found, trying again removing everything before : ."
+                        )
+                        pattern = r":\s(.*)$"
+                        cleaned_title = re.sub(pattern, ":", film_title, flags=re.MULTILINE)
+                        film_id = get_tmdb_id(cleaned_title)
+            if film_id is None:
+                logger.info("Film not found.")
         film.tmdb_id = film_id
         session.commit()
         log_string = f"{film_title}: {film_id}"
