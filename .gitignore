@@ -203,3 +203,5 @@ web/data/lb_list.json
 web_data/cities.json
 web_data/films_with_showings.json
 web_data/lb_list.json
+config.py
+api/config.py
