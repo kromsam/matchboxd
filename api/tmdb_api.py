@@ -25,6 +25,19 @@ def get_tmdb_id(film_title):
     return None
 
 
+def get_tmdb_img(tmdb_id):
+    """Get tmdb image from movie title"""
+    base_url = TMDB_API + "/movie/" + str(tmdb_id) + "/images"
+    api_key = TMDB_API_KEY
+    params = {"api_key": api_key}
+    response = httpx.get(base_url, params=params, timeout=20)
+    print(response.url)
+    tmdb_data = response.json()
+    if tmdb_data.get("backdrops"):
+        return tmdb_data.get("backdrops")[0]["file_path"]
+    return None
+
+
 def update_tmdb_id(session, film_titles=False):
     """Update the TMDB ID for given films."""
     if film_titles is False:
@@ -75,3 +88,15 @@ def update_tmdb_id(session, film_titles=False):
         session.commit()
         log_string = f"{film_title}: {film_id}"
         logger.info("TMDB id for %s.", log_string)
+
+
+def update_tmdb_image(session):
+    films = session.query(Film).filter(Film.img_url.is_(None)).all()
+    for film in films:
+        img_path = get_tmdb_img(film.tmdb_id)
+        if img_path:
+            film.img_url = "https://image.tmdb.org/t/p/original" + img_path
+        else:
+            film.img_url = None
+        session.commit()
+        logger.info("Image for %s updated.", film.title)
