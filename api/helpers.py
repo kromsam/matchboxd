@@ -2,13 +2,14 @@
 
 from datetime import datetime
 from itertools import zip_longest
+from urllib.parse import urlparse, parse_qs
 import logging
 
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from models import Film
-from schemas import FilmSchema
+from .models import Film
+from .schemas import FilmSchema
 
 # Import the root logger
 logger = logging.getLogger(__name__)
@@ -24,10 +25,11 @@ async def compare_with_database(response_data, db: Session):
     ]
     try:
         # Query the database to get films for matching tmdb_ids
+        logger.debug("Querying database for matching films.")
         films_in_database = (
             db.query(Film).filter(Film.tmdb_id.in_(external_tmdb_ids)).all()
         )
-
+        logger.debug("Matching films: %s", films_in_database)
         # Extract film_ids from the database result
         film_ids_in_database = [film.id for film in films_in_database]
 
@@ -100,3 +102,23 @@ def handle_showings(film):
             }
         )
     return showings_data
+
+
+def extract_api_url(url):
+    """Extract base_url, endpoint and params from url"""
+    # Parse the URL
+    parsed_url = urlparse(url)
+
+    # Extract base URL
+    base_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
+
+    # Extract endpoint
+    endpoint = parsed_url.path
+
+    # Extract query parameters and convert them to a dictionary
+    params = parse_qs(parsed_url.query)
+
+    # Convert list values to single values where applicable
+    params = {k: v[0] if len(v) == 1 else v for k, v in params.items()}
+
+    return base_url, endpoint, params

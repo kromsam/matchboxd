@@ -1,21 +1,34 @@
 """Helper functions for the database."""
 
-from sqlalchemy import create_engine, MetaData
+import logging
+from sqlalchemy import create_engine, text, MetaData
 from sqlalchemy.orm import declarative_base, sessionmaker
 
-from global_constants import DATABASE
+# Import the root logger
+logger = logging.getLogger(__name__)
 
 
 Base = declarative_base()
 
 
-class DatabaseHandler:
+class DatabaseHandler():
     """Class for setting up and handling database."""
 
-    def __init__(self):
-        self.engine = create_engine(DATABASE, echo=True)
+    def __init__(self, database):
+        print("Creating DB engine...")
+        self.engine = create_engine(database, echo=True)
+        print("DB engine created.")
+        # Connect to the database and print success message
+        with self.engine.connect() as connection:
+            print("Connection successful!")
+            result = connection.execute(text("SELECT 1"))
+            print("Query result:", result.fetchone())
+        print("Creating declarative base...")
         Base.metadata.create_all(bind=self.engine)
+        print("Declarative base created.")
+        print("Creating session")
         self.session = sessionmaker(bind=self.engine)
+        print("Session created.")
 
     def create_session(self):
         """Create new database session."""

@@ -2,8 +2,8 @@
 
 from datetime import datetime
 
-from cv_api_helpers import format_city_name
-from models import City, Film, Showing
+from .cv_api_helpers import format_city_name
+from .models import City, Film, Showing
 
 
 def get_film_dict(data):
@@ -59,7 +59,7 @@ def import_cities_to_db(session, api_data, country):
     """Import cities from the API."""
     updated_cities = []
 
-    for city in api_data["_embedded"]["collections"]:
+    for city in api_data["collections"]:
         city_slug = city.get("id")
         city_name = format_city_name(city_slug)
         timestamp = datetime.now()
@@ -92,45 +92,60 @@ def import_events_to_db(session, api_data, city=None):
         city = []
 
     # Add missing films
-    for event in api_data["_embedded"]["events"]:
-        cv_film_id = event.get("productionId")
+    with session.no_autoflush:
+        for event in api_data["events"]:
+            cv_film_id = event.get("productionId")
 
-        # Fetching tmdb_id and Film instance from the associated film in the films table
-        film = session.query(Film).filter_by(cv_film_id=cv_film_id).first()
-        if film is None:
-            production = event.get("_embedded", {}).get("production", {})
-            film_dict = get_film_dict(production)
-            film_dict["cv_film_id"] = cv_film_id
-            # Film is not in database, add it
-            new_film = Film(**film_dict)
-            session.add(new_film)
-            updated_film_titles.append(film_dict["title"])
-    session.commit()
+            # Fetching tmdb_id and Film instance from the associated film in the films table
+            film = session.query(Film).filter_by(cv_film_id=cv_film_id).first()
+            if film is None:
+                production = event.get("production", {})
+                film_dict = get_film_dict(production)
+                film_dict["cv_film_id"] = cv_film_id
+                # Film is not in database, add it
+                new_film = Film(**film_dict)
+                session.add(new_film)
+                updated_film_titles.append(film_dict["title"])
+        session.commit()
 
     # Add showings
-    for event in api_data["_embedded"]["events"]:
-        showing_dict = get_showing_dict(event)
-        showing_dict["cv_showing_id"] = event.get("id")
-        cv_film_id = event.get("productionId")
+    with session.no_autoflush:
+        for event in api_data["events"]:
+            showing_dict = get_showing_dict(event)
+            showing_dict["cv_showing_id"] = event.get("id")
+            cv_film_id = event.get("productionId")
 
-        film = session.query(Film).filter_by(cv_film_id=cv_film_id).first()
-        showing = (
-            session.query(Showing)
-            .filter_by(cv_showing_id=showing_dict["cv_showing_id"])
-            .first()
-        )
+            # Ensure start_date and end_date are properly formatted
+            showing_dict["start_date"] = format_timestamp(showing_dict.get("start_date"))
+            showing_dict["end_date"] = format_timestamp(showing_dict.get("end_date"))
 
-        if showing:
-            # Showing already in the database, update if necessary
-            update_showing(showing, film, showing_dict)
+            film = session.query(Film).filter_by(cv_film_id=cv_film_id).first()
+            showing = (
+                session.query(Showing)
+                .filter_by(cv_showing_id=showing_dict["cv_showing_id"])
+                .first()
+            )
 
-        else:
-            new_showing = get_new_showing(showing_dict, film)
-            session.add(new_showing)
-            updated_showings.append(showing_dict["cv_showing_id"])
+            if showing:
+                # Showing already in the database, update if necessary
+                update_showing(showing, film, showing_dict)
+            else:
+                new_showing = get_new_showing(showing_dict, film)
+                session.add(new_showing)
+                updated_showings.append(showing_dict["cv_showing_id"])
 
-    session.commit()
+        session.commit()
     return updated_showings, updated_film_titles
+
+
+def format_timestamp(timestamp):
+    """Format the timestamp to a proper string format."""
+    if timestamp and isinstance(timestamp, str):
+        try:
+            return datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.000Z")
+        except ValueError:
+            return None
+    return None
 
 
 def import_productions_to_db(session, api_data, city=None):
@@ -138,7 +153,7 @@ def import_productions_to_db(session, api_data, city=None):
     updated_film_titles = []
     cities = session.query(City).filter_by(city_slug=city).first()
 
-    for data in api_data["_embedded"]["productions"]:
+    for data in api_data["productions"]:
         film_dict = get_film_dict(data)
         film_dict["cv_film_id"] = data.get("id")
         film_dict["cities"] = []
@@ -163,7 +178,7 @@ def remove_films(session, api_data, city):
     """Remove films that are not in the API data."""
     for film in session.query(Film).all():
         condition_met = film.cv_film_id not in [
-            data.get("id") for data in api_data["_embedded"]["productions"]
+            data.get("id") for data in api_data["productions"]
         ]
 
         if city is None and condition_met:
@@ -179,7 +194,7 @@ def remove_showings(session, api_data):
     """Remove showings that are not in the API data."""
     for showing in session.query(Showing).all():
         condition_met = showing.cv_showing_id not in [
-            event["id"] for event in api_data["_embedded"]["events"]
+            event["id"] for event in api_data["events"]
         ]
         if condition_met:
             session.delete(showing)

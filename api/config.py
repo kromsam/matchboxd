@@ -2,14 +2,14 @@
 
 # Settings
 COUNTRY = "nl"
-CITY = None
+CITY = "amsterdam"
 
 # Database
 DB_TYPE = "postgresql"
 DB_NAME = "matchboxd_db"
 DB_USER = "matchboxd_db"
 DB_PASSWORD = "123_123"
-DB_HOST = "matchboxd_db"
+DB_HOST = "localhost"
 DB_PORT = "5432"
 
 # Cineville API

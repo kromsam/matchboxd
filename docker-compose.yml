@@ -1,26 +1,25 @@
 services:
-  api:
-    build: ./api/.
-    container_name: matchboxd_api
+  #api:
+  #  build: ./api/.
+  #  container_name: matchboxd_api
     # for development purposes
-    command: uvicorn main:app --host 0.0.0.0 --port 8080 --reload
-    volumes:
-      - ./api/.:/app
-    ports:
-      - "8080:8080"
-    networks:
-      - backend
+  #  command: uvicorn main:app --host 0.0.0.0 --port 8080 --reload
+  #  volumes:
+  #    - ./api/.:/app
+  #  ports:
+  #    - "8080:8080"
+  #  networks:
+  #    - backend
   api_db:
     image: postgres
     container_name: matchboxd_db
     environment:
-      - POSTGRES_DB="matchboxd_db"
-      - POSTGRES_USER="matchboxd_db"
-      - POSTGRES_PASSWORD="123_123"
+      - POSTGRES_DB=matchboxd_db
+      - POSTGRES_USER=matchboxd_db
+      - POSTGRES_PASSWORD=123_123
     ports:
       - "5432:5432"
-    networks:
-      - backend
+  #  network_mode: host
   #frontend:
   #  build: ./frontend/.
   #  ports:

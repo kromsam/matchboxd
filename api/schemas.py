@@ -4,7 +4,7 @@ from typing import List, Optional
 from marshmallow_sqlalchemy import fields, SQLAlchemyAutoSchema
 from pydantic import BaseModel
 
-from models import City, Film, Showing
+from .models import City, Film, Showing
 
 
 class APIResponse(BaseModel):
