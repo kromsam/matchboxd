@@ -2,7 +2,7 @@
 
 import logging
 
-from api.global_constants import DATABASE
+from .global_constants import DATABASE
 
 from .config import COUNTRY
 from .config import CITY
@@ -15,10 +15,10 @@ from .cv_api import import_events_to_db
 from .cv_api import import_productions_to_db
 from .cv_api import remove_films
 from .cv_api import remove_showings
-from .tmdb_api import update_tmdb_id
+from .tmdb_api import update_tmdb_id, update_tmdb_image
 
 # Import the root logger
-#logger = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 
 
 def import_cities():
@@ -79,13 +79,27 @@ def import_productions():
     session.close()
 
 
+def import_tmdb_id():
+    db_handler = DatabaseHandler(DATABASE)
+    session = db_handler.create_session()
+    update_tmdb_id(session)
+    session.close()
+
+def import_tmdb_image():
+    db_handler = DatabaseHandler(DATABASE)
+    session = db_handler.create_session()
+    update_tmdb_image(session)
+    session.close()
+
 def main():
-    #import_cities()
-    #import_productions()
+    import_cities()
+    import_productions()
     import_events()
+    import_tmdb_image()
+
 
 
 if __name__ == "__main__":
-    # db_handler = DatabaseHandler()
-    # db_handler.remove_database()
+    db_handler = DatabaseHandler(DATABASE)
+    db_handler.remove_database()
     main()
