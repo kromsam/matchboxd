@@ -1,17 +1,16 @@
 FROM python:3-alpine
 
 # Update and install required dependencies, including Firefox-ESR
-RUN apk add --no-cache firefox
-RUN apk add --no-cache cronie
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    firefox-esr \
+    cron && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
 # Install virtualenv and create a virtual environment
-RUN pip install --no-cache-dir virtualenv \
-    && virtualenv venv \
-    && . venv/bin/activate \
-    && pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
