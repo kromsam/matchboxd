@@ -3,7 +3,7 @@
 # Function to run the Python script and check its exit status
 run_script() {
     python -m matchboxd_scraper # Use absolute path to Python
-    return $?                                                   # Return the exit status of the script
+    return $?                   # Return the exit status of the script
 }
 
 # Check if the environment variable RUN_ONCE is set to true
@@ -34,7 +34,10 @@ echo "Cron job: $CRON_SCHEDULE"
 
 # Apply the cron job
 chmod 0644 /etc/cron.d/matchboxd
-crontab /etc/cron.d/matchboxd || { echo "Exiting..."; exit 1; }
+crontab /etc/cron.d/matchboxd || {
+    echo "Exiting..."
+    exit 1
+}
 
 # Start cron in the foreground
 if pgrep crond >/dev/null; then
@@ -45,6 +48,7 @@ else
         echo "Cron failed to start, exiting."
         exit 1
     fi
+    echo "Cron is running."
 fi
 
 # Monitor custom cron log output
