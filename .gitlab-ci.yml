@@ -1,32 +1,21 @@
-stages:
-  - build
-  - publish
-
 variables:
-  IMAGE_NAME: "$CI_REGISTRY_IMAGE" # Default to GitLab's built-in registry
-  TAG: "$CI_COMMIT_SHORT_SHA"     # Use a short commit hash as the image tag
-  DOCKER_HOST: tcp://docker:2375  # Set the Docker daemon endpoint
-  DOCKER_TLS_CERTDIR: ""         # Disable TLS for simplicity (not recommended for production)
+  IMAGE_NAME: registry.hetzijnet.nl/samsim/matchboxd
+  TAG: latest
+  DOCKER_HOST: tcp://docker:2375  # Use the Docker-in-Docker daemon
+  DOCKER_TLS_CERTDIR: ""         # Disable TLS for simplicity
 
-build:
+build-and-push:
   stage: build
   image: docker:latest
   services:
-    - docker:dind
+    - name: docker:dind
+      alias: docker
   script:
-    - docker info  # Test the Docker daemon
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - echo "Building Docker image..."
     - docker build -t "$IMAGE_NAME:$TAG" .
-  only:
-    - main # Adjust the branch name as per your workflow
-
-publish:
-  stage: publish
-  image: docker:latest
-  services:
-    - docker:dind
-  script:
+    - echo "Logging in to the container registry..."
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - echo "Pushing Docker image..."
     - docker push "$IMAGE_NAME:$TAG"
   only:
-    - main # Adjust the branch name as per your workflow
+    - main  # Run this job only on the main branch
