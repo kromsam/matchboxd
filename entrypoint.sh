@@ -26,8 +26,11 @@ echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >/etc/c
 # Export environment variables for cron job
 printenv | grep -v "no_proxy" >>/etc/cron.d/matchboxd
 
+# Add Python path to environment variables
+export PYTHONPATH="/usr/src/app:$PYTHONPATH"
+
 # Add cron schedule for running Python script
-echo "$CRON_SCHEDULE python -m /usr/src/app/matchboxd_scraper >> /var/log/matchboxd.log 2>&1" >>/etc/cron.d/matchboxd
+echo "$CRON_SCHEDULE python -m matchboxd_scraper >> /var/log/matchboxd.log 2>&1" >>/etc/cron.d/matchboxd
 
 # Apply permissions and load cron job
 chmod 0644 /etc/cron.d/matchboxd
