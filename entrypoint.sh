@@ -2,7 +2,7 @@
 
 # Function to run the Python script and check its exit status
 run_script() {
-    /usr/bin/python3 -m matchboxd_scraper # Use absolute path to Python
+    /usr/bin/python -m matchboxd_scraper # Use absolute path to Python
     return $?                             # Return the exit status of the script
 }
 
@@ -27,11 +27,12 @@ echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >/etc/c
 printenv | grep -v "no_proxy" >>/etc/cron.d/matchboxd
 
 # Add cron schedule for running Python script
-echo "$CRON_SCHEDULE /usr/bin/python3 -m matchboxd_scraper >> /var/log/matchboxd.log 2>&1" >>/etc/cron.d/matchboxd
+echo "$CRON_SCHEDULE /usr/bin/python -m matchboxd_scraper >> /var/log/matchboxd.log 2>&1" >>/etc/cron.d/matchboxd
 
 # Apply permissions and load cron job
 chmod 0644 /etc/cron.d/matchboxd
 mkdir -p /root/.cache
+echo "Cron schedule: $CRON_SCHEDULE"
 crontab /etc/cron.d/matchboxd || {
     echo "Failed to apply crontab, exiting."
     exit 1
@@ -40,7 +41,11 @@ crontab /etc/cron.d/matchboxd || {
 # Start cron service if not already running
 if ! pgrep crond >/dev/null; then
     echo "Starting cron..."
-    crond || { echo "Failed to start cron."; exit 1; }
+    crond || {
+        echo "Failed to start cron."
+        exit 1
+    }
+    echo "Cron started."
 fi
 
 # Monitor log file output
