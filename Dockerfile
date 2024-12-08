@@ -1,10 +1,8 @@
 FROM python:3-alpine
 
-# Update and install required dependencies, including Firefox-ESR
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    firefox-esr \
-    cron && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+# Update and install required dependencies, including Firefox and cron
+RUN apk add --no-cache firefox
+RUN apk add --no-cache cronie
 
 WORKDIR /usr/src/app
 
