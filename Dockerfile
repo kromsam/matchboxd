@@ -1,18 +1,19 @@
 FROM python:3-alpine
 
-# Update and install required dependencies, including Firefox and cron
-RUN apk add --no-cache firefox
-RUN apk add --no-cache cronie
+# Install Firefox and Cron
+RUN apk add --no-cache firefox cronie
 
+# Set working directory
 WORKDIR /usr/src/app
 
+# Install requirements
 COPY requirements.txt ./
-# Install virtualenv and create a virtual environment
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --root-user-action -r requirements.txt
 
+# Copy code
 COPY . .
 
-RUN chmod +x matchboxd_scraper
-RUN chmod +x entrypoint.sh
+# Set permissions for the scripts
+RUN chmod +x matchboxd_scraper entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
