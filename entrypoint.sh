@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# Add Python path to environment variables
-export PYTHONPATH="/usr/src/app:$PYTHONPATH"
-
 # Function to run the Python script and check its exit status
 run_script() {
     python -m matchboxd_scraper # Use absolute path to Python
@@ -25,6 +22,9 @@ chmod 0666 /var/log/matchboxd.log
 
 # Write cron configuration
 echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >/etc/cron.d/matchboxd
+
+# Add Python path to environment variables
+export PYTHONPATH="/usr/src/app:$PYTHONPATH"
 
 # Export environment variables for cron job
 printenv | grep -v "no_proxy" >>/etc/cron.d/matchboxd
