@@ -31,6 +31,7 @@ echo "$CRON_SCHEDULE /usr/bin/python3 -m matchboxd_scraper >> /var/log/matchboxd
 
 # Apply permissions and load cron job
 chmod 0644 /etc/cron.d/matchboxd
+mkdir -p /root/.cache
 crontab /etc/cron.d/matchboxd || {
     echo "Failed to apply crontab, exiting."
     exit 1
