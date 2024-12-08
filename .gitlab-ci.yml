@@ -5,6 +5,8 @@ stages:
 variables:
   IMAGE_NAME: "$CI_REGISTRY_IMAGE" # Default to GitLab's built-in registry
   TAG: "$CI_COMMIT_SHORT_SHA"     # Use a short commit hash as the image tag
+  DOCKER_HOST: tcp://docker:2375  # Set the Docker daemon endpoint
+  DOCKER_TLS_CERTDIR: ""         # Disable TLS for simplicity (not recommended for production)
 
 build:
   stage: build
@@ -12,6 +14,7 @@ build:
   services:
     - docker:dind
   script:
+    - docker info  # Test the Docker daemon
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
     - docker build -t "$IMAGE_NAME:$TAG" .
   only:
