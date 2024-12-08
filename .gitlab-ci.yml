@@ -14,7 +14,7 @@ build-and-push:
     - echo "Building Docker image..."
     - docker build -t "$IMAGE_NAME:$TAG" .
     - echo "Logging in to the container registry..."
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
     - echo "Pushing Docker image..."
     - docker push "$IMAGE_NAME:$TAG"
   only:
