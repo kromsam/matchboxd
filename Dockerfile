@@ -10,10 +10,8 @@ WORKDIR /usr/src/app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 
-# Copy code
+# Copy code and set permissions
 COPY . .
-
-# Set permissions for the scripts
 RUN chmod +x matchboxd_scraper entrypoint.sh
 
 ENTRYPOINT ["./entrypoint.sh"]
