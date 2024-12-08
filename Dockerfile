@@ -8,7 +8,7 @@ WORKDIR /usr/src/app
 
 # Install requirements
 COPY requirements.txt ./
-RUN pip install --no-cache-dir --root-user-action -r requirements.txt
+RUN pip install --no-cache-dir --root-user-action=ignore -r requirements.txt
 
 # Copy code
 COPY . .
