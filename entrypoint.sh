@@ -2,7 +2,7 @@
 
 # Function to run the Python script and check its exit status
 run_script() {
-    python -m matchboxd_scraper # Use absolute path to Python
+    python -m /usr/src/app/matchboxd_scraper # Use absolute path to Python
     return $?                   # Return the exit status of the script
 }
 
@@ -27,7 +27,7 @@ echo "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" >/etc/c
 printenv | grep -v "no_proxy" >>/etc/cron.d/matchboxd
 
 # Add cron schedule for running Python script
-echo "$CRON_SCHEDULE python -m matchboxd_scraper >> /var/log/matchboxd.log 2>&1" >>/etc/cron.d/matchboxd
+echo "$CRON_SCHEDULE python -m /usr/src/app/matchboxd_scraper >> /var/log/matchboxd.log 2>&1" >>/etc/cron.d/matchboxd
 
 # Apply permissions and load cron job
 chmod 0644 /etc/cron.d/matchboxd
