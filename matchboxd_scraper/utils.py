@@ -13,10 +13,8 @@ from selenium.common.exceptions import (
     ElementNotInteractableException,
 )
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from webdriver_manager.firefox import GeckoDriverManager
 
 
 # Import root logger
@@ -167,16 +165,9 @@ def run_driver():
     # Add the headless option
     firefox_options.add_argument("-headless")
 
-    # Install Gecko Driver
-    logger.debug("Installing Gecko Driver...")
-    driver_file = GeckoDriverManager().install()
-    logger.info("Gecko Driver installed.")
-
     # Initialize the Firefox web driver with the custom options
     logger.debug("Initializing WebDriver...")
-    driver = webdriver.Firefox(
-        service=FirefoxService(driver_file), options=firefox_options
-    )
+    driver = webdriver.Firefox(options=firefox_options)
     logger.info("WebDriver initialized.")
 
     return driver
