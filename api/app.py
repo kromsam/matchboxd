@@ -38,7 +38,9 @@ router = APIRouter()
 
 
 @router.get("/{path:path}", response_model=APIResponse)
-async def api_response(path: str, city: str = None, db: Session = Depends(get_db)):
+async def api_response(
+    path: str, city: str = "", db: Session = Depends(get_db)
+):
     """Create API response with data from path."""
     # Construct the URL for the external API
     external_api_url = f"{LB_API}/{path}"
