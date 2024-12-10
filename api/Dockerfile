@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3-slim
 
 WORKDIR /usr/src/app/api
 
@@ -10,4 +10,6 @@ COPY . .
 
 EXPOSE 8080
 
-CMD [CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8080"]]
+ENV PYTHONPATH=/usr/src/app
+
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8080"]
