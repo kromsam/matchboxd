@@ -34,6 +34,10 @@ def get_tmdb_img(tmdb_id):
     tmdb_data = response.json()
     if tmdb_data.get("backdrops"):
         return tmdb_data.get("backdrops")[0]["file_path"]
+    if tmdb_data.get("posters"):
+        return tmdb_data.get("posters")[0]["file_path"]
+    if tmdb_data.get("logos"):
+        return tmdb_data.get("logos")[0]["file_path"]
     return None
 
 
