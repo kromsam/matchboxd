@@ -1,28 +1,30 @@
 <template>
-  <div class="film-grid columns is-multiline">
-    <div v-for="film in films" :key="film.tmdb_id" class="column is-one-third">
-      <film-card @click="showFilmScreenings(film)" :film="film" />
+  <div class="columns is-multiline">
+    <div v-for="(film, index) in sortedFilms" 
+         :key="film.id" 
+         class="column is-3-desktop is-4-tablet is-6-mobile">
+      <film-card 
+        :film="film"
+        :index="index"
+      />
     </div>
   </div>
 </template>
+
 <script>
-import router from '@/router';
-import FilmCard from './FilmCard.vue';
+import FilmCard from './FilmCard.vue'
 
 export default {
-  components: {
-    FilmCard
-  },
+  components: { FilmCard },
   props: ['films'],
-  created() {
-    console.log('Films in FilmGrid:', this.films);
-  },
-  methods: {
-    showFilmScreenings(film) {
-      console.log('Film clicked:', film);
-      // Navigate to the detailed view for this film with its screenings
-      router.push({ name: 'film-details', params: { tmdb_id: film.tmdb_id }, props: { film } });
+  computed: {
+    sortedFilms() {
+      return [...this.films].sort((a, b) => {
+        const dateA = new Date(a.showings[0]?.start_date || '')
+        const dateB = new Date(b.showings[0]?.start_date || '')
+        return dateA - dateB
+      })
     }
   }
-};
+}
 </script>
