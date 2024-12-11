@@ -3,7 +3,7 @@
 import tomllib
 import os
 
-config_path = os.getenv("API_CONFIG_PATH", "config.toml")
+config_path = os.getenv("CONFIG_PATH", "config.toml")
 
 with open(config_path, "rb") as f:
     config = tomllib.load(f)
