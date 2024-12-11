@@ -100,5 +100,6 @@ def main(db_handler):
 
 if __name__ == "__main__":
     database_handler = DatabaseHandler(DATABASE)
-    # database_handler.remove_database()
+    database_handler.remove_database()
+    database_handler.create_all()
     main(database_handler)
