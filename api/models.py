@@ -9,6 +9,7 @@ from sqlalchemy import (
     Table,
 )
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import ARRAY
 
 from .db_helpers import Base
 
@@ -46,7 +47,6 @@ class Film(Base):
     cv_film_id = Column(String, unique=True)
     title = Column(String)
     slug = Column(String)
-    screening_state = Column(String)
     oneliner = Column(String)
     img_url = Column(String)
 
@@ -71,8 +71,7 @@ class Showing(Base):
     location_city = Column(String)
     ticket_url = Column(String)
     information_url = Column(String)
-    screening_info = Column(String)
-    additional_info = Column(String)
+    tags = Column(ARRAY(String))
 
     # Define the relationship to the Films table
     film_id = Column(Integer, ForeignKey("films.id"))

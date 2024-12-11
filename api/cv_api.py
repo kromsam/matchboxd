@@ -11,7 +11,6 @@ def get_film_dict(data):
     film_dict = {}
     film_dict["title"] = data.get("title")
     film_dict["slug"] = data.get("slug")
-    film_dict["screening_state"] = None
     film_dict["oneliner"] = data.get("localizableAttributes", {}).get("shortDescription")
     assets = data.get("assets", {})
     cover = assets.get("cover", {})
@@ -43,8 +42,7 @@ def get_showing_dict(data):
     showing_dict["location_city"] = data["_embedded"]["venue"]["address"].get("city")
     showing_dict["ticket_url"] = data["ticketingUrl"]
     showing_dict["information_url"] = data["_embedded"]["venue"]["attributes"]["website"]
-    showing_dict["screening_info"] = data.get("attributes", {}).get("shortDescription")
-    showing_dict["additional_info"] = data.get("localizableAttributes", {}).get("nl-NL", {}).get("shortDescription")
+    showing_dict["tags"] = data.get("attributes", {}).get("tags", [])
     return showing_dict
 
 
@@ -202,12 +200,6 @@ def update_film(film, film_dict, updated_film_titles):
 
     film.slug = film_dict["slug"] if film.slug != film_dict["slug"] else film.slug
 
-    film.screening_state = (
-        film_dict["screening_state"]
-        if film.screening_state != film_dict["screening_state"]
-        else film.screening_state
-    )
-
     film.oneliner = (
         film_dict["oneliner"]
         if film.oneliner != film_dict["oneliner"]
@@ -263,16 +255,10 @@ def update_showing(showing, film, showing_dict):
         else showing.information_url
     )
 
-    showing.screening_info = (
-        showing_dict["screening_info"]
-        if showing.screening_info != showing_dict["screening_info"]
-        else showing.screening_info
-    )
-
-    showing.additional_info = (
-        showing_dict["additional_info"]
-        if showing.additional_info != showing_dict["additional_info"]
-        else showing.additional_info
+    showing.tags = (
+        showing_dict["tags"]
+        if showing.tags != showing_dict["tags"]
+        else showing.tags
     )
 
     showing.film_id = film.id if showing.film_id != film.id else showing.film_id
