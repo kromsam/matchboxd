@@ -7,9 +7,9 @@
 # Database
 [database]
 type = "postgresql"
-name = "matchboxd_db"
-user = "matchboxd_db"
-password = "123_123"
+# name = "matchboxd_db"
+# user = "matchboxd_db"
+# password = "123_123"
 host = "localhost"
 port = "5432"
 
