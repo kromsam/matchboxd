@@ -1,12 +1,8 @@
 <template>
   <div class="columns is-multiline">
-    <div v-for="(showingsForDate, date) in groupedShowings" 
-         :key="date" 
-         class="column is-3"> <!-- Change to is-3 for four columns per row -->
-      <date-card 
-        :date="formatDate(date)"
-        :showings="showingsForDate"
-      />
+    <div v-for="(showingsForDate, date) in groupedShowings" :key="date" class="column is-3">
+      <!-- Change to is-3 for four columns per row -->
+      <date-card :date="formatDate(date)" :showings="showingsForDate" />
     </div>
   </div>
 </template>
@@ -20,19 +16,19 @@ export default {
   computed: {
     groupedShowings() {
       const groups = {};
-      
+
       this.films.forEach(film => {
         film.showings.forEach(showing => {
           const startDateTime = new Date(showing.start_date);
           const endDateTime = new Date(showing.end_date);
-          
+
           // Format date as YYYY-MM-DD for grouping
           const date = startDateTime.toISOString().split('T')[0];
-          
+
           if (!groups[date]) {
             groups[date] = [];
           }
-          
+
           groups[date].push({
             id: showing.id,
             film: {
@@ -85,6 +81,7 @@ export default {
 .card {
   margin-bottom: 1rem;
 }
+
 .table {
   margin-top: 1rem;
 }

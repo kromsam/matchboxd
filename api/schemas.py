@@ -1,4 +1,5 @@
 """Pydantic schemas."""
+
 from typing import List, Optional
 
 from marshmallow_sqlalchemy import fields, SQLAlchemyAutoSchema

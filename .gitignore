@@ -120,7 +120,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+/.env
 .venv
 env/
 venv/
@@ -179,7 +179,6 @@ web/index_pre.html
 database/database.sqlite
 node_modules
 todo
-package.json
 package-lock.json
 .eslintrc.yml
 .vscode/extensions.json

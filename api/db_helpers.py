@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 
-class DatabaseHandler():
+class DatabaseHandler:
     """Class for setting up and handling database."""
 
     def __init__(self, database):

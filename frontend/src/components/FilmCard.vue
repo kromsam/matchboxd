@@ -7,17 +7,13 @@
         </a>
       </figure>
     </div>
-    
+
     <div class="card-content">
       <p class="title is-5">{{ film.title }}</p>
       <p class="subtitle is-6">{{ film.oneliner }}</p>
-      
+
       <div class="buttons are-small">
-        <a v-for="link in links" 
-           :key="link.url" 
-           :href="link.url"
-           class="button is-primary is-light"
-           target="_blank">
+        <a v-for="link in links" :key="link.url" :href="link.url" class="button is-primary is-light" target="_blank">
           {{ link.text }}
         </a>
       </div>
@@ -25,20 +21,17 @@
 
     <footer class="card-footer">
       <div class="card-footer-item">
-        <button class="button is-ghost" 
-                @click="toggleShowings"
-                :aria-expanded="showShowings">
-          {{ film.showings.length }} 
+        <button class="button is-ghost" @click="toggleShowings" :aria-expanded="showShowings">
+          {{ film.showings.length }}
           {{ film.showings.length === 1 ? 'Voorstelling' : 'Voorstellingen' }}
         </button>
       </div>
     </footer>
-    
+
     <div v-show="showShowings" class="card-content pt-0">
       <div class="menu">
         <ul class="menu-list">
-          <li v-for="showing in groupedShowings" 
-              :key="showing.date">
+          <li v-for="showing in groupedShowings" :key="showing.date">
             <p class="menu-label">{{ showing.date }}</p>
             <ul>
               <li v-for="time in showing.times" :key="time.id">
@@ -68,7 +61,7 @@ export default {
     },
     groupedShowings() {
       const groups = {};
-      
+
       this.film.showings.forEach(showing => {
         const showingDate = new Date(showing.start_date);
         const date = showingDate.toLocaleDateString('nl-NL', {
@@ -76,14 +69,14 @@ export default {
           month: 'long',
           day: 'numeric'
         });
-        
+
         if (!groups[date]) {
           groups[date] = {
             date,
             times: []
           };
         }
-        
+
         groups[date].times.push({
           id: showing.id,
           url: showing.ticket_url,
@@ -96,14 +89,14 @@ export default {
       });
 
       return Object.values(groups).sort((a, b) => {
-        const dateA = new Date(this.film.showings.find(s => 
+        const dateA = new Date(this.film.showings.find(s =>
           new Date(s.start_date).toLocaleDateString('nl-NL', {
             weekday: 'long',
             month: 'long',
             day: 'numeric'
           }) === a.date
         ).start_date);
-        const dateB = new Date(this.film.showings.find(s => 
+        const dateB = new Date(this.film.showings.find(s =>
           new Date(s.start_date).toLocaleDateString('nl-NL', {
             weekday: 'long',
             month: 'long',

@@ -46,7 +46,7 @@ def import_events(db_handler):
     base_url, endpoint, params = get_api_url(
         "events", country=country, city=city, start_date=start_date
     )
-    logger.info("Fetch data from API with: ", base_url, endpoint, params)
+    logger.info("Fetch data from API with: %s, %s, %s", base_url, endpoint, params)
     cv_api_data = fetch_data_from_api(base_url, endpoint, params)
     updated_cv_showings, updated_cv_film_titles = import_events_to_db(
         session, cv_api_data, city

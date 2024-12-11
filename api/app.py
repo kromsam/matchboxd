@@ -37,9 +37,7 @@ router = APIRouter()
 
 
 @router.get("/{path:path}", response_model=APIResponse)
-async def api_response(
-    path: str, city: str = "", db: Session = Depends(get_db)
-):
+async def api_response(path: str, city: str = "", db: Session = Depends(get_db)):
     """Create API response with data from path."""
     logger.debug("API request received for path: %s and city: %s", path, city)
     # Construct the URL for the external API
@@ -57,9 +55,7 @@ async def api_response(
         )
     logger.debug("Starting comparison...")
     # Compare with the database
-    films_in_database = await compare_with_database(
-        external_data, db
-    )
+    films_in_database = await compare_with_database(external_data, db)
     # Combine the external data, city parameter, and film_ids from the database
     combined_data = {
         "path": path,

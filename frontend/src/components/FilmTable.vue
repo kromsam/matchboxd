@@ -23,7 +23,7 @@
         </div>
     </div>
 </template>
-  
+
 <script>
 export default {
     props: {
@@ -49,11 +49,10 @@ export default {
     },
 };
 </script>
-  
+
 <style>
 /* Add Bulma styling or your custom styles here */
 .block:not(:last-child) {
     margin-bottom: 1.5rem;
 }
 </style>
-  

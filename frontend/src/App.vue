@@ -1,15 +1,9 @@
 <template>
   <div class="section">
     <div class="container">
-      <app-header 
-        :letterboxdList="letterboxdList"
-        :selectedCity="selectedCity"
-        :cities="cities"
-        :sortMode="sortMode"
-        @updateCity="updateCity"
-        @toggleSort="toggleSort"
-      />
-      
+      <app-header :letterboxdList="letterboxdList" :selectedCity="selectedCity" :cities="cities" :sortMode="sortMode"
+        @updateCity="updateCity" @toggleSort="toggleSort" />
+
       <div class="content">
         <div v-if="isLoading" class="has-text-centered">
           <div class="button is-loading is-large is-primary">Loading</div>
@@ -66,7 +60,7 @@ export default {
       try {
         const path = window.location.pathname
         const response = await axios.get(`${this.apiUrl}${path}`, {
-          params: { 
+          params: {
             city: this.selectedCity,
             sort: this.sortMode
           }
@@ -74,7 +68,7 @@ export default {
         const data = response.data
         this.films = data.films_with_showings
         this.letterboxdList = data.path
-        this.cities = [...new Set(data.films_with_showings.flatMap(f => 
+        this.cities = [...new Set(data.films_with_showings.flatMap(f =>
           f.cities.map(c => c.city_name)
         ))]
       } catch (error) {

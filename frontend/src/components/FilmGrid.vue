@@ -1,12 +1,7 @@
 <template>
   <div class="columns is-multiline">
-    <div v-for="(film, index) in sortedFilms" 
-         :key="film.id" 
-         class="column is-3-desktop is-4-tablet is-6-mobile">
-      <film-card 
-        :film="film"
-        :index="index"
-      />
+    <div v-for="(film, index) in sortedFilms" :key="film.id" class="column is-3-desktop is-4-tablet is-6-mobile">
+      <film-card :film="film" :index="index" />
     </div>
   </div>
 </template>

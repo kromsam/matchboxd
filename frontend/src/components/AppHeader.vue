@@ -3,21 +3,15 @@
     <h1 class="title is-2">
       Films in
       <div class="select is-medium is-primary is-inline-block">
-        <select 
-          v-model="currentCity"
-          @change="$emit('updateCity', $event.target.value)"
-        >
+        <select v-model="currentCity" @change="$emit('updateCity', $event.target.value)">
           <option v-for="city in cities" :key="city" :value="city">
             {{ city }}
           </option>
         </select>
       </div>
-      van 
-      <a :href="letterboxdUrl" 
-         class="has-text-primary"
-         target="_blank">{{ letterboxdList }}</a>
-      <button class="button is-ghost is-medium" 
-              @click.prevent="$emit('toggleSort')">
+      van
+      <a :href="letterboxdUrl" class="has-text-primary" target="_blank">{{ letterboxdList }}</a>
+      <button class="button is-ghost is-medium" @click.prevent="$emit('toggleSort')">
         {{ sortMode === 'film' ? 'per film' : 'op datum' }}
       </button>
     </h1>

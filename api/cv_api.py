@@ -11,7 +11,9 @@ def get_film_dict(data):
     film_dict = {}
     film_dict["title"] = data.get("title")
     film_dict["slug"] = data.get("slug")
-    film_dict["oneliner"] = data.get("localizableAttributes", {}).get("shortDescription")
+    film_dict["oneliner"] = data.get("localizableAttributes", {}).get(
+        "shortDescription"
+    )
     assets = data.get("assets", {})
     cover = assets.get("cover", {})
     film_dict["img_url"] = cover.get("url") if cover else None
@@ -41,7 +43,9 @@ def get_showing_dict(data):
     showing_dict["location_name"] = data["_embedded"]["venue"].get("name")
     showing_dict["location_city"] = data["_embedded"]["venue"]["address"].get("city")
     showing_dict["ticket_url"] = data["ticketingUrl"]
-    showing_dict["information_url"] = data["_embedded"]["venue"]["attributes"]["website"]
+    showing_dict["information_url"] = data["_embedded"]["venue"]["attributes"][
+        "website"
+    ]
     showing_dict["tags"] = data.get("attributes", {}).get("tags", [])
     return showing_dict
 
@@ -256,9 +260,7 @@ def update_showing(showing, film, showing_dict):
     )
 
     showing.tags = (
-        showing_dict["tags"]
-        if showing.tags != showing_dict["tags"]
-        else showing.tags
+        showing_dict["tags"] if showing.tags != showing_dict["tags"] else showing.tags
     )
 
     showing.film_id = film.id if showing.film_id != film.id else showing.film_id
