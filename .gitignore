@@ -205,4 +205,3 @@ web_data/films_with_showings.json
 web_data/lb_list.json
 config.py
 api/config.py
-api/config.toml

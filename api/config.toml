@@ -1,0 +1,33 @@
+# Location
+
+[location]
+# country = ""
+# city = ""
+
+# Database
+[database]
+type = "postgresql"
+name = "matchboxd_db"
+user = "matchboxd_db"
+password = "123_123"
+host = "localhost"
+port = "5432"
+
+# Cineville API
+[cv_api]
+nl = "https://api.cineville.nl"
+be = "https://api.cinevillepass.be"
+
+# Letterboxd List API
+[lb_list_api]
+url = "https://letterboxd-list-radarr.onrender.com"
+
+# The Movie Database API
+[tmdb_api]
+url = "https://api.themoviedb.org/3"
+# key = ""
+
+# Logging
+[logging]
+level = "DEBUG"
+format = "%(asctime)s [%(levelname)s] %(message)s"
