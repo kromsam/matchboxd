@@ -1,7 +1,6 @@
 """Helpers for app."""
 
 from datetime import datetime
-from itertools import zip_longest
 from urllib.parse import urlparse, parse_qs
 import logging
 
@@ -31,9 +30,9 @@ async def compare_with_database(response_data, db: Session):
         )
         logger.debug("Matching films: %s", films_in_database)
         # Extract film_ids from the database result
-        film_ids_in_database = [film.id for film in films_in_database]
+        # film_ids_in_database = [film.id for film in films_in_database]
 
-        return film_ids_in_database, films_in_database
+        return films_in_database
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=str(e)) from e
@@ -50,8 +49,9 @@ def get_films_in_database_dict(films_in_database):
 
 def handle_films_from_database(films_in_database, external_data):
     """Handle Letterboxd film data."""
+    merged_data_list = []
     if external_data is not None:
-        films_from_database = []
+        # films_from_database = []
 
         # Use zip_longest to iterate over both lists, filling missing values with None
 
@@ -62,8 +62,8 @@ def handle_films_from_database(films_in_database, external_data):
 
         # Create a dictionary for faster lookup based on tmdb_id
         films_in_database_dict_dict = {
-            film["tmdb_id"]: film 
-            for film in films_in_database_dict 
+            film["tmdb_id"]: film
+            for film in films_in_database_dict
             if isinstance(film, dict) and film is not None
         }
 

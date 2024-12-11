@@ -25,7 +25,11 @@ def get_new_showing(showing_dict, film):
     new_showing = Showing(**showing_dict)
 
     # Set the film_id to the id of the associated Film
-    new_showing.film_id = film.id if film else None
+    if film:
+        new_showing.film_id = film.id
+    else:
+        # Handle the case where film is None, e.g., raise an exception or log an error
+        raise ValueError("film cannot be None")
 
     return new_showing
 

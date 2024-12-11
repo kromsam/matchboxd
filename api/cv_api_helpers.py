@@ -24,8 +24,12 @@ def fetch_data_from_api(base_url, endpoint, params):
         # Check if the first key of the dict is "error"
         if list(response_data.keys())[0] == "error":
             error_code = response_data["error"].get("code")
-            unique_identifier = response_data["error"].get("unique_identifier")
-            raise ValueError(f"Error {error_code}: {unique_identifier}")
+            unique_identifier = response_data["error"].get(
+                "unique_identifier"
+            )
+            raise ValueError(
+                f"Error {error_code}: {unique_identifier}"
+            )
 
         count = response_data.get("count")
         total_count = response_data.get("totalCount")
@@ -51,8 +55,12 @@ def fetch_data_from_api(base_url, endpoint, params):
                 # Check if the first key of the dict is "error"
                 if list(response_data.keys())[0] == "error":
                     error_code = response_data["error"].get("code")
-                    unique_identifier = response_data["error"].get("unique_identifier")
-                    raise ValueError(f"Error {error_code}: {unique_identifier}")
+                    unique_identifier = response_data["error"].get(
+                        "unique_identifier"
+                    )
+                    raise ValueError(
+                        f"Error {error_code}: {unique_identifier}"
+                    )
 
                 response_block[response_endpoint].extend(
                     response_data["_embedded"][response_endpoint]
@@ -87,7 +95,7 @@ def get_api_response(base_url, endpoint, params):
     """Make an API request."""
     try:
         response = httpx.get(base_url + endpoint, params=params, timeout=30)
-        response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
+        response.raise_for_status()  # Raise exception for 4xx & 5xx status
 
         return response
     except httpx.HTTPError as http_err:
@@ -95,7 +103,9 @@ def get_api_response(base_url, endpoint, params):
         return None
 
 
-def get_api_url(query_type, country, city=None, start_date=None, page_limit=None):
+def get_api_url(
+    query_type, country, city=None, start_date=None, page_limit=None
+):
     """Generate the url for the API request to Cineville."""
     base_url = CV_API[country]
     endpoint = ""

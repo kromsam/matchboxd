@@ -44,7 +44,10 @@ def update_tmdb_id(session, film_titles=False):
         films = session.query(Film).all()
     elif film_titles:
         # If film_titles is provided, filter films based on the given titles
-        films = session.query(Film).filter(Film.title.in_(film_titles)).all()
+        if isinstance(film_titles, list):
+            films = session.query(Film).filter(Film.title.in_(film_titles)).all()
+        else:
+            films = []
     else:
         logger.info("No films to update.")
         return
@@ -93,6 +96,7 @@ def update_tmdb_id(session, film_titles=False):
 
 
 def update_tmdb_image(session):
+    """Update the TMDB image for films without an image."""
     films = session.query(Film).filter(Film.img_url.is_(None)).all()
     for film in films:
         img_path = get_tmdb_img(film.tmdb_id)

@@ -57,7 +57,7 @@ async def api_response(
         )
     logger.debug("Starting comparison...")
     # Compare with the database
-    film_ids_in_database, films_in_database = await compare_with_database(
+    films_in_database = await compare_with_database(
         external_data, db
     )
 

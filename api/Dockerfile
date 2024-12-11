@@ -3,7 +3,6 @@ FROM python:3-slim
 WORKDIR /usr/src/app/api
 
 COPY ./requirements.txt ./
-# Install virtualenv and create a virtual environment
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
