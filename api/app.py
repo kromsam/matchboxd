@@ -46,7 +46,8 @@ async def api_response(
     external_api_url = f"{LB_API}/{path}"
     logger.debug("Fetching data from: %s", external_api_url)
     # Fetch data from external API
-    external_data = await fetch_external_data(httpx.AsyncClient(), external_api_url)
+    async with httpx.AsyncClient() as client:
+        external_data = await fetch_external_data(client, external_api_url)
     logger.debug("Data fetched.")
 
     # Check if the external data is not None
