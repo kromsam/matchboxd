@@ -6,8 +6,7 @@ from fastapi import FastAPI
 from fastapi_sqlalchemy import DBSessionMiddleware
 
 from api.app import router
-from api.config import LOG_LEVEL, LOG_FORMAT
-from api.global_constants import DATABASE
+from api.global_constants import LOG_LEVEL, LOG_FORMAT, DATABASE
 
 
 # Set up logging

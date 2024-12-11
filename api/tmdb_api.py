@@ -5,8 +5,7 @@ import re
 
 import httpx
 
-from .config import TMDB_API
-from .config import TMDB_API_KEY
+from .global_constants import TMDB_API, TMDB_API_KEY
 from .models import Film
 
 # Import the root logger

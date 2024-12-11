@@ -2,10 +2,8 @@
 
 import logging
 
-from .global_constants import DATABASE
+from .global_constants import COUNTRY, CITY, DATABASE
 
-from .config import COUNTRY
-from .config import CITY
 from .db_helpers import DatabaseHandler
 from .cv_api_helpers import get_api_url
 from .cv_api_helpers import fetch_data_from_api

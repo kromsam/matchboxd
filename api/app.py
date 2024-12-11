@@ -9,8 +9,7 @@ from fastapi_restful.session import FastAPISessionMaker
 import httpx
 from sqlalchemy.orm import Session
 
-from .config import LB_API
-from .global_constants import DATABASE
+from .global_constants import LB_LIST_API, DATABASE
 from .helpers import compare_with_database, handle_films_from_database
 from .lb_api import (
     fetch_external_data,
@@ -43,7 +42,7 @@ async def api_response(
 ):
     """Create API response with data from path."""
     # Construct the URL for the external API
-    external_api_url = f"{LB_API}/{path}"
+    external_api_url = f"{LB_LIST_API}/{path}"
     logger.debug("Fetching data from: %s", external_api_url)
     # Fetch data from external API
     async with httpx.AsyncClient() as client:
