@@ -25,15 +25,21 @@ services:
       - "5371:80"
 
   lb_list:
-        image: screeny05/letterboxd-list-radarr:latest
-        ports:
-            - 5000:5000
-        environment:
-            - REDIS_URL=redis://Lb_list_redis:6379
-        depends_on:
-            - Lb_list_redis
+    container_name: lb_list
+    image: screeny05/letterboxd-list-radarr:latest
+    ports:
+      - 5000:5000
+    environment:
+      - REDIS_URL=redis://Lb_list_redis:6379
+      - LOG_LEVEL=debug
+    depends_on:
+      - Lb_list_redis
   Lb_list_redis:
-        image: redis:6.0
+    container_name: lb_list_redis
+    image: redis:6.0
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
 
 networks:
   backend:
