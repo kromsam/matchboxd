@@ -45,6 +45,10 @@ class DatabaseHandler():
         # Drop all tables
         metadata.drop_all(bind=self.engine)
 
+    def create_all(self):
+        """Create all tables in the database."""
+        Base.metadata.create_all(bind=self.engine)
+
 
 def clear_tables(session, table_to_clear):
     """Empty specific table from database."""

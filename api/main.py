@@ -7,7 +7,7 @@ from fastapi_sqlalchemy import DBSessionMiddleware
 
 from api.app import router
 from api.global_constants import LOG_LEVEL, LOG_FORMAT, DATABASE
-
+from api.db_helpers import DatabaseHandler
 
 # Set up logging
 
@@ -22,6 +22,10 @@ logging.basicConfig(
         # Add other handlers if needed
     ],
 )
+
+# Initialize the database
+db_handler = DatabaseHandler(DATABASE)
+db_handler.create_all()
 
 # Create a FastAPI app
 app = FastAPI()
