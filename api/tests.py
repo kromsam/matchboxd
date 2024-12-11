@@ -19,10 +19,8 @@ from .tmdb_api import update_tmdb_id, update_tmdb_image
 logger = logging.getLogger(__name__)
 
 
-def import_cities():
-    print("Creating database handler: ", DATABASE)
-    db_handler = DatabaseHandler(DATABASE)
-    print("Database handler created")
+def import_cities(db_handler):
+    """Import cities into the database."""
     print("Creating database session...")
     session = db_handler.create_session()
     print("Database session created.")
@@ -30,13 +28,13 @@ def import_cities():
     base_url, endpoint, params = get_api_url("cities", country=country)
     cv_api_data = fetch_data_from_api(base_url, endpoint, params)
     updated_cv_cities = import_cities_to_db(session, cv_api_data, country)
-    #logger.info("Updated Cities: %s", updated_cv_cities)
+    logger.info("Updated Cities: %s", updated_cv_cities)
     session.close()
 
 
-def import_events():
+def import_events(db_handler):
+    """Import events into the database."""
     print("Import events")
-    db_handler = DatabaseHandler(DATABASE)
     session = db_handler.create_session()
     # clear_tables(session, Showing.__table__)
     city = CITY
@@ -54,14 +52,15 @@ def import_events():
         session, cv_api_data, city
     )
     remove_showings(session, cv_api_data)
-    update_tmdb_id(session, film_titles=updated_cv_film_titles)
-    #logger.info("Updated Titles: %s", updated_cv_film_titles)
+    update_tmdb_id(session, film_titles=bool(updated_cv_film_titles))
+    logger.info("Updated Titles: %s", updated_cv_film_titles)
+    logger.info("Updated Showings: %s", updated_cv_showings)
     session.close()
 
 
-def import_productions():
+def import_productions(db_handler):
+    """Import productions into the database."""
     # Replace 'your_database_path' with the path to your SQLite database file
-    db_handler = DatabaseHandler(DATABASE)
     session = db_handler.create_session()
     print("Import productions...")
     city = CITY
@@ -71,33 +70,35 @@ def import_productions():
     print("Fetch data from url...")
     cv_api_data = fetch_data_from_api(base_url, endpoint, params)
     updated_cv_titles = import_productions_to_db(session, cv_api_data, city=city)
-    #logger.info("Updated Titles: %s", updated_cv_titles)
+    # logger.info("Updated Titles: %s", updated_cv_titles)
     remove_films(session, cv_api_data, city)
-    update_tmdb_id(session, film_titles=updated_cv_titles)
+    update_tmdb_id(session, film_titles=bool(updated_cv_titles))
     session.close()
 
 
-def import_tmdb_id():
-    db_handler = DatabaseHandler(DATABASE)
+def import_tmdb_id(db_handler):
+    """Import tmdb id into the database."""
     session = db_handler.create_session()
     update_tmdb_id(session)
     session.close()
 
-def import_tmdb_image():
-    db_handler = DatabaseHandler(DATABASE)
+
+def import_tmdb_image(db_handler):
+    """Import tmdb image into the database."""
     session = db_handler.create_session()
     update_tmdb_image(session)
     session.close()
 
-def main():
-    import_cities()
-    import_productions()
-    import_events()
-    import_tmdb_image()
 
+def main(db_handler):
+    """Main."""
+    import_cities(db_handler)
+    import_productions(db_handler)
+    import_events(db_handler)
+    import_tmdb_image(db_handler)
 
 
 if __name__ == "__main__":
-    db_handler = DatabaseHandler(DATABASE)
-    db_handler.remove_database()
-    main()
+    database_handler = DatabaseHandler(DATABASE)
+    # database_handler.remove_database()
+    main(database_handler)
