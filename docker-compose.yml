@@ -22,10 +22,13 @@ services:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - matchboxd_db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     network_mode: host
   frontend:
+    container_name: matchboxd_web
     build: ./frontend/.
     ports:
       - "5371:80"
@@ -54,3 +57,7 @@ networks:
   backend:
     name: backend
     driver: bridge
+
+volumes:
+  matchboxd_db:
+    name: matchboxd_db
