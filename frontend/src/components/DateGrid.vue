@@ -11,21 +11,19 @@
 <script>
 export default {
     props: ['dates'],
+    created() {
+      console.log('Dates in DateGrid:', this.dates);
+    },
     methods: {
         showDateScreenings(date) {
+            console.log('Date clicked:', date);
             // Navigate to the detailed view for this date with its screenings
-            // You can use Vue Router or other navigation methods here
             this.$router.push(`/dates/${date}`);
         },
         formatDate(date) {
             // Format the date as per your requirements
-            // You can use a library like moment.js for this
             return date;
         }
     }
 };
 </script>
-  
-<style scoped>
-/* Add your styling for date cards here */
-</style>

@@ -3,6 +3,7 @@
 import logging
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi_sqlalchemy import DBSessionMiddleware
 
 from api.app import router
@@ -30,6 +31,20 @@ db_handler.create_all()
 # Create a FastAPI app
 app = FastAPI()
 app.add_middleware(DBSessionMiddleware, db_url=DATABASE)
+
+# Configure CORS
+origins = [
+    "http://localhost:5371",  # Frontend URL
+    "http://matchboxd_web:5371",  # Docker frontend URL
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Endpoint to handle the API request and database comparison
 app.include_router(router, prefix="/api")

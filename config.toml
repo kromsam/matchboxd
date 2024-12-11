@@ -10,7 +10,7 @@ type = "postgresql"
 # name = "matchboxd_db"
 # user = "matchboxd_db"
 # password = "123_123"
-host = "localhost"
+host = "matchboxd_db"
 port = "5432"
 
 # Cineville API
@@ -31,3 +31,7 @@ url = "https://api.themoviedb.org/3"
 [logging]
 level = "DEBUG"
 format = "%(asctime)s [%(levelname)s] %(message)s"
+
+# Frontend API URL
+[frontend]
+api_url = "http://matchboxd_api:8080/api"

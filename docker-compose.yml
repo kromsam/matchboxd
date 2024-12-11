@@ -1,5 +1,5 @@
 services:
-  api:
+  matchboxd_api:
     build: ./api/.
     container_name: matchboxd_api
     # for development purposes
@@ -12,14 +12,16 @@ services:
       - COUNTRY=${COUNTRY}
       - CITY=${CITY}
       - TMDB_API_KEY=${TMDB_API_KEY}
-      - CONFIG_PATH=${CONFIG_PATH}
+      - CONFIG_PATH=/usr/src/app/api/config.toml
     volumes:
       - ./api/.:/app
-      - ./config.toml:${CONFIG_PATH}
+      - ./config.toml:/usr/src/app/api/config.toml
     ports:
       - "8080:8080"
-    network_mode: host
-  api_db:
+    networks:
+      - backend
+      - frontend
+  matchboxd_db:
     image: postgres
     container_name: matchboxd_db
     environment:
@@ -31,12 +33,17 @@ services:
       - matchboxd_db:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    network_mode: host
-  frontend:
+    networks:
+      - backend
+  matchboxd_web:
     container_name: matchboxd_web
     build: ./frontend/.
+    environment:
+      - TZ=${TZ}
     ports:
       - "5371:80"
+    networks:
+      - frontend
 
   lb_list:
     container_name: lb_list
@@ -61,7 +68,8 @@ services:
 networks:
   backend:
     name: backend
-    driver: bridge
+  frontend:
+    name: frontend
 
 volumes:
   matchboxd_db:

@@ -41,6 +41,7 @@ async def api_response(
     path: str, city: str = "", db: Session = Depends(get_db)
 ):
     """Create API response with data from path."""
+    logger.debug("API request received for path: %s and city: %s", path, city)
     # Construct the URL for the external API
     external_api_url = f"{LB_LIST_API}/{path}"
     logger.debug("Fetching data from: %s", external_api_url)
@@ -48,7 +49,6 @@ async def api_response(
     async with httpx.AsyncClient() as client:
         external_data = await fetch_external_data(client, external_api_url)
     logger.debug("Data fetched.")
-
     # Check if the external data is not None
     if external_data is None:
         logger.error("Failed to fetch data from external API.")
@@ -60,16 +60,14 @@ async def api_response(
     films_in_database = await compare_with_database(
         external_data, db
     )
-
     # Combine the external data, city parameter, and film_ids from the database
     combined_data = {
         "path": path,
         "city": city,
         "films_with_showings": [],
     }
-
     combined_data["films_with_showings"] = handle_films_from_database(
         films_in_database, external_data
     )
-
+    logger.debug("Combined data: %s", combined_data)
     return combined_data
