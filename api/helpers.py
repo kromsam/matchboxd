@@ -57,9 +57,14 @@ def handle_films_from_database(films_in_database, external_data):
 
         films_in_database_dict = get_films_in_database_dict(films_in_database)
 
+        if films_in_database_dict is None:
+            raise ValueError("films_in_database_dict is None")
+
         # Create a dictionary for faster lookup based on tmdb_id
         films_in_database_dict_dict = {
-            film["tmdb_id"]: film for film in films_in_database_dict
+            film["tmdb_id"]: film 
+            for film in films_in_database_dict 
+            if isinstance(film, dict) and film is not None
         }
 
         # Iterate through external_data
