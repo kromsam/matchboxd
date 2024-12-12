@@ -31,7 +31,7 @@ from .utils import get_cv_data, store_data
 logger = logging.getLogger(__name__)
 
 
-APP_PATH = Path.cwd()
+APP_PATH = Path(os.path.dirname(os.path.abspath(__file__))).parent
 
 
 def cv_films_import(driver, cv_url, location_list, elements, db):
