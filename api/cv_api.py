@@ -62,7 +62,7 @@ def import_cities_to_db(session, api_data, country):
         city = session.query(City).filter_by(city_slug=city_slug).first()
 
         if city is None:
-            # Showing not in the database, add it
+            # City not in the database, add it
             new_city = City(
                 city_slug=city_slug,
                 city_name=city_name,
