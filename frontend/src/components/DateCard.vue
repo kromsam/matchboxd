@@ -22,8 +22,12 @@
               <td>{{ showing.theater }}</td>
               <td>{{ showing.startTime }} - {{ showing.endTime }}</td>
               <td>
-                <a v-if="showing.ticketUrl" :href="showing.ticketUrl" class="button is-small is-primary"
-                  target="_blank">
+                <a
+                  v-if="showing.ticketUrl"
+                  :href="showing.ticketUrl"
+                  class="button is-small is-primary"
+                  target="_blank"
+                >
                   Tickets
                 </a>
               </td>
@@ -35,10 +39,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ['date', 'showings']
-}
+<script setup>
+defineProps({
+  date: String,
+  showings: Array
+});
 </script>
 
 <style scoped>

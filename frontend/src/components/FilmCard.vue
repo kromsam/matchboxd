@@ -3,7 +3,7 @@
     <div class="card-image">
       <figure class="image is-2by3">
         <a :href="film.clean_title" target="_blank">
-          <img :src="film.img_url" :alt="film.title">
+          <img :src="film.img_url" :alt="film.title" />
         </a>
       </figure>
     </div>
@@ -13,7 +13,13 @@
       <p class="subtitle is-6">{{ film.oneliner }}</p>
 
       <div class="buttons are-small">
-        <a v-for="link in links" :key="link.url" :href="link.url" class="button is-primary is-light" target="_blank">
+        <a
+          v-for="link in links"
+          :key="link.url"
+          :href="link.url"
+          class="button is-primary is-light"
+          target="_blank"
+        >
           {{ link.text }}
         </a>
       </div>
@@ -21,7 +27,11 @@
 
     <footer class="card-footer">
       <div class="card-footer-item">
-        <button class="button is-ghost" @click="toggleShowings" :aria-expanded="showShowings">
+        <button
+          class="button is-ghost"
+          @click="toggleShowings"
+          :aria-expanded="showShowings"
+        >
           {{ film.showings.length }}
           {{ film.showings.length === 1 ? 'Voorstelling' : 'Voorstellingen' }}
         </button>
@@ -47,83 +57,78 @@
   </div>
 </template>
 
-<script>
-export default {
-  props: ['film', 'index'],
-  computed: {
-    links() {
-      return [
-        { url: this.film.clean_title, text: 'Cineville' },
-        { url: `https://letterboxd.com/film/${this.film.slug}`, text: 'Letterboxd' },
-        { url: `https://www.imdb.com/title/${this.film.imdb_id}`, text: 'IMDb' },
-        { url: `https://www.themoviedb.org/movie/${this.film.tmdb_id}`, text: 'TMDB' }
-      ]
-    },
-    groupedShowings() {
-      const groups = {};
+<script setup>
+import { ref, computed } from 'vue';
 
-      this.film.showings.forEach(showing => {
-        const showingDate = new Date(showing.start_date);
-        const date = showingDate.toLocaleDateString('nl-NL', {
-          weekday: 'long',
-          month: 'long',
-          day: 'numeric'
-        });
+const props = defineProps({
+  film: Object,
+  index: Number
+});
 
-        if (!groups[date]) {
-          groups[date] = {
-            date,
-            times: []
-          };
-        }
+const showShowings = ref(false);
 
-        groups[date].times.push({
-          id: showing.id,
-          url: showing.ticket_url,
-          theater: showing.location_name,
-          time: new Date(showing.start_date).toLocaleTimeString('nl-NL', {
-            hour: '2-digit',
-            minute: '2-digit'
-          })
-        });
-      });
+const links = computed(() => [
+  { url: props.film.clean_title, text: 'Cineville' },
+  { url: `https://letterboxd.com/film/${props.film.slug}`, text: 'Letterboxd' },
+  { url: `https://www.imdb.com/title/${props.film.imdb_id}`, text: 'IMDb' },
+  { url: `https://www.themoviedb.org/movie/${props.film.tmdb_id}`, text: 'TMDB' }
+]);
 
-      return Object.values(groups).sort((a, b) => {
-        const dateA = new Date(this.film.showings.find(s =>
-          new Date(s.start_date).toLocaleDateString('nl-NL', {
-            weekday: 'long',
-            month: 'long',
-            day: 'numeric'
-          }) === a.date
-        ).start_date);
-        const dateB = new Date(this.film.showings.find(s =>
-          new Date(s.start_date).toLocaleDateString('nl-NL', {
-            weekday: 'long',
-            month: 'long',
-            day: 'numeric'
-          }) === b.date
-        ).start_date);
-        return dateA - dateB;
-      });
+const groupedShowings = computed(() => {
+  const groups = {};
+
+  props.film.showings.forEach(showing => {
+    const showingDate = new Date(showing.start_date);
+    const date = showingDate.toLocaleDateString('nl-NL', {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric'
+    });
+
+    if (!groups[date]) {
+      groups[date] = {
+        date,
+        times: []
+      };
     }
-  },
-  data() {
-    return {
-      showShowings: false
-    }
-  },
-  methods: {
-    toggleShowings() {
-      this.showShowings = !this.showShowings
-    }
-  }
+
+    groups[date].times.push({
+      id: showing.id,
+      url: showing.ticket_url,
+      theater: showing.location_name,
+      time: new Date(showing.start_date).toLocaleTimeString('nl-NL', {
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+    });
+  });
+
+  return Object.values(groups).sort((a, b) => {
+    const dateA = new Date(props.film.showings.find(s =>
+      new Date(s.start_date).toLocaleDateString('nl-NL', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric'
+      }) === a.date
+    ).start_date);
+    const dateB = new Date(props.film.showings.find(s =>
+      new Date(s.start_date).toLocaleDateString('nl-NL', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric'
+      }) === b.date
+    ).start_date);
+    return dateA - dateB;
+  });
+});
+
+function toggleShowings() {
+  showShowings.value = !showShowings.value;
 }
 </script>
 
 <style scoped>
-.menu-label {
-  font-weight: bold;
-  margin-bottom: 0.5em;
-  text-transform: capitalize;
-}
+/* Removed styles for .image.is-2by3, moved to global CSS */
+
+/* ...existing code... */
 </style>
