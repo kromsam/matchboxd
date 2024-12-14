@@ -2,7 +2,7 @@
 
 from functools import lru_cache
 import logging
-from typing import Iterator
+from typing import Iterator, List
 
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_restful.session import FastAPISessionMaker
@@ -14,7 +14,8 @@ from .helpers import compare_with_database, handle_films_from_database
 from .lb_api import (
     fetch_external_data,
 )
-from .schemas import APIResponse
+from .schemas import APIResponse, CityModel
+from .models import City
 
 
 # Import the root logger
@@ -36,7 +37,16 @@ def get_db() -> Iterator[Session]:
 router = APIRouter()
 
 
-@router.get("/{path:path}", response_model=APIResponse)
+@router.get("/cities", response_model=List[CityModel])
+async def get_cities(db: Session = Depends(get_db)):
+    """Fetch and return all cities from the database."""
+    logger.debug("Fetching all cities from the database.")
+    cities = db.query(City).all()
+    logger.debug("Cities fetched: %s", cities)
+    return cities
+
+
+@router.get("/list/{path:path}", response_model=APIResponse)
 async def api_response(path: str, city: str = "", db: Session = Depends(get_db)):
     """Create API response with data from path."""
     logger.debug("API request received for path: %s and city: %s", path, city)
@@ -67,3 +77,4 @@ async def api_response(path: str, city: str = "", db: Session = Depends(get_db))
     )
     logger.debug("Combined data: %s", combined_data)
     return combined_data
+

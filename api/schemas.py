@@ -1,6 +1,7 @@
 """Pydantic schemas."""
 
 from typing import List, Optional
+from datetime import datetime
 
 from marshmallow_sqlalchemy import fields, SQLAlchemyAutoSchema
 from pydantic import BaseModel
@@ -14,6 +15,17 @@ class APIResponse(BaseModel):
     path: str
     city: Optional[str] = None
     films_with_showings: List[dict]
+
+
+class CityModel(BaseModel):
+    id: int
+    city_slug: str
+    city_name: str
+    country: str
+    timestamp: datetime
+
+    class Config:
+        orm_mode = True
 
 
 class CitySchema(SQLAlchemyAutoSchema):
