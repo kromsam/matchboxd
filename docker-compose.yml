@@ -21,6 +21,8 @@ services:
     networks:
       - backend
       - frontend
+    depends_on:
+      - matchboxd_db
   matchboxd_db:
     image: postgres
     container_name: matchboxd_db
